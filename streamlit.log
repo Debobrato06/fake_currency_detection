@@ -4,7 +4,25 @@
   Local URL: http://localhost:8501
   Network URL: http://192.168.0.105:8501
 
-2026-02-13 16:15:54.333 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/torch/cuda/__init__.py:435: UserWarning: 
+    Found GPU0 NVIDIA GeForce 840M which is of cuda capability 5.0.
+    Minimum and Maximum cuda capability supported by this version of PyTorch is
+    (7.0) - (12.0)
+    
+  queued_call()
+/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/torch/cuda/__init__.py:435: UserWarning: 
+    Please install PyTorch with a following CUDA
+    configurations:  12.6 following instructions at
+    https://pytorch.org/get-started/locally/
+    
+  queued_call()
+/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/torch/cuda/__init__.py:435: UserWarning: 
+NVIDIA GeForce 840M with CUDA capability sm_50 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_70 sm_75 sm_80 sm_86 sm_90 sm_100 sm_120.
+If you want to use the NVIDIA GeForce 840M GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+  queued_call()
+2026-02-14 13:20:44.089 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
 Stack (most recent call last):
   File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
     self._bootstrap_inner()
@@ -20,7 +38,7 @@ Stack (most recent call last):
     result = func()
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
     exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 433, in <module>
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
     result = non_optional_func(*args, **kwargs)
@@ -30,7 +48,7 @@ Stack (most recent call last):
     maybe_raise_label_warnings(label, label_visibility)
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
     _LOGGER.warning(
-2026-02-13 16:16:44.517 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+2026-02-14 13:21:23.522 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
 Stack (most recent call last):
   File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
     self._bootstrap_inner()
@@ -46,7 +64,7 @@ Stack (most recent call last):
     result = func()
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
     exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 433, in <module>
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
     result = non_optional_func(*args, **kwargs)
@@ -56,27 +74,7 @@ Stack (most recent call last):
     maybe_raise_label_warnings(label, label_visibility)
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
     _LOGGER.warning(
-2026-02-13 16:16:46.172 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:16:46.262 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:16:46.284 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:16:46.298 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:21:35.573 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+2026-02-14 13:21:43.628 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
 Stack (most recent call last):
   File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
     self._bootstrap_inner()
@@ -92,7 +90,7 @@ Stack (most recent call last):
     result = func()
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
     exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 460, in <module>
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
     result = non_optional_func(*args, **kwargs)
@@ -102,7 +100,7 @@ Stack (most recent call last):
     maybe_raise_label_warnings(label, label_visibility)
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
     _LOGGER.warning(
-2026-02-13 16:21:53.974 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+2026-02-14 13:22:18.802 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
 Stack (most recent call last):
   File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
     self._bootstrap_inner()
@@ -118,7 +116,7 @@ Stack (most recent call last):
     result = func()
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
     exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 460, in <module>
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
     result = non_optional_func(*args, **kwargs)
@@ -128,402 +126,7 @@ Stack (most recent call last):
     maybe_raise_label_warnings(label, label_visibility)
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
     _LOGGER.warning(
-2026-02-13 16:21:54.822 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:21:54.884 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:21:54.887 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:21:54.899 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:25:32.335 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 460, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:25:32.897 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:25:32.935 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:25:32.944 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:25:32.954 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:25:34.701 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 460, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:25:35.930 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:25:35.982 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:25:35.989 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:25:36.014 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:27:13.999 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 442, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:27:27.779 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 442, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:28:05.565 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 442, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:28:07.045 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:28:07.101 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:28:07.119 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:28:07.152 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:28:07.173 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:28:56.244 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 442, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:28:56.618 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 442, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:28:57.232 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:28:57.250 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:28:57.253 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:28:57.259 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:28:57.266 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:29:28.852 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 442, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:29:29.179 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 442, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:29:29.740 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:29:29.752 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:29:29.755 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:29:29.760 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:29:29.764 Please replace `use_container_width` with `width`.
-
-`use_container_width` will be removed after 2025-12-31.
-
-For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
-2026-02-13 16:31:02.571 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
-    self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
-    self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 442, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
-2026-02-13 16:33:12.859 Uncaught app execution
+2026-02-14 13:22:19.371 Uncaught app execution
 Traceback (most recent call last):
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
     result = func()
@@ -531,47 +134,14 @@ Traceback (most recent call last):
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
     exec(code, module.__dict__)  # noqa: S102
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 3, in <module>
-    st.set_page_config(
-    ^^
-NameError: name 'st' is not defined
-2026-02-13 16:33:18.090 Uncaught app execution
-Traceback (most recent call last):
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-             ^^^^^^
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 3, in <module>
-    st.set_page_config(
-    ^^
-NameError: name 'st' is not defined
-2026-02-13 16:33:19.665 Uncaught app execution
-Traceback (most recent call last):
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-             ^^^^^^
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 3, in <module>
-    st.set_page_config(
-    ^^
-NameError: name 'st' is not defined
-2026-02-13 16:33:34.234 Uncaught app execution
-Traceback (most recent call last):
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-             ^^^^^^
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 3, in <module>
-    st.set_page_config(
-    ^^
-NameError: name 'st' is not defined
-2026-02-13 16:34:32.942 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 495, in <module>
+    ai_results, ai_err = analyze_currency_elite(uploaded_file.getvalue(), strictness=sensitivity)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/detector.py", line 72, in analyze_currency_elite
+    if not AI_DISABLED:
+           ^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'AI_DISABLED' where it is not associated with a value
+2026-02-14 13:23:12.697 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
 Stack (most recent call last):
   File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
     self._bootstrap_inner()
@@ -587,7 +157,7 @@ Stack (most recent call last):
     result = func()
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
     exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 443, in <module>
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
     result = non_optional_func(*args, **kwargs)
@@ -597,7 +167,7 @@ Stack (most recent call last):
     maybe_raise_label_warnings(label, label_visibility)
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
     _LOGGER.warning(
-2026-02-13 16:35:41.690 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+2026-02-14 13:23:13.109 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
 Stack (most recent call last):
   File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
     self._bootstrap_inner()
@@ -613,7 +183,7 @@ Stack (most recent call last):
     result = func()
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
     exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 443, in <module>
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
     result = non_optional_func(*args, **kwargs)
@@ -623,4 +193,157 @@ Stack (most recent call last):
     maybe_raise_label_warnings(label, label_visibility)
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
     _LOGGER.warning(
-  Stopping...
+2026-02-14 13:23:13.220 Uncaught app execution
+Traceback (most recent call last):
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             ^^^^^^
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 495, in <module>
+    ai_results, ai_err = analyze_currency_elite(uploaded_file.getvalue(), strictness=sensitivity)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/detector.py", line 72, in analyze_currency_elite
+    if not AI_DISABLED:
+           ^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'AI_DISABLED' where it is not associated with a value
+2026-02-14 13:25:02.277 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+Stack (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
+    self._bootstrap_inner()
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
+    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
+    result = non_optional_func(*args, **kwargs)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
+    return self._file_uploader(
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
+    maybe_raise_label_warnings(label, label_visibility)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
+    _LOGGER.warning(
+2026-02-14 13:25:13.159 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+Stack (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
+    self._bootstrap_inner()
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
+    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
+    result = non_optional_func(*args, **kwargs)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
+    return self._file_uploader(
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
+    maybe_raise_label_warnings(label, label_visibility)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
+    _LOGGER.warning(
+2026-02-14 13:25:16.541 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-02-14 13:25:16.619 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-02-14 13:25:16.623 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-02-14 13:25:16.629 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-02-14 13:25:16.643 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-02-14 13:25:16.650 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-02-14 13:25:16.663 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-02-14 13:45:25.336 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+Stack (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
+    self._bootstrap_inner()
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
+    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
+    result = non_optional_func(*args, **kwargs)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
+    return self._file_uploader(
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
+    maybe_raise_label_warnings(label, label_visibility)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
+    _LOGGER.warning(
+2026-02-14 13:46:15.918 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+Stack (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
+    self._bootstrap_inner()
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
+    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
+    result = non_optional_func(*args, **kwargs)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
+    return self._file_uploader(
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
+    maybe_raise_label_warnings(label, label_visibility)
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
+    _LOGGER.warning(

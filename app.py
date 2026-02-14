@@ -7,6 +7,7 @@ import plotly.express as px
 import time
 import os
 import base64
+from detector import analyze_currency_elite
 
 st.set_page_config(
     page_title="AI Currency Guardian | Elite",
@@ -15,23 +16,24 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# --- Theme & Page Configuration ---
-if 'theme' not in st.session_state: st.session_state.theme = 'dark'
-if 'page' not in st.session_state: st.session_state.page = 'scanner'
-if 'font_scale' not in st.session_state: st.session_state.font_scale = 1.0
+# --- State Management (URL-First) ---
+# This ensures state persists across reloads and sharing
+if "p" in st.query_params:
+    st.session_state.page = st.query_params["p"]
+elif 'page' not in st.session_state:
+    st.session_state.page = 'scanner'
 
-# --- Navigation Logic ---
-params = st.query_params
-if "p" in params:
-    st.session_state.page = params["p"]
+if "theme" in st.query_params:
+    st.session_state.theme = st.query_params["theme"]
+elif 'theme' not in st.session_state:
+    st.session_state.theme = 'dark'
 
-# --- Global Theme Toggle Handler ---
-if "theme_toggle" in params:
-    st.session_state.theme = 'dark' if st.session_state.theme == 'light' else 'light'
-    new_params = {"p": st.session_state.page}
-    st.query_params.clear()
-    for k, v in new_params.items(): st.query_params[k] = v
-    st.rerun()
+if 'font_scale' not in st.session_state:
+    st.session_state.font_scale = 1.0
+
+# Ensure current state is reflected in URL for all subsequent clicks
+st.query_params["p"] = st.session_state.page
+st.query_params["theme"] = st.session_state.theme
 
 # --- Asset Helpers ---
 def get_base64_img(path):
@@ -362,21 +364,21 @@ st.markdown(f"""
             <span>CURRENCY GUARDIAN</span>
         </div>
         <div class="nav-links">
-            <a href="?p=scanner" target="_self" class="nav-item {"active" if st.session_state.page == 'scanner' else ""}">
+            <a href="?p=scanner&theme={st.session_state.theme}" target="_self" class="nav-item {"active" if st.session_state.page == 'scanner' else ""}">
                 <i class="fas fa-microscope"></i> Scanner
             </a>
-            <a href="?p=journal" target="_self" class="nav-item {"active" if st.session_state.page == 'journal' else ""}">
+            <a href="?p=journal&theme={st.session_state.theme}" target="_self" class="nav-item {"active" if st.session_state.page == 'journal' else ""}">
                 <i class="fas fa-book-open"></i> Journal
             </a>
-            <a href="?p=manual" target="_self" class="nav-item {"active" if st.session_state.page == 'manual' else ""}">
+            <a href="?p=manual&theme={st.session_state.theme}" target="_self" class="nav-item {"active" if st.session_state.page == 'manual' else ""}">
                 <i class="fas fa-circle-info"></i> Manual
             </a>
             <a href="http://127.0.0.1:5000" target="_blank" class="nav-item">
                 <i class="fas fa-external-link-alt"></i> Classic UI
             </a>
-            <button onclick="window.location.href='?p={st.session_state.page}&theme_toggle=1'" class="theme-btn">
+            <a href="?p={st.session_state.page}&theme={'dark' if st.session_state.theme == 'light' else 'light'}" target="_self" class="theme-btn" style="text-decoration: none;">
                 {"🌙" if st.session_state.theme == "light" else "☀️"}
-            </button>
+            </a>
         </div>
     </div>
 """, unsafe_allow_html=True)
@@ -488,12 +490,16 @@ else:
                 variance = np.var(hist)
                 return hsv, variance > 800
 
-            with st.status("⚔️ Deploying Forensic Modules...", expanded=False):
+            with st.status("⚔️ Deploying Forensic Modules...", expanded=False) as status:
+                st.write("Initializing AI Forensic Engine...")
+                ai_results, ai_err = analyze_currency_elite(uploaded_file.getvalue(), strictness=sensitivity)
+                st.write("Running Structural Analysis...")
                 w_img, w_pass = analyze_watermark(image) if watermark_enabled else (None, False)
                 t_img, t_pass = analyze_security_thread(image) if thread_enabled else (None, False)
                 i_img, i_pass = analyze_intaglio(image) if intaglio_enabled else (None, False)
                 m_img, m_pass, m_text = analyze_microprint(image) if microprint_enabled else (None, False, "")
                 o_img, o_pass = analyze_ovi(image) if ovi_enabled else (None, False)
+                status.update(label="Forensic Analysis Complete", state="complete")
 
             res_col1, res_col2 = st.columns([1.2, 1])
             with res_col1:
@@ -501,28 +507,35 @@ else:
                 st.image(image_rgb, use_container_width=True)
                 st.markdown("</div>", unsafe_allow_html=True)
             with res_col2:
-                # Scroring (4 points each for 5 features = 20 max)
-                score = (4 if w_pass else 0) + (4 if t_pass else 0) + (4 if i_pass else 0) + (4 if m_pass else 0) + (4 if o_pass else 0)
-                is_real = score >= sensitivity
+                # Combined logic
+                score = ai_results['score']
+                is_real = ai_results['is_real']
                 st.markdown(f"<div class='verdict-box {'verdict-real' if is_real else 'verdict-fake'}'><h1 style='font-size:3rem; margin:0;'>{'GENUINE' if is_real else 'SUSPICIOUS'}</h1><p>Forensic Score: {score}/20</p></div>", unsafe_allow_html=True)
                 
                 # New Metrics display
                 m_row1 = st.columns(3)
-                m_row1[0].metric("Watermark", "PASS" if w_pass else "FAIL")
-                m_row1[1].metric("Thread", "PASS" if t_pass else "FAIL")
-                m_row1[2].metric("Intaglio", "PASS" if i_pass else "FAIL")
+                m_row1[0].metric("AI Confidence", f"{ai_results['ai_confidence']}%")
+                m_row1[1].metric("Anomaly Score", f"{ai_results['anomaly_score']}")
+                m_row1[2].metric("Thread", "PASS" if t_pass else "FAIL")
                 
                 m_row2 = st.columns(2)
-                m_row2[0].metric("Microprint", "PASS" if m_pass else "FAIL")
+                m_row2[0].metric("Watermark", "PASS" if w_pass else "FAIL")
                 m_row2[1].metric("OVI Color", "PASS" if o_pass else "FAIL")
 
             st.markdown("### 🎛️ Forensic Streams")
-            tabs = st.tabs(["💧 Watermark", "🧵 Thread", "� Intaglio", "� Microprint", "🌈 OVI"])
-            with tabs[0]: st.image(w_img if w_img is not None else image, caption="Texture Analysis", use_container_width=True)
-            with tabs[1]: st.image(t_img if t_img is not None else image, caption="Security Thread Detection", use_container_width=True)
-            with tabs[2]: st.image(i_img if i_img is not None else image, caption="Edge Sharpness (Intaglio)", use_container_width=True)
-            with tabs[3]: st.code(m_text if m_text else "NO MICROPRINT DATA", language="txt")
-            with tabs[4]: st.image(o_img if o_img is not None else image, caption="Color Histogram Map", use_container_width=True)
+            tabs = st.tabs(["🧠 AI Forensic Core", "💧 Watermark", "🧵 Thread", "📐 Intaglio", "🔍 Microprint", "🌈 OVI"])
+            
+            with tabs[0]: 
+                t_col1, t_col2 = st.columns(2)
+                t_col1.image("data:image/jpeg;base64," + ai_results['visuals']['ai_attention'], caption="AI Attention Heatmap (SE-Block Focus)", use_container_width=True)
+                t_col2.image("data:image/jpeg;base64," + ai_results['visuals']['reconstruction'], caption="AI Reconstruction (Forensic Decoder)", use_container_width=True)
+                st.info("The AI model uses Attention Mechanisms to focus on micro-features and Anomaly Detection to flag deviations from a genuine note's distribution.")
+
+            with tabs[1]: st.image(w_img if w_img is not None else image, caption="Texture Analysis", use_container_width=True)
+            with tabs[2]: st.image(t_img if t_img is not None else image, caption="Security Thread Detection", use_container_width=True)
+            with tabs[3]: st.image(i_img if i_img is not None else image, caption="Edge Sharpness (Intaglio)", use_container_width=True)
+            with tabs[4]: st.code(m_text if m_text else "NO MICROPRINT DATA", language="txt")
+            with tabs[5]: st.image(o_img if o_img is not None else image, caption="Color Histogram Map", use_container_width=True)
 
         else:
             st.markdown(f"""

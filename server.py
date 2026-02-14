@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify
-from detector import analyze_currency
 import os
 
 app = Flask(__name__)
@@ -18,7 +17,14 @@ def analyze():
         return jsonify({"error": "No selected file"}), 400
     
     image_bytes = file.read()
-    results, error = analyze_currency(image_bytes)
+    
+    # Try elite analysis, fallback to legacy if needed
+    try:
+        from detector import analyze_currency_elite
+        results, error = analyze_currency_elite(image_bytes)
+    except ImportError:
+        from detector import analyze_currency
+        results, error = analyze_currency(image_bytes)
     
     if error:
         return jsonify({"error": error}), 400
