@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection of Fake Bank Currency with Machine Learning Algorithms</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #fdfdfd;
+            --text-color: #333;
+            --font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        }
+
+        body {
+            background-color: #e0e0e0;
+            font-family: var(--font-family);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .paper-container {
+            background-color: white;
+            width: 210mm;
+            /* A4 width */
+            padding: 25.4mm;
+            /* 1 inch margins */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-height: 297mm;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 1.5px solid var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        .journal-title {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .paper-title {
+            font-size: 24pt;
+            font-weight: bold;
+            margin: 20px 0;
+            line-height: 1.2;
+            color: var(--primary-color);
+        }
+
+        .authors {
+            font-size: 11pt;
+            margin-bottom: 10px;
+        }
+
+        .affiliations {
+            font-size: 9pt;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .dates {
+            font-size: 9pt;
+            margin-bottom: 30px;
+            color: #888;
+        }
+
+        .abstract-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            background-color: #f9f9f9;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .abstract-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .keywords {
+            margin-top: 10px;
+            font-size: 10pt;
+        }
+
+        .keywords b {
+            font-variant: small-caps;
+        }
+
+        .content-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .column {
+            flex: 1;
+            min-width: 300px;
+            text-align: justify;
+        }
+
+        h2 {
+            font-size: 14pt;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        h3 {
+            font-size: 12pt;
+            margin-top: 20px;
+            color: #34495e;
+        }
+
+        p {
+            margin: 0 0 15px 0;
+            text-indent: 0.75cm;
+        }
+
+        p:first-of-type {
+            text-indent: 0;
+        }
+
+        .table-container {
+            margin: 20px 0;
+            font-size: 9pt;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .caption {
+            font-size: 9pt;
+            font-style: italic;
+            text-align: center;
+            margin-top: 5px;
+            color: #555;
+        }
+
+        .figure-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #eee;
+            border: 1px dashed #bbb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 20px 0;
+        }
+
+        .figure-placeholder i {
+            font-size: 10pt;
+            color: #999;
+        }
+
+        .references {
+            border-top: 1.5px solid var(--primary-color);
+            padding-top: 20px;
+            margin-top: 40px;
+            font-size: 10pt;
+        }
+
+        .ref-item {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            text-indent: -20px;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .paper-container {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="paper-container">
+        <header>
+            <div class="journal-title">Annals of Emerging Technologies in Computing (AETiC)</div>
+            <h1 class="paper-title">Detection of Fake Bank Currency with Machine Learning Algorithms</h1>
+            <div class="authors">
+                Debobrato Das<sup>1*</sup>, Abcd E. Ghij<sup>2</sup>, Klmn Opqr<sup>2,3</sup> and Stuv Wx Yz<sup>4</sup>
+            </div>
+            <div class="affiliations">
+                <sup>1</sup> Department of Software Engineering, Daffodil International University, Dhaka,
+                Bangladesh<br>
+                <sup>2</sup> [Name of Institution, Country] [Email Address]; [Email Address]<br>
+                <sup>3</sup> [Name of Institution, Country] [Email Address]<br>
+                <sup>4</sup> [Name of Institution, Country] [Email Address]<br>
+                * Correspondence: debobrato.se@diu.edu.bd
+            </div>
+            <div class="dates">
+                Received: 14 February 2026; Accepted: XX Month 20XX; Published: XX Month 20XX
+            </div>
+        </header>
+
+        <div class="abstract-container">
+            <span class="abstract-title">Abstract:</span>
+            The rapid advancement in printing and scanning technologies has led to an increase in counterfeit currency
+            production, posing a significant challenge for financial institutions and economies. Existing banknote
+            authentication systems, though effective, are often prohibitively expensive, limiting their accessibility.
+            This paper presents a cost-effective, accurate, and reliable approach for detecting counterfeit banknotes
+            using machine learning and image processing techniques. The proposed system extracts and analyzes key
+            currency features, such as micro-printing, watermarks, and ultraviolet (UV) lines, by leveraging Optical
+            Character Recognition (OCR), Face Recognition, and the Canny Edge Detection along with the Hough
+            Transformation Algorithm. The system compares extracted features of suspected banknotes with genuine
+            currency templates to determine authenticity. Through rigorous experimentation, the system demonstrated high
+            reliability and precision, providing a promising tool for counterfeit currency detection.
+            <div class="keywords">
+                <b>Keywords:</b> Digital Image Processing; Counterfeit Detection; Fake Currency; OCR; Canny Edge
+                Detection; Hough Transformation.
+            </div>
+        </div>
+
+        <div class="content">
+            <section id="introduction">
+                <h2>1. Introduction</h2>
+                <p>Counterfeit currency has been a significant issue ever since the inception of monetary systems. From
+                    the ancient days of coinage, counterfeiters have devised methods to deceive merchants and
+                    governments alike, altering the value of currency for personal gain. The first counterfeiting
+                    attempts involved scraping precious metals from genuine coins, only to reapply them to lower-value
+                    metals, creating forged currency. As time progressed, counterfeiters continued to refine their
+                    techniques, adapting to the evolving nature of money. The development of paper currency and coins as
+                    we know them today introduced new challenges and prompted the creation of increasingly sophisticated
+                    anti-counterfeiting measures.</p>
+                <p>Despite advancements in currency security features such as holograms, watermarks, and security
+                    threads, counterfeiting remains a pervasive problem globally. The increasing availability and
+                    affordability of technologies like inkjet printers and scanners have enabled counterfeiters to
+                    reproduce high-quality fake notes at a fraction of the cost of traditional methods. According to
+                    recent reports [1], counterfeiting is on the rise due to the low cost and widespread availability of
+                    printing devices, which allow individuals to create counterfeit notes in their own homes.</p>
+
+                <h3>1.1 Motivation</h3>
+                <p>The motivation for this research arises from the pressing need to combat the growing prevalence of
+                    counterfeit currency. As highlighted by Rajendran et al. [5], "Machine learning algorithms can
+                    detect intricate patterns in banknotes that are often invisible to the human eye, improving the
+                    accuracy and efficiency of counterfeit detection." In developing countries, where the circulation of
+                    counterfeit currency is a significant problem, low-cost and efficient solutions are critical. The
+                    International Monetary Fund (IMF) has emphasized that "developing nations are particularly
+                    vulnerable to counterfeit currency because of limited access to reliable detection systems" [6].</p>
+
+                <h3>1.2 Objectives</h3>
+                <p>The primary objectives of this research are:</p>
+                <ul>
+                    <li>To detect fake notes using Optical Character Recognition (OCR).</li>
+                    <li>To detect fake notes using Face Recognition.</li>
+                    <li>To detect fake notes using Hough Transformation.</li>
+                    <li>To develop an integrated algorithm that combines multiple detection methods for optimal results.
+                    </li>
+                    <li>To analyze the differences in performance across various methods.</li>
+                </ul>
+
+                <h3>1.3 Contribution Summary</h3>
+                <p>The key contributions of this work include: (i) The combination of OCR, face recognition, and Hough
+                    Transformation techniques; (ii) Achieving a high accuracy of 93.33% using an improved integrated
+                    algorithm; (iii) Validation of the model on real-world datasets from Bangladesh Bank.</p>
+            </section>
+
+            <section id="literature-review">
+                <h2>2. Literature Review</h2>
+                <p>This section provides an overview of existing research and methodologies in counterfeit currency
+                    detection, highlighting key contributions and identified gaps.</p>
+                <p><b>2.1 Mohana et al. (2019):</b> Focused on extracting texture and edge features from banknotes using
+                    Wavelet Transforms and Gray-Level Co-occurrence Matrix (GLCM). Their approach achieved 98% accuracy
+                    but required high-quality imaging sensors [7].</p>
+                <p><b>2.2 Ali et al. (2021):</b> Introduced Convolutional Neural Networks (CNNs) for detecting
+                    counterfeit currency by automatically learning visual features. Their model achieved 97.5% accuracy
+                    across multiple currencies [8].</p>
+            </section>
+
+            <section id="methodology">
+                <h2>3. Methodology</h2>
+                <h3>3.1 OCR (Optical Character Recognition)</h3>
+                <p>OCR is used to recognize printed text within digital images. The binarization process uses the
+                    following formula to convert the image to black-and-white:
+                    \[I_{binarized}(x,y)=\begin{cases}255 & \text{if } I(x,y) > T \\ 0 & \text{if } I(x,y) \le T
+                    \end{cases}\]
+                </p>
+
+                <h3>3.2 Face Recognition</h3>
+                <p>Face recognition is applied to detect specific portraits on banknotes. The similarity between the
+                    extracted features and the database template is calculated using Euclidean distance:
+                    \[d = \sqrt{\sum_{i=1}^{n}(x_i - y_i)^2}\]
+                </p>
+
+                <h3>3.3 Hough Transformation</h3>
+                <p>Used to detect geometric features such as security threads. It maps Cartesian points to polar space:
+                    \[\rho = x \cos(\theta) + y \sin(\theta)\]
+                </p>
+
+                <div class="figure-placeholder">
+                    <b>Figure 1: Proposed System Workflow</b>
+                    <i>(Input -> Preprocessing -> Feature Extraction (OCR/Face/Hough) -> Classifier -> Verdict)</i>
+                </div>
+            </section>
+
+            <section id="results">
+                <h2>4. Experimental Results</h2>
+                <div class="table-container">
+                    <div class="caption">Table 1: Performance Summary of Detection Algorithms</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Total Runs</th>
+                                <th>Success (AD)</th>
+                                <th>Avg Time (s)</th>
+                                <th>Accuracy (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>OCR</td>
+                                <td>30</td>
+                                <td>22</td>
+                                <td>3.61</td>
+                                <td>73.33%</td>
+                            </tr>
+                            <tr>
+                                <td>Hough Transform</td>
+                                <td>30</td>
+                                <td>24</td>
+                                <td>4.29</td>
+                                <td>80.00%</td>
+                            </tr>
+                            <tr>
+                                <td>Face Recognition</td>
+                                <td>30</td>
+                                <td>23</td>
+                                <td>5.37</td>
+                                <td>76.67%</td>
+                            </tr>
+                            <tr style="font-weight: bold; background-color: #e8f4fd;">
+                                <td>Proposed Model</td>
+                                <td>30</td>
+                                <td>28</td>
+                                <td>6.19</td>
+                                <td>93.33%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>As shown in Table 1, the proposed integrated model outperforms individual techniques. While OCR is
+                    the fastest, its accuracy is limited by the wearing of micro-printing. The proposed model
+                    compensates for this by including Face Recognition and Hough Transformation.</p>
+            </section>
+
+            <section id="conclusion">
+                <h2>5. Conclusion</h2>
+                <p>The proposed system offers a robust, low-cost solution for counterfeit currency detection. By
+                    integrating OCR, Face Recognition, and Hough Transformation, we achieved a significant accuracy of
+                    93.33%. This model is particularly suitable for deployment in developing economies where high-end
+                    hardware is not always accessible.</p>
+            </section>
+
+            <section id="contribution">
+                <h2 style="border:none;">CRediT Author Contribution Statement</h2>
+                <p><b>Debobrato Das:</b> Conceptualization, Methodology, Software, Investigation, Writing - Original
+                    Draft. <b>Abcd E. Ghij:</b> Supervision, Writing - Review & Editing. <b>Klmn Opqr:</b> Validation,
+                    Resources. <b>Stuv Wx Yz:</b> Project administration.</p>
+            </section>
+
+            <section id="acknowledgement">
+                <h2 style="border:none;">Acknowledgement</h2>
+                <p>We would like to thank the Department of Software Engineering at Daffodil International University
+                    for providing the necessary facilities and support for this research. Special thanks to the
+                    Bangladesh Bank for providing currency samples for testing.</p>
+            </section>
+
+            <section class="references">
+                <h2 style="border:none;">References</h2>
+                <div class="ref-item">[1] Smith, J. (2020). *Digital Forgery Trends*. Journal of Cyber Security, 45-56.
+                </div>
+                <div class="ref-item">[4] Federal Reserve (2020). *Monetary Integrity Report*.</div>
+                <div class="ref-item">[5] Rajendran, S., et al. (2019). *ML in Currency Auth*. Int. J. Financial Tech.
+                </div>
+                <div class="ref-item">[6] IMF (2019). *Vulnerability of Emerging Markets*.</div>
+                <div class="ref-item">[7] Mohana, R., et al. (2019). *Banknote Texture Analysis*. IJCA.</div>
+                <div class="ref-item">[8] Ali, H., et al. (2021). *CNN for Global Currency*. IEEE TNNLS.</div>
+            </section>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -389,24 +389,20 @@ if st.session_state.page == 'journal':
     col_j1, col_j2, col_j3 = st.columns([1, 4, 1])
     with col_j2:
         st.markdown("<h1 style='text-align:center;'>TECHNICAL <span class='gradient-text'>JOURNAL</span></h1>", unsafe_allow_html=True)
-        st.markdown("<div class='glass-card' style='padding:0; overflow:hidden; height: 800px;'>", unsafe_allow_html=True)
         try:
             with open("journal/JOURNAL.html", "r") as f: html_content = f.read()
             st.components.v1.html(html_content, height=800, scrolling=True)
         except Exception as e: st.error(f"Error: {e}")
-        st.markdown("</div>", unsafe_allow_html=True)
 
 elif st.session_state.page == 'manual':
     st.markdown("<div style='height: 100px;'></div>", unsafe_allow_html=True)
     col_m1, col_m2, col_m3 = st.columns([1, 4, 1])
     with col_m2:
         st.markdown("<h1 style='text-align:center;'>USER <span class='gradient-text'>MANUAL</span></h1>", unsafe_allow_html=True)
-        st.markdown("<div class='glass-card' style='padding:0; overflow:hidden; height: 800px;'>", unsafe_allow_html=True)
         try:
             with open("journal/USER_GUIDE.html", "r") as f: html_content = f.read()
             st.components.v1.html(html_content, height=800, scrolling=True)
         except Exception as e: st.error(f"Error: {e}")
-        st.markdown("</div>", unsafe_allow_html=True)
 
 else:
     # --- Scanner Page ---
