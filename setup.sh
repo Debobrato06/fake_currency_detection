@@ -25,4 +25,6 @@ then
     echo "⚠️  Tesseract OCR not found. Please install it (sudo apt install tesseract-ocr)."
 fi
 
-echo "✅ Setup complete! Run 'source venv/bin/activate && streamlit run app.py' to start."
+echo "✅ Setup complete!"
+echo "To run the Premium Design (New): source venv/bin/activate && python3 server.py"
+echo "To run the Streamlit version: source venv/bin/activate && streamlit run app.py"
