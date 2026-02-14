@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal - AI Currency Guardian Forensic Analysis</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        .page {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 50px 70px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .authors {
+            font-size: 12pt;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .abstract-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+        }
+
+        .abstract-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            text-align: justify;
+        }
+
+        h2 {
+            font-size: 14pt;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            grid-column: span 2;
+        }
+
+        h3 {
+            font-size: 12pt;
+            margin-top: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 11pt;
+        }
+
+        .figure {
+            grid-column: span 2;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+        }
+
+        .figure-caption {
+            font-size: 9pt;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            grid-column: span 2;
+            font-size: 10pt;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .references {
+            grid-column: span 2;
+            font-size: 10pt;
+            margin-top: 30px;
+            border-top: 2px solid #333;
+            padding-top: 10px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .page {
+                box-shadow: none;
+                width: 100%;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="header">
+            <h1>Elite Forensic Counterfeit Intelligence: Multi-Feature Neural & Pattern Analysis</h1>
+            <div class="authors">Advanced Technical Manuscript | AI Currency Guardian Suite</div>
+        </div>
+
+        <div class="abstract-section">
+            <span class="abstract-title">Abstract</span>
+            Contemporary counterfeiting techniques have evolved beyond simple visual imitation, requiring advanced
+            forensic methods for detection. This research presents the "AI Currency Guardian," a high-precision analysis
+            engine that moves beyond basic structural checks. By integrating texture density analysis for watermarks,
+            Hough-line continuity for security threads, Laplacian variance for intaglio printing, OCR for microprint,
+            and HSV histogram analysis for Optically Variable Ink (OVI), we establish a comprehensive 5-tier
+            verification protocol. This multi-stream forensic approach ensures that even high-quality counterfeits are
+            identified through subtle physical and digital discrepancies.
+            <br><br>
+            <strong>Keywords:</strong> Forensic Vision, Texture Analysis, Intaglio Detection, OVI Analysis, Counterfeit
+            Intelligence.
+        </div>
+
+        <div class="content">
+            <h2>1. Introduction</h2>
+            <p>Modern banknotes incorporate a variety of security features designed to be easily verified by humans but
+                difficult to replicate by machines. Our "AI Currency Guardian" reverses this paradigm by using computer
+                vision to outperform manual inspection. The system targets five specific physical properties: the
+                transparency of watermarks, the continuity of metallic threads, the tactile depth of intaglio ink, the
+                legibility of micro-text, and the spectral shift of OVI.</p>
+
+            <h2>2. Forensic Methodology</h2>
+            <p>The system employs five parallel processing streams, each dedicated to a specific security feature. This
+                modularity allows for granular strictness adjustment and detailed error reporting.</p>
+
+            <h3>2.1 Watermark (Texture Density)</h3>
+            <p>Authentic watermarks are embedded within the paper pulp, creating varying pixel densities under
+                backlighting. We use Gaussian blurring followed by binary thresholding to measure "Density Fill." A
+                genuine note exhibits a specific range of pixel transparency that surface-level printing cannot
+                replicate.</p>
+
+            <h3>2.2 Security Thread (Line Continuity)</h3>
+            <p>The metallic thread is a continuous structural element. Using Canny edges and Probabilistic Hough Line
+                Transform, the model isolates vertical structures. A "Broken" or scattered line detection indicates a
+                surface-printed imitation of the thread.</p>
+
+            <h3>2.3 Intaglio (Edge Sharpness & Variance)</h3>
+            <p>Intaglio printing involves high-pressure ink application, creating a unique texture. We apply a Laplacian
+                operator to compute the second-order derivative of gray levels. High variance in this stream confirms
+                the presence of "Raised Ink" textures found on genuine currency.</p>
+
+            <h3>2.4 Microprinting (OCR Verification)</h3>
+            <p>Micro-text like "BANGLADESH BANK" is often too small for common printers to render clearly. Using
+                PyTesseract with customized configurations, the system attempts to match specific keywords. If the text
+                is unrecognizable or "Blurred," the feature fails the authenticity check.</p>
+
+            <h3>2.5 OVI (Color Histogram Mapping)</h3>
+            <p>Optically Variable Ink changes color based on the viewing angle. By mapping the banknote to the HSV (Hue,
+                Saturation, Value) color space and analyzing the variance in the color histogram, we can detect the
+                "Color Shift" property that standard CMYK printers lack.</p>
+
+            <h2>3. Scoring & Verdict Logic</h2>
+            <p>Each module contributes 4 points to a total "Forensic Score" of 20. The verdict is determine by a sliding
+                "Strictness Scale," allowing the operator to set threshold limits based on the condition of the currency
+                (e.g., worn vs. new notes).</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Forensic Feature</th>
+                        <th>Detection Method</th>
+                        <th>Max Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Watermark (জলছাপ)</td>
+                        <td>Texture / Density Analysis</td>
+                        <td>4 Points</td>
+                    </tr>
+                    <tr>
+                        <td>Security Thread (সুতা)</td>
+                        <td>Hough Line Continuity</td>
+                        <td>4 Points</td>
+                    </tr>
+                    <tr>
+                        <td>Intaglio (উঁচু ছাপা)</td>
+                        <td>Laplacian Sharpness Variance</td>
+                        <td>4 Points</td>
+                    </tr>
+                    <tr>
+                        <td>Microprint (ক্ষুদ্র লেখা)</td>
+                        <td>OCR & Pattern Matching</td>
+                        <td>4 Points</td>
+                    </tr>
+                    <tr>
+                        <td>Color Shift (রঙ পরিবর্তন)</td>
+                        <td>HSV Histogram Variance</td>
+                        <td>4 Points</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>4. Conclusion</h2>
+            <p>The integration of these five forensic streams provides a robust defense against counterfeit currency. By
+                quantifying physical traits into digital metrics, the AI Currency Guardian provides a reliable,
+                data-driven verdict that significantly reduces human error in currency verification.</p>
+
+            <div class="references">
+                <strong>Forensic References</strong><br>
+                [1] Laplacian Edge Analysis for Texture Verification (2024).<br>
+                [2] Advanced HSV Mapping in Security Printing Analysis.<br>
+                [3] OCR Reliability in Micro-text Forensic Environments.
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

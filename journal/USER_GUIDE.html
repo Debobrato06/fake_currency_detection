@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manual - AI Currency Guardian</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+            color: #333;
+            background-color: #f4f7f9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            border-bottom: 3px solid #10b981;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #05060f;
+            font-size: 28px;
+        }
+
+        .icon {
+            font-size: 40px;
+            color: #10b981;
+        }
+
+        h2 {
+            color: #10b981;
+            border-left: 5px solid #10b981;
+            padding-left: 15px;
+            margin-top: 40px;
+            font-size: 20px;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 25px;
+        }
+
+        p,
+        li {
+            font-size: 16px;
+            color: #4b5563;
+        }
+
+        .feature-box {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #05060f;
+        }
+
+        .verdict-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .tag-real {
+            background: #10b981;
+        }
+
+        .tag-fake {
+            background: #ef4444;
+        }
+
+        .tip-card {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 14px;
+            color: #9ca3af;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 20px;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="icon">🛡️</span>
+            <h1>AI Currency Guardian | User Manual</h1>
+        </div>
+
+        <p>Welcome to the Elite Forensic Suite. This manual provides comprehensive instructions to operate the AI-driven
+            counterfeit detection system.</p>
+
+        <h2>1. Quick Start Guide</h2>
+        <div class="feature-box">
+            <ol>
+                <li>Launch the application using <code>bash start.sh</code>.</li>
+                <li>Upload a clear photo of the currency note in the <b>Scanner</b> tab.</li>
+                <li>Wait for the 5-tier forensic engine to analyze the image.</li>
+                <li>Review the final <b>Verdict</b> and <b>Forensic Score</b>.</li>
+            </ol>
+        </div>
+
+        <h2>2. Understanding Forensic Modules</h2>
+        <p>The system uses five specialized streams to verify authenticity:</p>
+
+        <div class="feature-box">
+            <h3>💧 Watermark (জলছাপ)</h3>
+            <p>Analyzes pixel density in the designated watermark area. <b>Genuine</b> notes show smooth transparency
+                transitions.</p>
+
+            <h3>🧵 Security Thread (সুতা)</h3>
+            <p>Checks for the continuity of the metallic line. Counterfeit notes often have flickering or broken
+                threads.</p>
+
+            <h3>🔨 Intaglio (উঁছু ছাপা)</h3>
+            <p>Uses digital sharpening to detect the texture of "raised ink." This is a high-security feature found on
+                real currency.</p>
+
+            <h3>🔍 Microprint (ক্ষুদ্র লেখা)</h3>
+            <p>Runs OCR (Optical Character Recognition) to find microscopic text like "BANGLADESH BANK."</p>
+
+            <h3>🌈 Color Shift (রঙ পরিবর্তন)</h3>
+            <p>Analyzes the color spectrum shift (OVI - Optically Variable Ink) which changes hue when tilted.</p>
+        </div>
+
+        <h2>3. Interpreting Results</h2>
+        <p>The final result is calculated based on your <b>Strictness Mode</b> setting.</p>
+        <ul>
+            <li><span class="verdict-tag tag-real">GENUINE</span>: The note passed the minimum required forensic points.
+            </li>
+            <li><span class="verdict-tag tag-fake">SUSPICIOUS</span>: The system detected multiple physical or digital
+                anomalies.</li>
+        </ul>
+        <div class="tip-card">
+            <b>Pro Tip:</b> Use a score of 12/20 for general use, and 16/20 for high-security verification.
+        </div>
+
+        <h2>4. Best Practices for Images</h2>
+        <ul>
+            <li><b>Lighting:</b> Avoid direct flash. Use ambient, even lighting for best color shift analysis.</li>
+            <li><b>Alignment:</b> Keep the banknote flat and straight. Avoid crumpling.</li>
+            <li><b>Resolution:</b> High-resolution images (1080p+) are required for Microprint detection.</li>
+        </ul>
+
+        <div class="footer">
+            © 2026 AI CURRENCY GUARDIAN | Advanced Forensic Intelligence Suite
+        </div>
+    </div>
+</body>
+
+</html>
