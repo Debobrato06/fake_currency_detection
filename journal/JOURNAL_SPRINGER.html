@@ -217,26 +217,29 @@
             </div>
 
             <div class="correspondence">
-                *Corresponding author: debobrato.se@diu.edu.bd
+                *Corresponding author:devbiswas1499@gmail.com
             </div>
         </header>
 
         <div class="abstract-section">
             <span class="abstract-title">Abstract</span>
-            The proliferation of sophisticated counterfeit currency poses a severe threat to global economic stability.
-            Traditional detection methods often fail to identify high-quality replicas, known as "Supernotes." This
-            paper presents the <b>Elite Forensic Intelligence System</b>, a hybrid multi-modal framework that integrates
-            <b>Self-Supervised Anomaly Detection</b> with <b>Squeeze-and-Excitation (SE) Attention Mechanisms</b>. By
-            utilizing a Deep Autoencoder trained exclusively on genuine banknotes, the system identifies forgeries by
-            calculating the <b>Forensic Reconstruction Error ($L_{rec}$)</b>. The integration of structural computer
-            vision analysis, including Hough Line Transforms and Laplacian variance, ensures a robust, multi-dimensional
-            verification process. Experimental results on Bangladeshi banknotes demonstrate a superior accuracy of
-            <b>98.8%</b> for the combined hybrid model, significantly outperforming individual Computer Vision or Deep
-            Learning components.
+            The proliferation of sophisticated counterfeit currency, particularly high-quality "Supernotes," poses a
+            critical threat to financial security. Traditional single-domain detection methods often lack the nuance to
+            distinguish between genuine wear-and-tear and forensic anomalies. This paper proposes the <b>Elite Forensic
+                Intelligence System</b>, a novel hybrid framework integrating <b>Self-Supervised Deep Learning</b> with
+            deterministic <b>Structural Computer Vision</b>. The core authentication engine utilizes a Deep Autoencoder
+            enhanced with <b>Squeeze-and-Excitation (SE) Attention</b> mechanisms to learn the manifold of genuine
+            banknotes, flagging forgeries via high <b>Forensic Reconstruction Error ($L_{rec}$)</b>. Parallel to this, a
+            robust structural analysis pipeline employs <b>Hough Line Transforms</b> for security thread verification,
+            <b>Haar Cascade Classifiers</b> for portrait authentication, and <b>Optical Character Recognition (OCR)</b>
+            for textual density analysis. By fusing probabilistic anomaly scores with deterministic feature validation
+            through a weighted hybrid protocol, the system achieves a detection accuracy of <b>98.8%</b> on Bangladeshi
+            banknotes, demonstrating superior resilience against both digital forgeries and physical tampering compared
+            to unimodal baselines.
 
             <div class="keywords">
-                <b>Keywords:</b> Banknote Authentication, Anomaly Detection, SE-Attention, Computer Vision, Deep
-                Learning, Forensic Analysis.
+                <b>Keywords:</b> Banknote Authentication, Autoencoder, SE-Attention, Haar Cascade, OCR, Hybrid Fusion,
+                Forensic Analysis.
             </div>
         </div>
 
@@ -281,10 +284,37 @@
             <h3>2.2 Structural Domain: Component Analysis</h3>
             <p>Parallel to the AI core, traditional CV modules analyze structural integrity:</p>
             <ul>
-                <li><b>Hough Transform:</b> Extracts security thread alignment.</li>
-                <li><b>Laplacian Variance:</b> Measures intaglio print sharpness.</li>
-                <li><b>OCR (Tesseract):</b> Verifies serial number font and presence.</li>
+                <li><b>Hough Transform:</b> Extracts security thread alignment ($w_{thread}=4$).</li>
+                <li><b>Face Detection (Haar):</b> Verifies portrait presence ($w_{face}=4$).</li>
+                <li><b>OCR (Tesseract):</b> Verifies serial number text density ($w_{ocr}=2$).</li>
             </ul>
+
+            <h3>2.3 Hybrid Scoring & Decision Logic</h3>
+            <p>The system fuses the probabilistic output of the Deep Learning model with the deterministic checks of the
+                Structural component using a weighted linear formula. The <b>Deep Learning Score ($S_{DL}$)</b> is
+                inversely proportional to the anomaly score ($A_{score}$), normalized to a 0-10 scale:</p>
+
+            <div class="math-block">
+                \[S_{DL} = \max(0, 10 - (A_{score} \times 100))\]
+            </div>
+
+            <p>The <b>Computer Vision Score ($S_{CV}$)</b> is calculated as a weighted sum of binary feature indicators:
+            </p>
+
+            <div class="math-block">
+                \[S_{CV} = \sum (w_i \cdot \mathbb{I}_{feature_i})\]
+            </div>
+
+            <p>The final authenticity decision is determined by the <b>Hybrid Fusion Score ($S_{Total}$)</b>, where
+                $\alpha=0.6$ and $\beta=1.0$ represent the confidence weights for the Forensic and Structural domains
+                respectively:</p>
+
+            <div class="math-block">
+                \[S_{Total} = \alpha \cdot S_{DL} + \beta \cdot S_{CV}\]
+            </div>
+
+            <p>A banknote is classified as <b>Genuine</b> if $S_{Total} \ge \tau$, where $\tau$ is the strictness
+                threshold (default $\tau=6.0$).</p>
         </section>
 
         <section id="experimental">
@@ -325,12 +355,13 @@
 
             <p>As demonstrated in Table 1, the Hybrid Elite Fusion provides the most reliable verification, achieving a
                 <b>98.8% success rate</b>. The integration of SE-Attention allows the model to ignore background noise
-                caused by dirty or worn notes, focusing instead on the invariant security artifacts.</p>
+                caused by dirty or worn notes, focusing instead on the invariant security artifacts.
+            </p>
 
             <div class="figure-box">
-                <div class="caption">Figure 1: AI Attention Heatmap (Left) and Forensic Reconstruction (Right)</div>
-                <p style="color:#888; border:1px dashed #ccc; padding:20px;">[AI Visualizations: Heatmaps focus on
-                    watermarks and security threads]</p>
+                <div class="caption">Figure 1: Proposed Hybrid Architecture for Fake Currency Detection System</div>
+                <img src="architecture_final.png"
+                    alt="System Architecture Diagram exhibiting the dual-branch processing pipeline: Structural Analysis (Top) and Forensic Deep Learning (Bottom) merging into Hybrid Fusion.">
             </div>
         </section>
 
@@ -340,7 +371,8 @@
                 of Deep Learning Anomaly Detection with the structural reliability of Computer Vision, we provide a tool
                 that is robust against both current and future counterfeiting techniques. Future work will explore
                 <b>Generative Adversarial Networks (GANs)</b> for data augmentation to further enhance resilience
-                against severely damaged currency.</p>
+                against severely damaged currency.
+            </p>
         </section>
 
         <section class="declarations">

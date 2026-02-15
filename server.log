@@ -5,8 +5,13 @@
 [33mPress CTRL+C to quit[0m
  * Restarting with watchdog (inotify)
  * Debugger is active!
- * Debugger PIN: 421-629-575
- * Detected change in '/media/debu/C218B74418B735EF/fake_currency_detection/app.py', reloading
- * Restarting with watchdog (inotify)
- * Debugger is active!
- * Debugger PIN: 421-629-575
+ * Debugger PIN: 950-390-488
+Exception ignored in: <function Popen.__del__ at 0x7faf9d117f60>
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/subprocess.py", line 1120, in __del__
+    def __del__(self, _maxsize=sys.maxsize, _warn=warnings.warn):
+
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/werkzeug/_reloader.py", line 446, in <lambda>
+    signal.signal(signal.SIGTERM, lambda *args: sys.exit(0))
+                                                ^^^^^^^^^^^
+SystemExit: 0

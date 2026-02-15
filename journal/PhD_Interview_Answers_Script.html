@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhD Interview Script: Full Model Answers</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #27ae60;
+            --bg: #ecf0f1;
+            --text: #34495e;
+            --card-bg: #fff;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            /* Serif for reading flow */
+            line-height: 1.8;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            font-family: 'Segoe UI', sans-serif;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-left: 6px solid var(--accent);
+        }
+
+        .question {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .script {
+            font-size: 1.05rem;
+            color: #2c3e50;
+        }
+
+        .highlight {
+            background-color: #fff9c4;
+            padding: 0 4px;
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-style: italic;
+            border-top: 1px dashed #ccc;
+            padding-top: 10px;
+        }
+
+        /* Technical terms styling */
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            color: #d35400;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>PhD Interview: Suggested Oral Responses</h1>
+        <p style="text-align: center; margin-bottom: 40px;">
+            <i>These are "scripted" answers. Do not memorize them word-for-word. <br>Read them aloud to understand the
+                flow, then adapt them to your natural speaking style.</i>
+        </p>
+
+        <!-- Q1 -->
+        <div class="card">
+            <div class="question">Q1: "Tell us about yourself and your background."</div>
+            <div class="script">
+                "My name is Debobrato Biswas, and I recently completed my studies in Software Engineering. My primary
+                research interest lies at the intersection of <b>Computer Vision</b> and <b>Trustworthy AI</b>.
+                <br><br>
+                For my Master's thesis, I developed the 'Elite Forensic Intelligence System', a hybrid framework for
+                detecting counterfeit currency.
+                I realized that standard deep learning models are often 'black boxes' and lack the precision for
+                forensic tasks.
+                To solve this, I designed a system that fuses a <b>Deep Autoencoder</b> for learning genuine texture
+                manifolds with <b>deterministic Computer Vision algorithms</b> like Hough Transforms and OCR for
+                structural verification.
+                <br><br>
+                I am particularly drawn to your lab because of your focus on [Mention Lab's Focus, e.g., Robust AI /
+                Industrial Vision], and I believe my background in building explainable hybrid systems makes me a strong
+                candidate for this PhD position."
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="card">
+            <div class="question">Q3: "Why a Hybrid approach (Deep Learning + Classical CV)? Why not just a CNC?"</div>
+            <div class="script">
+                "That is a critical design choice. A pure CNN trained as a binary classifier (Real vs. Fake) suffers
+                from two major issues in this domain:
+                <br><br>
+                First, <b>Generalization</b>. Counterfeiters constantly improve their methods. A CNN trained on 'Fake
+                Version 1' might fail to detect 'Fake Version 2'.
+                <br><br>
+                Second, <b>Explainability</b>. In a banking or legal context, simply saying '99% Fake' is not enough. We
+                need to know <i>why</i>.
+                <br><br>
+                By using a Hybrid approach, I get the best of both worlds. The Autoencoder learns the 'perfect' version
+                of a note, so it flags <i>any</i> anomaly, even new types of fakes. Meanwhile, the Classical CV layer
+                provides instant, human-verifiable feedback—for example, 'The security thread is misaligned by 3
+                millimeters.' This makes the system both robust to unseen attacks and trusted by human operators."
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="card">
+            <div class="question">Q4: "Explain the math behind your Anomaly Score ($L_{rec}$)."</div>
+            <div class="script">
+                "Certainly. I modeled the problem as a <b>One-Class Classification</b> task. I trained a Deep
+                Autoencoder exclusively on genuine samples to learn a manifold, let's call it $M$, that represents
+                authentic currency.
+                <br><br>
+                Mathematically, the Autoencoder approximates an identity function $f(x) \approx x$ for all $x \in M$.
+                The objective function during training is to minimize the Mean Squared Error (MSE): <br>
+                <code>L = || x - \hat{x} ||^2</code>
+                <br><br>
+                During inference, when a counterfeit note $x'$ is fed into the network, it lies <i>outside</i> the
+                learned manifold $M$. The network tries to project it back onto $M$, resulting in a reconstructed image
+                $\hat{x'}$ that looks like a genuine note.
+                <br><br>
+                The difference between the input fake $x'$ and the reconstructed genuine version $\hat{x'}$ is large. I
+                quantify this using the reconstruction error metric:
+                <code>Anomaly Score = || x' - \hat{x'} ||_2</code>
+                <br><br>
+                If this score exceeds a learned threshold $\tau$ (tau), the note is classified as an anomaly."
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="card">
+            <div class="question">Q5: "Why Squeeze-and-Excitation (SE) blocks?"</div>
+            <div class="script">
+                "In banknote analysis, not all features are equally important. A plain background texture is less
+                relevant than the intricate micro-printing or the watermark region.
+                <br><br>
+                Standard Convolutional Networks treat all feature channels with equal importance. I integrated
+                <b>Squeeze-and-Excitation (SE) blocks</b> to introduce a mechanism of 'feature recalibration'.
+                <br><br>
+                The 'Squeeze' operation pools global spatial information to understand the global context.
+                The 'Excitation' operation then uses a small neural network to output channel-wise weights.
+                <br><br>
+                Essentially, this allows the network to say, 'Focus 80% on the watermark channel and only 20% on the
+                background.' This improved my model's sensitivity to subtle high-quality forgeries (Supernotes) by
+                explicitly attending to the most discriminative security features."
+            </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="card">
+            <div class="question">Q10: "How would you extend this for a 3-year PhD?"</div>
+            <div class="script">
+                "I see three main avenues for my doctoral research:
+                <br><br>
+                1. <b>Few-Shot Learning & Domain Adaptation:</b> Currently, my model needs retraining for every new
+                currency bill. I want to develop a 'Universal Currency Network' using Meta-Learning, where the model can
+                adapt to a new currency (e.g., Euro or Dollar) showing only 5 reference images.
+                <br><br>
+                2. <b>Adversarial Robustness:</b> I want to test the system against <b>Adversarial
+                    Examples</b>—mathematically generated noise designed to fool AI. I plan to research 'Adversarial
+                Training' methods to mathematically guarantee robustness against such attacks.
+                <br><br>
+                3. <b>Deployment on Edge Devices:</b> I aim to investigate model compression techniques like
+                <b>Quantization</b> and <b>Knowledge Distillation</b> to run these complex Deep Learning models directly
+                on low-power handheld scanners used by field agents, without needing cloud connectivity."
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

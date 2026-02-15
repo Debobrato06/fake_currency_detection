@@ -22,7 +22,7 @@ The current PyTorch install supports CUDA capabilities sm_70 sm_75 sm_80 sm_86 s
 If you want to use the NVIDIA GeForce 840M GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
 
   queued_call()
-2026-02-14 22:25:14.260 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+2026-02-16 00:58:32.481 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
 Stack (most recent call last):
   File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
     self._bootstrap_inner()
@@ -38,7 +38,7 @@ Stack (most recent call last):
     result = func()
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
     exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 445, in <module>
+  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 441, in <module>
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
     result = non_optional_func(*args, **kwargs)
@@ -48,3 +48,5 @@ Stack (most recent call last):
     maybe_raise_label_warnings(label, label_visibility)
   File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
     _LOGGER.warning(
+  Stopping...
+  Stopping...

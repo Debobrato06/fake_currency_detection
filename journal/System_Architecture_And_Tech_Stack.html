@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Forensic Intelligence System: Comprehensive Technical Documentation</title>
+    <style>
+        :root {
+            --primary: #1a237e;
+            /* Deep Indigo */
+            --secondary: #0d47a1;
+            --accent: #2962ff;
+            --light-bg: #f5f6fa;
+            --text: #2d3436;
+            --code-bg: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: var(--secondary);
+            margin-top: 40px;
+            border-left: 5px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #444;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .tech-card {
+            background: #fff;
+            border: 1px solid #e1e1e1;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+        }
+
+        .why-section {
+            background-color: #e3f2fd;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+
+        .why-label {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .image-box {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #fafafa;
+            border: 1px dashed #ccc;
+        }
+
+        code {
+            background-color: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            color: #d63031;
+        }
+
+        ul {
+            margin-top: 0;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .workflow-step {
+            margin-bottom: 25px;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>System Architecture & Technology Stack</h1>
+            <p><b>Project:</b> Elite Forensic Intelligence System (Fake Currency Detection)</p>
+            <p><b>Overview:</b> A detailed breakdown of the internal workings, model architecture, and technology
+                justifications.</p>
+        </header>
+
+        <!-- SECTION 1: SYSTEM OVERVIEW -->
+        <section>
+            <h2>1. System Overview (Abstract)</h2>
+            <p>
+                The <b>Elite Forensic Intelligence System</b> is a hybrid software solution designed to authenticate
+                banknotes.
+                Unlike traditional systems that rely on a single method, this system uses a "Two-Factor Authentication"
+                approach:
+            </p>
+            <ul>
+                <li><b>Factor 1 (The Specialist):</b> A Deep Learning Model that looks for microscopic anomalies
+                    (Digital Forensics).</li>
+                <li><b>Factor 2 (The Inspector):</b> Computer Vision algorithms that measure physical properties like
+                    lines, faces, and text (Structural Analysis).</li>
+            </ul>
+            <p>
+                These two independent judgments are fused together to produce a final, highly reliable decisions.
+            </p>
+        </section>
+
+        <!-- SECTION 2: TECHNOLOGY STACK & JUSTIFICATION -->
+        <section>
+            <h2>2. Technology Stack: What & Why?</h2>
+            <p>Every technology in this stack was chosen for a specific engineering reason.</p>
+
+            <div class="tech-card">
+                <h3>Language: Python 3.9+</h3>
+                <div class="why-section">
+                    <span class="why-label">Why Used:</span>
+                    Python is the de-facto standard for AI/ML. It has the richest ecosystem of libraries (PyTorch,
+                    OpenCV, NumPy) which drastically reduces development time compared to C++ or Java.
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <h3>Core AI Framework: PyTorch</h3>
+                <div class="why-section">
+                    <span class="why-label">Why Used:</span>
+                    PyTorch offers a distinct advantage over TensorFlow: <b>Dynamic Computation Graphs</b>. This makes
+                    debugging complex architectures (like our Autoencoder) much easier. It is also more "Pythonic" and
+                    widely favored in academic research for its flexibility.
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <h3>Applied Computer Vision: OpenCV (Open Source Computer Vision Library)</h3>
+                <div class="why-section">
+                    <span class="why-label">Why Used:</span>
+                    Deep Learning is heavy and probabilistic. OpenCV provides fast, deterministic image processing tools
+                    (Line Detection, Canny Edge, Color Space conversion) that run efficiently on the CPU, providing a
+                    necessary "sanity check" to the heavy AI model.
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <h3>Web Framework: Flask</h3>
+                <div class="why-section">
+                    <span class="why-label">Why Used:</span>
+                    Flask is a "micro-framework". Unlike Django, it doesn't come with unnecessary bloat. It allows us to
+                    wrap our PyTorch model in a lightweight REST API server with minimal overhead, ensuring low latency
+                    responses.
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <h3>OCR Engine: Tesseract</h3>
+                <div class="why-section">
+                    <span class="why-label">Why Used:</span>
+                    We need to verify if the text on the note is legible. Tesseract is the best open-source OCR engine
+                    available. It helps detect "blurry" fakes where the text looks like smudges, which a standard CNN
+                    might miss.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: THE CORE MODEL (DEEP DIVE) -->
+        <section>
+            <h2>3. The Core Model: Deep Autoencoder with SE-Attention</h2>
+            <p>
+                The heart of the system is a <b>Generative Autoencoder</b>. This is NOT a classifier (Classifier means
+                it learns Class A vs Class B).
+                This is a <b>Reconstruction Network</b>.
+            </p>
+
+            <h3>3.1 Concept: One-Class Classification</h3>
+            <p>
+                We assume it is impossible to collect every version of "Fake Money" in existence. Therefore, we train
+                the model <b>ONLY on Genuine Money</b>.
+                The model learns: <i>"This is what a real banknote looks like."</i>
+            </p>
+
+            <h3>3.2 Architecture Components</h3>
+
+            <div class="tech-card">
+                <h4>The Encoder (The Compressor)</h4>
+                <p>Takes the high-resolution input image ($512 \times 512$) and compresses it down to a small feature
+                    vector (Latent Space). It acts like a funnel, forcing the network to keep only the most essential
+                    information.</p>
+            </div>
+
+            <div class="tech-card">
+                <h4>The Bottleneck (Latent Space)</h4>
+                <p>This is the most critical part. It is a compressed representation of a "Perfect Banknote". If a fake
+                    note is passed through, its anomalous features (e.g., wrong ink type) cannot be compressed
+                    effectively into this specific shape.</p>
+            </div>
+
+            <div class="tech-card">
+                <h4>The Decoder (The Painter)</h4>
+                <p>Takes the compressed data from the Bottleneck and tries to recreate the original image from memory.
+                    Since it only knows how to draw "Real Notes", if you give it a "Fake Note", it will try its best to
+                    draw a "Real Note" instead.</p>
+            </div>
+
+            <div class="tech-card">
+                <h4>Squeeze-and-Excitation (SE) Blocks</h4>
+                <p>
+                    <b>The Problem:</b> Standard Convolutional Networks treat the background of the note and the
+                    security watermark as equally important. <br>
+                    <b>The Solution:</b> SE Blocks assign "Attention Weights". The model learns that Channel 5
+                    (Watermark) is 10x more important than Channel 2 (Paper Texture). This makes the model "Smart"
+                    enough to focus on security features.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 4: STEP-BY-STEP WORKFLOW -->
+        <section>
+            <h2>4. System Workflow: How it works "Pungkhanupunkho" (Detail)</h2>
+            <p>This is exactly what happens when you click "Scan" in the application:</p>
+
+            <div class="workflow-step">
+                <span class="step-number">1</span> <b>Image Acquisition</b>
+                <p>The system captures a raw image from the camera or upload. (Format: RGB, Resolution: High).</p>
+            </div>
+
+            <div class="workflow-step">
+                <span class="step-number">2</span> <b>Preprocessing (Normalization)</b>
+                <p>
+                    The AI model cannot read massive 4K images.
+                    <br> - <b>Resize:</b> Downscale to $512 \times 512$ pixels.
+                    <br> - <b>Normalize:</b> Convert pixel values from [0, 255] to [0.0, 1.0]. This helps the Neural
+                    Network math converge faster (Gradient Descent).
+                </p>
+            </div>
+
+            <div class="workflow-step">
+                <span class="step-number">3</span> <b>Path A: Deep Forensic Analysis (The "Brain")</b>
+                <p>
+                    - Input tensor goes into the <b>Encoder</b>.
+                    - Passes through <b>SE-Blocks</b> which highlight security threads.
+                    - Compressed into <b>Latent Vector</b>.
+                    - <b>Decoder</b> reconstructs the image.
+                    - <b>Calculation:</b> The system subtracts the Input from the Output.
+                    <br><code>Error = |Input - Output|</code>
+                    <br>If the Error > Threshold (0.005), it is designated as an <b>Anomaly</b>.
+                </p>
+            </div>
+
+            <div class="workflow-step">
+                <span class="step-number">4</span> <b>Path B: Structural Analysis (The "Ruler")</b>
+                <p>
+                    While the AI is thinking, OpenCV runs continuously:
+                    <br> - <b>Hough Transform:</b> Scans for straight parallel lines (Security Thread). If no lines are
+                    found = Fake.
+                    <br> - <b>Face Detection:</b> Looks for human facial features (Portrait). If no face = Fake.
+                    <br> - <b>Optical Character Recognition (OCR):</b> Tries to read the Serial Number. If text is
+                    gibberish = Fake.
+                </p>
+            </div>
+
+            <div class="workflow-step">
+                <span class="step-number">5</span> <b>Hybrid Fusion (The Decision)</b>
+                <p>
+                    The system combines the results using a weighted formula:
+                    <br><code>Final_Score = (0.6 * AI_Score) + (1.0 * CV_Score)</code>
+                    <br>Standard CV checks are given higher immediate weight (1.0) because if a note is missing a face,
+                    it is 100% fake. The AI score is used to detect the "High Quality" fakes that pass the CV check but
+                    look "slightly off" in texture.
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Debobrato Biswas | Elite Forensic Intelligence System Documentation</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>
