@@ -1,17 +1,24 @@
  * Serving Flask app 'server'
  * Debug mode: on
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
  * Running on http://127.0.0.1:5000
-[33mPress CTRL+C to quit[0m
- * Restarting with watchdog (inotify)
+Press CTRL+C to quit
+ * Restarting with watchdog (windowsapi)
  * Debugger is active!
- * Debugger PIN: 950-390-488
-Exception ignored in: <function Popen.__del__ at 0x7faf9d117f60>
-Traceback (most recent call last):
-  File "/usr/lib/python3.12/subprocess.py", line 1120, in __del__
-    def __del__(self, _maxsize=sys.maxsize, _warn=warnings.warn):
-
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/werkzeug/_reloader.py", line 446, in <lambda>
-    signal.signal(signal.SIGTERM, lambda *args: sys.exit(0))
-                                                ^^^^^^^^^^^
-SystemExit: 0
+ * Debugger PIN: 124-647-350
+ * Detected change in 'D:\\DebobratoResearch\\fake_currency_detection\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 124-647-350
+ * Detected change in 'D:\\DebobratoResearch\\fake_currency_detection\\venv\\Lib\\site-packages\\cv2\\config.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 124-647-350
+ * Detected change in 'D:\\DebobratoResearch\\fake_currency_detection\\venv\\Lib\\site-packages\\streamlit\\env_util.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 124-647-350
+ * Detected change in 'D:\\DebobratoResearch\\fake_currency_detection\\detector.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 124-647-350

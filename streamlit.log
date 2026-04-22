@@ -2,51 +2,31 @@
   You can now view your Streamlit app in your browser.
 
   Local URL: http://localhost:8501
-  Network URL: http://192.168.0.105:8501
+  Network URL: http://10.15.5.49:8501
 
-/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/torch/cuda/__init__.py:435: UserWarning: 
-    Found GPU0 NVIDIA GeForce 840M which is of cuda capability 5.0.
-    Minimum and Maximum cuda capability supported by this version of PyTorch is
-    (7.0) - (12.0)
-    
-  queued_call()
-/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/torch/cuda/__init__.py:435: UserWarning: 
-    Please install PyTorch with a following CUDA
-    configurations:  12.6 following instructions at
-    https://pytorch.org/get-started/locally/
-    
-  queued_call()
-/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/torch/cuda/__init__.py:435: UserWarning: 
-NVIDIA GeForce 840M with CUDA capability sm_50 is not compatible with the current PyTorch installation.
-The current PyTorch install supports CUDA capabilities sm_70 sm_75 sm_80 sm_86 sm_90 sm_100 sm_120.
-If you want to use the NVIDIA GeForce 840M GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
-
-  queued_call()
-2026-02-16 00:58:32.481 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
+2026-02-18 11:16:08.236 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
 Stack (most recent call last):
-  File "/usr/lib/python3.12/threading.py", line 1030, in _bootstrap
+  File "C:\Users\DEBO-ODCL\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1032, in _bootstrap
     self._bootstrap_inner()
-  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+  File "C:\Users\DEBO-ODCL\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1075, in _bootstrap_inner
     self.run()
-  File "/usr/lib/python3.12/threading.py", line 1010, in run
+  File "C:\Users\DEBO-ODCL\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1012, in run
     self._target(*self._args, **self._kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 379, in _run_script_thread
+  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
     self._run_script(request.rerun_data)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 705, in _run_script
+  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
     ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 129, in exec_func_with_error_handling
+  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
     result = func()
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 689, in code_to_exec
+  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
     exec(code, module.__dict__)  # noqa: S102
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/app.py", line 441, in <module>
+  File "D:\DebobratoResearch\fake_currency_detection\app.py", line 441, in <module>
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/runtime/metrics_util.py", line 532, in wrapped_func
+  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\metrics_util.py", line 532, in wrapped_func
     result = non_optional_func(*args, **kwargs)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 458, in file_uploader
+  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\elements\widgets\file_uploader.py", line 458, in file_uploader
     return self._file_uploader(
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/widgets/file_uploader.py", line 510, in _file_uploader
+  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\elements\widgets\file_uploader.py", line 510, in _file_uploader
     maybe_raise_label_warnings(label, label_visibility)
-  File "/media/debu/C218B74418B735EF/fake_currency_detection/venv/lib/python3.12/site-packages/streamlit/elements/lib/policies.py", line 184, in maybe_raise_label_warnings
+  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\elements\lib\policies.py", line 184, in maybe_raise_label_warnings
     _LOGGER.warning(
-  Stopping...
-  Stopping...

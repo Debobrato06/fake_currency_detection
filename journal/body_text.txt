@@ -1,0 +1,59 @@
+﻿A Multi-Feature Machine Learning Model for Counterfeit
+
+Counterfeit currency has long undermined the financial stability of developing economies, where the cost of dedicated authentication hardware often puts reliable detection out of reach. This paper describes a detection system we built to tackle precisely that problem-one that relies only on a standard camera and commodity computing, yet still performs with meaningful accuracy. Our approach brings together three well-established computer vision techniques: Optical Character Recognition (OCR) for reading micro-printed serial text, facial watermark verification using Local Binary Patterns, and UV security-line analysis via the Hough Transformation. We chose the Bangladeshi 1,000 Taka note as our test case because it is among the most frequently forged denominations in South Asia and carries a rich set of verifiable security features.
+
+People have been forging money for as long as official currency has existed. Early counterfeiting was largely a physical craft-clippers would shave metal from genuine coins, and later, once paper notes arrived, forgers reproduced designs by hand. The shift to digital printing changed everything. A consumer-grade inkjet and a flatbed scanner are now sufficient to produce a fake note that most people cannot distinguish by eye alone.
+
+The tools currently available to most businesses are simply not keeping pace. Basic UV lamps, still the most common frontline check, miss digital forgeries that replicate fibre patterns. Industrial sorting machines used by large banks are accurate but cost far too much for small businesses or rural branch offices to acquire. There is, in short, a genuine need for a detection approach that is both affordable and technically sound.
+
+Research on automated banknote verification goes back several decades. Over time, methods have shifted from hand-engineered image features to deep neural networks, and each generation has brought measurable gains in accuracy-often at the cost of greater hardware demands. We survey this progression below to establish where our work sits and what gap it fills.
+
+Optical Character Recognition is applied to detect and verify
+
+Genuine notes incorporate micro-lettering that is optically
+
+Rotation correction via a Hough-based skew-angle estimator ensures
+
+Connected-component analysis identifies a candidate character
+
+The 1,000 Taka note carries an embedded portrait of Bangabandhu
+
+Sheikh Mujibur Rahman, visible under transmitted light. Because
+
+Facial landmarks centroid of the eye region, tip of the nose,
+
+The candidate is accepted as a genuine portrait when
+
+Genuine Bangladeshi banknotes incorporate fluorescent security
+
+Transformation is well-suited to detecting these structures
+
+The UV-illuminated image is converted to grayscale and then
+
+Each edge point $(x, y)$ votes in a two-dimensional accumulator
+
+The pipeline was developed in MATLAB R2023a, leveraging the Image
+
+Processing Toolbox for convolution, morphological operations, and
+
+GPU-intentionally reflecting the resource constraints of the
+
+Thirty specimens of the Bangladeshi 1{,}000 Taka note were
+
+In total, each note yielded six images, giving a working dataset
+
+Each detection module was evaluated independently over the full
+
+Inspection of failure cases revealed that the primary error source
+
+Repeatedly -creasing distorts micro-character edges and reduces
+
+A secondary source of failure was ink fading in older genuine
+
+The confusion matrix for the integrated pipeline is as follows: of 15 genuine specimens, 14 were correctly classified (true positives) and one was rejected (false negative); of 15 counterfeit specimens, 14 were correctly flagged (true negatives) and one was passed (false positive). This balanced error distribution confirms that the pipeline does not exhibit systematic bias toward either class.
+
+Several limitations warrant explicit acknowledgement. The evaluation corpus comprised 30 specimens, which, whilst sufficient for proof-of-concept validation, limits the statistical power of the reported accuracy estimates and precludes robust cross-validation. The pipeline was calibrated exclusively for the BDT 1,000 Taka denomination; extension to additional denominations or foreign currencies will necessitate re-calibration of acceptance thresholds and template libraries. Furthermore, the current implementation depends on MATLAB's Image Processing Toolbox, which carries a commercial licence; a fully open-source Python reimplementation would considerably broaden accessibility in low-resource deployment contexts.
+
+The authors gratefully acknowledge the Department of Software Engineering at Daffodil International University for providing laboratory facilities and administrative support throughout this research. We extend sincere thanks to Dr. Abdul Kadar Muhammad Masum, Afsana Begum, Marzia Ahmed, and Md. Tanvir Quader for their constructive review comments, which materially improved the quality of this manuscript. This research received no external funding.
+
+The annotated image dataset supporting the findings of this study is available from the corresponding author upon reasonable request, subject to compliance with data-sharing agreements established with the cooperating law enforcement agency and applicable provisions of the Bangladesh Bank Act.

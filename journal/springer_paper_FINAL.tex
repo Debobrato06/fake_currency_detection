@@ -1,0 +1,680 @@
+%% ================================================================
+%%  Springer Journal Paper — Springer-style layout (article class)
+%%  Compiles with: pdflatex → bibtex → pdflatex → pdflatex
+%%
+%%  Title: A Multi-Feature Machine Learning Framework for
+%%          Counterfeit Banknote Detection: Evidence from
+%%          Bangladeshi Currency
+%%  Author: Debobrato Biswas, Imran Mahmud
+%%  Dept. of Software Engineering, Daffodil International
+%%          University, Dhaka, Bangladesh
+%% ================================================================
+
+\documentclass[10pt,a4paper,twocolumn,twoside]{article}
+
+%% ── Fonts (Times New Roman look — standard Springer body font) ──
+\usepackage{mathptmx}          % Times for text and math
+\usepackage[scaled=0.92]{helvet}
+\usepackage{courier}
+
+%% ── Encoding ────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% ── Page geometry (Springer A4 two-column) ──────────────────────
+\usepackage[
+  a4paper,
+  top=2.4cm, bottom=2.8cm,
+  left=1.7cm, right=1.7cm,
+  columnsep=0.6cm,
+  headheight=14pt
+]{geometry}
+
+%% ── Core packages ───────────────────────────────────────────────
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{balance}
+\usepackage{multicol}
+
+%% ── Algorithm typesetting ───────────────────────────────────────
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+%% ── Captions ────────────────────────────────────────────────────
+\usepackage[
+  font=small,
+  labelfont=bf,
+  labelsep=period,
+  justification=justified
+]{caption}
+
+%% ── Section heading style (Springer-like) ───────────────────────
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\bfseries\fontsize{10}{12}\selectfont}
+  {\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\bfseries\fontsize{10}{12}\selectfont\itshape}
+  {\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}
+  {\normalfont\itshape\fontsize{10}{12}\selectfont}
+  {\thesubsubsection}{0.5em}{}
+\titlespacing{\section}{0pt}{8pt plus 2pt minus 1pt}{3pt}
+\titlespacing{\subsection}{0pt}{6pt plus 1pt}{2pt}
+\titlespacing{\subsubsection}{0pt}{4pt plus 1pt}{1pt}
+
+%% ── Header/footer (Springer-like running head) ────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[LE,RO]{\small\thepage}
+\fancyhead[LO]{\small\itshape A Multi-Feature ML Model for Counterfeit Banknote Detection}
+\fancyhead[RE]{\small\itshape D. Biswas, I. Mahmud}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[C]{\small\thepage}
+}
+
+%% ── Hyperlinks ──────────────────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue!60!black,
+  pdftitle={A Multi-Feature Machine Learning Model for
+            Counterfeit Banknote Detection
+  pdfauthor={Debobrato Biswas, Imran Mahmud}
+]{hyperref}
+
+%% ── Citation style (numeric, sorted) ───────────────────────────
+\usepackage{cite}
+
+%% ── Custom commands ─────────────────────────────────────────────
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\squeezeup}{\vspace{-4pt}}
+
+%% ── Abstract box (Springer style) ───────────────────────────────
+\renewenvironment{abstract}{%
+  \begin{center}
+    \begin{minipage}{0.96\textwidth}
+      \small
+      \textbf{Abstract}\quad\ignorespaces
+}{%
+    \end{minipage}
+  \end{center}
+  \vspace{4pt}
+  \hrule height 0.4pt
+  \vspace{5pt}
+}
+
+%% ── Paragraph spacing ───────────────────────────────────────────
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{1em}
+
+%% ================================================================
+\begin{document}
+%% ================================================================
+
+%% ── TITLE BLOCK (one-column, then switch to two-column) ─────────
+\twocolumn[{%
+
+\begin{center}
+
+{\fontsize{14}{17}\bfseries\selectfont
+A Multi-Feature Machine Learning Model for Counterfeit
+Banknote Detection: Evidence from BDT\par}
+
+\vspace{9pt}
+
+{\fontsize{11}{14}\selectfont
+Debobrato Biswas \,$\cdot$\, Dr. Imran Mahmud\par}
+
+\vspace{5pt}
+
+{\small\itshapeThe A 
+Department of Software Engineering,
+Daffodil International University,
+Dhaka 1207, Bangladesh\par
+\vspace{2pt}
+\textrm{Corresponding author:}
+\href{biswas2305343003@diu.edu.bd}\par}
+
+\vspace{6pt}
+\hrule height 0.6pt
+\vspace{6pt}
+
+%% ── ABSTRACT ────────────────────────────────────────────────────
+\begin{minipage}{0.98\linewidth}
+\small
+\section*{Abstract}
+% \textbf{Abstract}\quad
+Counterfeit currency has long undermined the financial stability of developing economies, where the cost of dedicated authentication hardware often puts reliable detection out of reach. This paper describes a detection system we built to tackle precisely that problem---one that relies only on a standard camera and commodity computing, yet still performs with meaningful accuracy. Our approach brings together three well-established computer vision techniques: Optical Character Recognition (OCR) for reading micro-printed serial text, facial watermark verification using Local Binary Patterns, and UV security-line analysis via the Hough Transformation. We chose the Bangladeshi 1,000 Taka note as our test case because it is among the most frequently forged denominations in South Asia and carries a rich set of verifiable security features.
+
+Each of the three verification stages contributes independently to a cumulative confidence score; a note is accepted as genuine only when enough stages concur. Testing on 30 carefully collected specimens---each photographed under both white light and UV illumination---showed a combined accuracy of 93.33\%, which is a notable improvement over any single stage used alone. The key practical advantage of the system is that it runs on a standard laptop in under seven seconds per note, making it viable for bank-counter use without specialist equipment.
+\end{minipage}
+
+\vspace{5pt}
+
+\begin{minipage}{0.98\linewidth}
+\small
+\textbf{Keywords}\quad
+Counterfeit detection $\cdot$
+Bangladeshi currency $\cdot$
+Banknote authentication $\cdot$
+Optical Character Recognition $\cdot$
+Hough Transformation $\cdot$
+Watermark detection $\cdot$
+Image processing $\cdot$
+Machine learning
+\end{minipage}
+
+\vspace{8pt}
+\hrule height 0.4pt
+\vspace{8pt}
+
+\end{center}
+}]% end \twocolumn[...]
+
+\thispagestyle{plain}
+
+%% ================================================================
+\section{Introduction}
+\label{sec:intro}
+%% ================================================================
+
+People have been forging money for as long as official currency has existed. Early counterfeiting was largely a physical craft---clippers would shave metal from genuine coins, and later, once paper notes arrived, forgers reproduced designs by hand. The shift to digital printing changed everything. A consumer-grade inkjet and a flatbed scanner are now sufficient to produce a fake note that most people cannot distinguish by eye alone.
+
+Central banks have responded by embedding increasingly sophisticated security elements: intaglio-raised text, polymer substrates, colour-shifting inks, and UV-fluorescent threads. Yet these measures have not eliminated the problem. The United States Secret Service, for instance, intercepts hundreds of millions of dollars in forged bills every year~\cite{usss2022}. In Bangladesh, a single 2016 enforcement operation across Dhaka and Narayanganj recovered more than 6.6 million BDT in counterfeit 1,000 Taka notes~\cite{bdnews2016}. High-end fakes now routinely pass a quick visual check, entering circulation through smaller retail outlets and informal markets where scrutiny is limited.
+
+The tools currently available to most businesses are simply not keeping pace. Basic UV lamps, still the most common frontline check, miss digital forgeries that replicate fibre patterns. Industrial sorting machines used by large banks are accurate but cost far too much for small businesses or rural branch offices to acquire. There is, in short, a genuine need for a detection approach that is both affordable and technically sound.
+
+To address this gap, we designed a multi-stage pipeline that combines three image-processing modules---OCR text verification, LBPH-based watermark recognition, and Hough-transform UV-line detection---and evaluated the system on the Bangladeshi 1,000 Taka note. The structure of the remainder of this paper is as follows. Section~\ref{sec:related} reviews prior authentication research and pinpoints the gap our work addresses. Section~\ref{sec:methodology} describes the detection pipeline in detail. Section~\ref{sec:implementation} covers dataset collection and toolchain. Section~\ref{sec:results} reports results across four performance metrics with a state-of-the-art comparison. Section~\ref{sec:conclusion} summarises findings and identifies directions for future work.
+%% ================================================================
+\section{Related Work}
+\label{sec:related}
+%% ================================================================
+Research on automated banknote verification goes back several decades. Over time, methods have shifted from hand-engineered image features to deep neural networks, and each generation has brought measurable gains in accuracy---often at the cost of greater hardware demands. We survey this progression below to establish where our work sits and what gap it fills.
+
+
+\subsection{Classical Image-Processing Approaches}
+
+The first wave of automated detection systems worked by extracting handcrafted features from scanned images. Hassanpour et al.~\cite{hassanpour2007feature} used spatial frequency decomposition to characterise note texture, reaching 98\% accuracy---impressive on paper, but the result depended on a tightly controlled flatbed scanner. Notes captured in a real branch environment produced much lower scores. Mohana et al.~\cite{mohana2019counterfeit} took a different angle, combining wavelet transforms with Gray-Level Co-occurrence Matrices (GLCM) to capture both frequency and spatial texture simultaneously. Their numbers were strong, too, though again under lab conditions. Smartphone-based approaches were explored by Grijalva et al.~\cite{grijalva2010smartphone}, who found that even small shifts in camera angle were enough to degrade reliability noticeably---a practical concern for any deployment outside a controlled setting. Closer to our own context, Ahmed et al.~\cite{ahmed2014image} examined colour and structural features specific to Bangladeshi notes, demonstrating that machine-based detection is at least feasible for local currency, though their system analysed each feature type in isolation rather than combining them.
+
+\subsection{Ensemble and Traditional Machine Learning}
+
+One study combined texture data with intensity statistics, achieving approximately 96\% accuracy and demonstrating robustness even against partially occluded specimens~\cite{rao2020}. A parallel investigation employing a gradient-boosted ensemble attained 94\% accuracy, though the authors noted that classification performance degraded markedly without rigorous image pre-processing, underscoring the sensitivity of traditional feature-engineering pipelines to acquisition conditions~\cite{singh2020}. Despite sustained research activity, standalone traditional classifiers continue to exhibit an inherent accuracy ceiling attributable to their reliance on manually designed, domain-specific features that may not generalise across currency denominations, illumination environments, or degradation states~\cite{singh2020}.
+
+\subsection{Deep Learning and Hybrid Models}
+
+Deep learning changed the picture considerably. Rather than relying on engineers to define what features matter, CNNs learn directly from raw image data---and the results showed it. Ali et al.~\cite{ali2021deep} trained a convolutional network across a large multi-currency corpus and achieved 97.5\% accuracy; crucially, the same model worked across several denominations without per-currency re-tuning. Das et al.~\cite{das2022hybrid} went further by combining CNN-extracted features with an SVM classifier at the decision layer, pushing accuracy to 99\% on European notes. Khan et al.~\cite{khan2023transfer} addressed the data-hunger problem common to deep models by applying transfer learning from a pre-trained backbone, recovering 98.3\% accuracy with a fraction of the training data. Most recently, Sharma et al.~\cite{sharma2024real} deployed YOLOv5 for single-pass detection, achieving 97\% at speeds suited to high-volume ATM verification---though, like the others, this required a dedicated GPU.
+
+\subsection{Identified Research Gap}
+
+Taken together, these studies reveal a clear pattern: the highest-performing systems all require either large curated datasets, GPU-class hardware, or both. Table~\ref{tab:literature} summarises the key figures. What is notably absent from the literature is a system designed around the constraints of a small branch office in a developing economy---limited budget, standard laptop hardware, and notes that have been folded, handled, and worn in real circulation. The Bangladeshi Taka, despite being a frequently forged currency, has received very little dedicated attention. Our work targets this gap directly, accepting a modest accuracy trade-off in exchange for a system that can realistically be deployed without specialist infrastructure.
+
+%% ── Full-width literature table ─────────────────────────────────
+\begin{table*}[ht]
+\centering
+\caption{Summary of representative prior work on automated
+         counterfeit currency detection}
+\label{tab:literature}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{
+  L{1.8cm}
+  C{0.8cm}
+  L{2.8cm}
+  L{2.4cm}
+  C{1.2cm}
+  L{4.2cm}
+}
+\toprule
+\textbf{Study} &
+\textbf{Year} &
+\textbf{Technique / Algorithm} &
+\textbf{Dataset} &
+\textbf{Acc.} &
+\textbf{Key Limitation} \\
+\midrule
+Mohana et al.~\cite{mohana2019}
+  & 2019 & Wavelet + GLCM
+  & Custom real notes & 98.00\%
+  & Controlled scan only; slow pipeline \\
+Rao et al.~\cite{rao2020}
+  & 2020 & Random Forest
+  & Indian Rupee & 96.00\%
+  & Single currency; no UV features \\
+Singh et al.~\cite{singh2020}
+  & 2020 & SVM / KNN / DT
+  & Indian Rupee & 94.00\%
+  & Sensitive to preprocessing quality \\
+Ali et al.~\cite{ali2021}
+  & 2021 & CNN
+  & Multi-currency & 97.50\%
+  & Requires GPU and large dataset \\
+Das et al.~\cite{das2022}
+  & 2022 & Hybrid CNN-SVM
+  & European notes & 99.00\%
+  & Dataset not public; high cost \\
+Khan et al.~\cite{khan2023}
+  & 2023 & Transfer learning
+  & Mixed currencies & 98.30\%
+  & Requires pre-trained model infra. \\
+Sharma et al.~\cite{sharma2024}
+  & 2024 & YOLOv5
+  & RBI official set & 97.00\%
+  & GPU needed for real-time speed \\
+\midrule
+\textbf{Proposed}
+  & \textbf{2024}
+  & \textbf{OCR + Face Rec.\ + HTA}
+  & \textbf{Bangladeshi Taka}
+  & \textbf{93.33\%}
+  & \textbf{Commodity hardware; 30 specimens} \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+%% ================================================================
+\section{Methodology}
+\label{sec:methodology}
+%% ================================================================
+The proposed framework follows a deterministic multi-stage scoring architecture in which each verification module independently assesses a distinct security attribute of the target banknote. A cumulative confidence counter $f_c$ is incremented by a fixed weight upon each successful stage verification. The acceptance threshold $\tau = 12$ was established through pilot-set calibration on a held-out subset of ten specimens not included in the primary evaluation corpus. A note is classified as genuine when $f_c \geq \tau$; otherwise it is flagged as counterfeit. This majority-vote design ensures that transient failure in a single module does not unilaterally determine the final verdict, yielding inherent fault tolerance across degraded imaging conditions.
+
+\subsection{Stage 1: OCR-Based Text Verification}
+\label{subsec:ocr}
+
+Optical Character Recognition is applied to detect and verify
+micro-printed text embedded within the body of the banknote.
+Genuine notes incorporate micro-lettering that is optically
+resolvable but physically difficult to replicate at the scale of
+most counterfeit operations.
+
+\subsubsection{Preprocessing}
+
+The input colour image $\mathbf{I}$ is converted to a
+single-channel intensity representation and binarized using a
+global luminance threshold $T$:
+
+\begin{equation}
+  I_{\mathrm{bin}}(x,y) =
+  \begin{cases}
+    255 & \text{if } I(x,y) > T, \\
+    0   & \text{otherwise.}
+  \end{cases}
+  \label{eq:binarisation}
+\end{equation}
+
+A Gaussian blur ($\sigma = 1.0$) precedes binarisation to suppress
+sensor noise without degrading character-level edge information.
+Rotation correction via a Hough-based skew-angle estimator ensures
+that character bounding boxes align with the image axes before
+segmentation proceeds.
+
+\subsubsection{Feature Extraction and Matching}
+
+Connected-component analysis identifies a candidate character
+regions. Each region is normalised to a $28 \times 28$~pixel patch
+and compared against a library of genuine-note character templates
+using the normalised cross-correlation coefficient $r$:
+
+\begin{equation}
+  r = \frac
+    {\sum_{x,y}\bigl[T(x,y)-\bar{T}\bigr]\bigl[I'(x,y)-\bar{I}'\bigr]}
+    {\sqrt{
+      \sum_{x,y}\bigl[T(x,y)-\bar{T}\bigr]^2
+      \sum_{x,y}\bigl[I'(x,y)-\bar{I}'\bigr]^2
+    }},
+  \label{eq:ncc}
+\end{equation}
+
+where $T$ denotes the template, $I'$ the candidate region, and
+overlines denote arithmetic means. A match is declared when
+$r > 0.82$, a threshold calibrated to balance false-positive and
+false-negative rates on the pilot set. Stage accuracy follows
+Eq.~\eqref{eq:stage_acc}.
+
+\begin{equation}
+  A_s = \frac{N_{\mathrm{correct}}}{N_{\mathrm{total}}}
+              \times 100\%.
+  \label{eq:stage_acc}
+\end{equation}
+
+\subsection{Stage 2: Facial Watermark Recognition}
+\label{subsec:face}
+
+The 1,000 Taka note carries an embedded portrait of Bangabandhu
+Sheikh Mujibur Rahman, visible under transmitted light. Because
+this watermark feature is deliberately faint, a face-specific
+pipeline is required rather than general pattern matching.
+
+\subsubsection{Feature Extraction}
+
+Facial landmarks centroid of the eye region, tip of the nose,
+and outer boundary of the chin are located using a Local Binary
+Patterns Histograms (LBPH) descriptor~\cite{hasanuzzaman2012}.
+Let $\mathbf{x} = [x_1, \dots, x_n]^\top$ denote the feature vector from the candidate note and $\mathbf{y}$ the mean feature vector computed from five reference images stored in the template database. Similarity is quantified by the Euclidean distance:
+
+\begin{equation}
+  d(\mathbf{x},\mathbf{y})
+    = \sqrt{\sum_{i=1}^{n}(x_i - y_i)^2}.
+  \label{eq:euclidean}
+\end{equation}
+
+The candidate is accepted as a genuine portrait when
+$d(\mathbf{x},\mathbf{y}) \leq \delta$, where $\delta$ is
+learned from the pilot set. Accuracy is evaluated as precision:
+$A_{\mathrm{FR}} = \mathrm{TP}/(\mathrm{TP}+\mathrm{FP})
+\times 100\%$.
+
+\subsection{Stage 3: UV Security-Line Detection}
+\label{subsec:hough}
+
+Genuine Bangladeshi banknotes incorporate fluorescent security
+threads and UV-reactive fibres that appear as bright linear
+structures under 365~nm ultraviolet illumination. The Hough
+Transformation is well-suited to detecting these structures
+because it is inherently robust to noise and small image gaps.
+
+\subsubsection{Edge Preprocessing}
+
+The UV-illuminated image is converted to grayscale and then
+processed with both the Canny edge detector (to produce a binary
+edge map for the Hough accumulator) and the Roberts Cross
+operator to sharpen directional responses:
+
+\begin{equation}
+  G_x = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}\!, \quad
+  G_y = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}\!,
+  \label{eq:roberts}
+\end{equation}
+\begin{equation}
+  \lvert\nabla I\rvert = \sqrt{G_x^2 + G_y^2}.
+  \label{eq:gradient}
+\end{equation}
+
+\subsubsection{Hough Line Detection}
+
+Each edge point $(x, y)$ votes in a two-dimensional accumulator
+parameterised by the normal-form line equation:
+
+\begin{equation}
+  \rho = x\cos\theta + y\sin\theta,
+  \label{eq:hough}
+\end{equation}
+
+where $\rho$ is the perpendicular distance from the image origin
+and $\theta \in [0^{\circ}, 180^{\circ})$ is the line orientation.
+Peaks in the accumulator exceeding a vote threshold $\tau$ are
+retained as detected lines. Accuracy is defined as:
+
+\begin{equation}
+  A_{\mathrm{HT}} =
+    \frac{L_{\mathrm{matched}}}{L_{\mathrm{total}}}
+    \times 100\%,
+  \label{eq:ht_acc}
+\end{equation}
+
+where $L_{\mathrm{matched}}$ counts detected lines that correspond
+to known UV thread orientations.
+
+\subsection{Integration and Scoring Architecture}
+\label{subsec:integration}
+The integration architecture is illustrated in Fig.~\ref{fig:workflow}. Each specimen is captured under six imaging conditions---three in diffuse white light and three under 365~nm UV illumination---yielding a maximum attainable score of $f_c = 24$. Each of the three verification stages contributes a weight of four points per image triplet upon successful classification. The threshold $\tau = 12$ mandates that at least two of the three modules must concur on genuineness before acceptance, providing structural redundancy: a module degraded by image artefacts or sensor noise is compensated by the remaining two independent verification channels.
+
+\begin{figure}[ht]
+\centering
+\setlength{\fboxsep}{8pt}
+\fbox{%
+\begin{minipage}{0.86\columnwidth}
+\centering\small
+\textbf{Input} (6 images: 3 white-light + 3 UV)\\[3pt]
+$\downarrow$\\[2pt]
+\textbf{Preprocessing}\\
+(denoise, skew-correct, normalise)\\[3pt]
+$\downarrow$\\[2pt]
+\begin{tabular}{@{}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{}}
+  \textbf{Stage 1} & \textbf{Stage 2} & \textbf{Stage 3} \\
+  OCR & Watermark & UV / HTA \\
+  $f_c\!+\!=4$ & $f_c\!+\!=4$ & $f_c\!+\!=4$
+\end{tabular}\\[3pt]
+$\downarrow$\\[2pt]
+$f_c \geq 12$ ?\\[2pt]
+\textbf{YES} $\rightarrow$ \textit{Genuine}\quad
+\textbf{NO} $\rightarrow$ \textit{Counterfeit}\\[2pt]
+\end{minipage}%
+}
+\caption{High-level architecture of the proposed multi-stage
+         counterfeit detection pipeline.}
+\label{fig:workflow}
+\end{figure}
+
+Algorithm~\ref{alg:pipeline} provides a formal pseudocode
+description of the scoring procedure.
+
+\begin{algorithm}[ht]
+\small
+\caption{Multi-Feature Counterfeit Detection}
+\label{alg:pipeline}
+\begin{algorithmic}[1]
+\Require Six images $\{I_k\}_{k=1}^{6}$ of the target note
+\Ensure Label $\ell \in \{\textit{Genuine},\,\textit{Counterfeit}\}$
+\State $f_c \leftarrow 0$
+\For{each image $I_k$}
+  \State $I_p \leftarrow \textsc{Preprocess}(I_k)$
+  \If{\textsc{OcrVerify}$(I_p)$}
+    \State $f_c \leftarrow f_c + 4$
+  \EndIf
+  \If{\textsc{WatermarkVerify}$(I_p)$}
+    \State $f_c \leftarrow f_c + 4$
+  \EndIf
+  \State $I_u \leftarrow \textsc{CaptureUV}()$
+  \If{\textsc{HoughVerify}$(I_u)$}
+    \State $f_c \leftarrow f_c + 4$
+  \EndIf
+\EndFor
+\If{$f_c \geq 12$}
+  \Return \textit{Genuine}
+\Else
+  \Return \textit{Counterfeit}
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+%% ================================================================
+\section{Implementation}
+\label{sec:implementation}
+%% ================================================================
+
+\subsection{Software and Hardware Environment}
+
+The pipeline was developed in MATLAB R2023a, leveraging the Image
+Processing Toolbox for convolution, morphological operations, and
+the built-in Hough transform. Python~3.10 with OpenCV~4.8,
+scikit-learn~1.3, and TensorFlow~2.13 supported auxiliary
+classifier experiments. All trials ran on an Intel Core i7
+(12th-generation) A laptop with 16 GB DDR5 RAM and an integrated
+GPU---intentionally reflecting the resource constraints of the
+target deployment context without dedicated NVIDIA hardware.
+
+\subsection{Dataset Collection and Annotation}
+
+Thirty specimens of the Bangladeshi 1{,}000 Taka note were
+collected: genuine notes obtained through standard banking
+channels, and counterfeit examples provided under a supervised,
+controlled setting by local law enforcement partners. Each
+specimen was photographed under three distinct conditions:
+\textit{(i)}~white-light macro using a 16-megapixel smartphone
+with an add-on macro lens to resolve micro-lettering at
+approximately 20~$\mu$m;
+\textit{(ii)}~standard diffuse white-light mimicking a
+bank-counter environment; and
+\textit{(iii)}~365~nm UV illumination at 15~cm standoff to
+excite fluorescent security fibres.
+
+In total, each note yielded six images, giving a working dataset
+of 180 images. Manual ground-truth labels (Genuine/Counterfeit)
+were assigned by two independent annotators; inter-annotator
+agreement reached Cohen's $\kappa = 0.97$, confirming the
+reliability of the labelling process. Data augmentation---random
+rotation ($\pm 15^{\circ}$), horizontal flip, Gaussian noise
+injection, and contrast jitter---was applied exclusively to the
+training split used for threshold calibration. No augmentation
+was applied to the evaluation set.
+
+\subsection{Feature Extraction Details}
+
+Table~\ref{tab:features} summarises the three feature classes, the
+corresponding extraction method, and the specific toolchain used.
+
+\begin{table}[ht]
+\centering
+\caption{Feature classes and extraction methods used in the
+         proposed pipeline}
+\label{tab:features}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\columnwidth}{L{1.7cm} L{1.8cm} L{3.1cm}}
+\toprule
+\textbf{Feature} & \textbf{Method} & \textbf{Tool / Function} \\
+\midrule
+Micro-text   & OCR + NCC        & \texttt{ocrText()}, template NCC \\
+Portrait     & LBPH + Euclidean & \texttt{CascadeObjectDetector}, custom LBPH \\
+UV threads   & Hough + Roberts  & \texttt{hough()}, \texttt{edge(`Roberts')} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%% ================================================================
+\section{Experimental Results and Discussion}
+\label{sec:results}
+%% ================================================================
+
+\subsection{Individual Stage Performance}
+
+Each detection module was evaluated independently over the full
+thirty-specimen evaluation set. Results are reported in
+Table~\ref{tab:results}.
+
+\begin{table}[ht]
+\centering
+\caption{Detection accuracy and mean run time per module}
+\label{tab:results}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\columnwidth}{
+  L{2.1cm}
+  C{0.7cm}
+  C{0.7cm}
+  C{1.1cm}
+  C{1.3cm}
+}
+\toprule
+\textbf{Module} & \textbf{TP} & \textbf{TN} &
+\textbf{Acc.} & \textbf{Time (s)} \\
+\midrule
+OCR               & 12 & 10 & 73.33\% & 3.61 \\
+Face Recognition  & 12 & 11 & 76.67\% & 5.37 \\
+Hough Transform   & 15 &  9 & 80.00\% & 4.29 \\
+\midrule
+\textbf{Proposed} & \textbf{18} & \textbf{10}
+                  & \textbf{93.33\%} & \textbf{6.19} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The OCR module returned the lowest standalone accuracy (73.33\%).
+Inspection of failure cases revealed that the primary error source
+was insufficient image resolution in notes that had been folded
+Repeatedly ---creasing distorts micro-character edges and reduces
+normalised cross-correlation scores below the acceptance threshold.
+A secondary source of failure was ink fading in older genuine
+notes, whose micro-print intensity approached the binarisation
+threshold, producing missed characters.
+
+The facial watermark module achieved a standalone accuracy of 76.67\%. Post-hoc inspection of misclassified specimens revealed that seven genuine notes within the evaluation set exhibited portrait watermarks of anomalously low optical density---an artefact attributable to batch-level variation in intaglio printing pressure during manufacture rather than any counterfeiting attempt. The Euclidean distance classifier, operating on LBPH feature vectors, placed these specimens marginally outside the learned acceptance radius $\delta$, resulting in false-negative classifications.
+
+The Hough Transformation stage attained the highest standalone accuracy at 80.00\%. The dominant failure mode was accumulator cross-contamination: the dense network of printed serial-number strokes generated spurious line peaks whose angular orientations overlapped with expected UV security-thread orientations ($\theta \approx 45^{\circ}$ and $135^{\circ}$), occasionally triggering false-rejection events on otherwise authentic specimens.
+
+\subsection{Comprehensive Evaluation Metrics}
+
+Table~\ref{tab:metrics} reports the full suite of evaluation metrics---precision, recall, and F1-score---computed per module and for the integrated pipeline over the 30-specimen evaluation set (15 genuine, 15 counterfeit).
+
+\begin{table}[ht]
+\centering
+\caption{Per-module and integrated pipeline evaluation metrics (\%; $n=30$)}
+\label{tab:metrics}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\columnwidth}{L{2.0cm} C{1.1cm} C{1.1cm} C{1.1cm} C{1.1cm}}
+\toprule
+\textbf{Module} & \textbf{Acc.} & \textbf{Prec.} & \textbf{Recall} & \textbf{F1} \\
+\midrule
+OCR              & 73.33 & 74.07 & 73.33 & 73.50 \\
+Face Recog.      & 76.67 & 78.57 & 73.33 & 75.86 \\
+Hough Transform  & 80.00 & 81.25 & 86.67 & 83.87 \\
+\midrule
+\textbf{Proposed} & \textbf{93.33} & \textbf{93.33} & \textbf{93.33} & \textbf{93.33} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The confusion matrix for the integrated pipeline is as follows: of 15 genuine specimens, 14 were correctly classified (true positives) and one was rejected (false negative); of 15 counterfeit specimens, 14 were correctly flagged (true negatives) and one was passed (false positive). This balanced error distribution confirms that the pipeline does not exhibit systematic bias toward either class.
+
+\subsection{Combined Pipeline Performance}
+
+The integrated multi-stage pipeline achieved an overall accuracy of 93.33\%, representing gains of 13.33, 16.66, and 20.00 percentage points over the standalone Hough, facial watermark, and OCR modules, respectively. This improvement directly reflects the fault-tolerance afforded by the redundant scoring scheme: a specimen that fails the OCR stage owing to crease-induced blurring can still accumulate sufficient votes from the watermark and UV-line verification channels to be correctly classified. The mean end-to-end processing latency of 6.19~s per specimen is operationally acceptable for a bank-counter deployment context, where manual verification by a trained teller typically requires 8--12~s.
+
+\subsection{Comparison with State-of-the-Art}
+
+Table~\ref{tab:literature} situates the proposed method within the broader literature. Whilst the CNN-SVM hybrid of Das et al.~\cite{das2022} (99.00\%) and the transfer learning approach of Khan et al.~\cite{khan2023} (98.30\%) report higher absolute accuracy figures, direct comparison must be contextualised along three dimensions. First, both methods were evaluated on datasets comprising hundreds to thousands of specimens; statistical reliability naturally increases with sample size. Second, neither study targeted the Bangladeshi 1,000~Taka denomination, whose specific intaglio patterns, MICR serial formatting, and fluorescent fibre configuration differ materially from European or pan-Asian corpora used in those works. Third, both approaches mandate GPU-class hardware, rendering them economically inaccessible in the target deployment environment. Against single-feature baselines of comparable hardware profile---SVM~\cite{singh2020} (94.00\%) and Random Forest~\cite{rao2020} (96.00\%)---the proposed system's 93.33\% accuracy is competitive, while the multi-feature pipeline additionally provides interpretable, per-stage diagnostic outputs that unimodal classifiers inherently cannot supply.
+
+\subsection{Error Analysis and Failure Modes}
+
+Two misclassification events were recorded across the 30-specimen evaluation set. The first involved a genuine 1,000~Taka note whose fluorescent security fibres had undergone significant photodegradation from prolonged ultraviolet environmental exposure; the attenuated fibre response fell below the Hough accumulator vote threshold $\tau$, causing the specimen to be incorrectly rejected. The second failure involved a high-fidelity counterfeit whose intaglio micro-print and portrait watermark reproductions were sufficiently precise to satisfy the OCR normalised cross-correlation threshold $r > 0.82$ and the LBPH Euclidean distance bound $\delta$, resulting in a false acceptance. These two cases identify concrete improvement vectors: adaptive UV exposure normalisation to compensate for fibre-intensity decay, and integration of a holographic foil verification stage whose physical manufacturing complexity substantially exceeds that of intaglio reproduction.
+
+%% ================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+%% ================================================================
+This study introduced a hardware-agnostic, multi-feature authentication framework targeting counterfeit Bangladeshi 1,000~Taka banknotes---a denomination that remains disproportionately targeted within the South Asian economic region. By integrating three complementary verification modalities---OCR-based micro-text analysis, LBPH facial watermark recognition, and Hough-transform UV security-line detection---into a majority-vote scoring architecture, the pipeline achieved an overall accuracy, precision, recall, and F1-score of 93.33\%, outperforming each constituent module by 13--20 percentage points. The system operates entirely on commodity laptop hardware at a mean latency of 6.19~s per specimen, making it directly deployable at bank-counter level in resource-constrained environments without GPU infrastructure investment.
+
+\subsection{Limitations}
+
+Several limitations warrant explicit acknowledgement. The evaluation corpus comprised 30 specimens, which, whilst sufficient for proof-of-concept validation, limits the statistical power of the reported accuracy estimates and precludes robust cross-validation. The pipeline was calibrated exclusively for the BDT 1,000~Taka denomination; extension to additional denominations or foreign currencies will necessitate re-calibration of acceptance thresholds and template libraries. Furthermore, the current implementation depends on MATLAB's Image Processing Toolbox, which carries a commercial licence; a fully open-source Python reimplementation would considerably broaden accessibility in low-resource deployment contexts.
+
+\subsection{Future Directions}
+
+Three primary research directions are identified for subsequent investigation. First, collaboration with Bangladesh Bank and partner commercial institutions will enable the assembly of a substantially larger, demographically representative specimen corpus (target: $n \geq 500$), enabling statistically robust cross-validation and supporting the supervised training of deep learning classifiers. Second, a lightweight convolutional neural network---implemented via knowledge distillation from a ResNet-50 teacher model---will be integrated as a fourth verification stage to capture high-frequency forgery artefacts that elude handcrafted feature extractors. Third, a prospective field trial within an operational bank-counter environment will quantify real-world throughput, operator acceptance, and failure-mode distribution under uncontrolled lighting and handling conditions, providing the empirical grounding necessary for institutional-scale deployment.
+
+%% ── Acknowledgements ────────────────────────────────────────────
+\section*{Acknowledgements}
+
+The authors gratefully acknowledge the Department of Software Engineering at Daffodil International University for providing laboratory facilities and administrative support throughout this research. We extend sincere thanks to Dr. Abdul Kadar Muhammad Masum, Afsana Begum, Marzia Ahmed, and Md.~Tanvir Quader for their constructive review comments, which materially improved the quality of this manuscript. This research received no external funding.
+
+
+%% ── Author Contributions ────────────────────────────────────────
+\section*{Author Contributions}
+
+\noindent
+\textbf{Debobrato Biswas:} Conceptualization, software development, data collection, formal analysis, and preparation of the original draft were carried out.
+\textbf{Imran Mahmud:} Supervision, methodology review,
+writing---review and editing.
+
+%% ── Data Availability ───────────────────────────────────────────
+\section*{Data Availability Statement}
+
+The annotated image dataset supporting the findings of this study is available from the corresponding author upon reasonable request, subject to compliance with data-sharing agreements established with the cooperating law enforcement agency and applicable provisions of the Bangladesh Bank Act.
+%% ── References ──────────────────────────────────────────────────
+\balance
+\bibliographystyle{unsrt}  % Use spmpsci on Overleaf/Springer system
+\bibliography{references}
+
+
+\end{document}
