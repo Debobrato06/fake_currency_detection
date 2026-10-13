@@ -4,19 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Guardian AI | Fake Detection</title>
-    <meta name="description"
-        content="Advanced AI-powered counterfeit currency detection system using Computer Vision and Machine Learning.">
+    <title>Currency Guardian AI | Fake Taka Detection</title>
+    <meta name="description" content="AI-powered genuine vs counterfeit detection for Bangladeshi Tk 500 and Tk 1000 notes.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;600;800&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body class="dark-theme">
     <div class="hero-bg"></div>
-    <div class="theme-overlay"></div>
     <div class="glow-bg"></div>
 
     <nav class="navbar">
@@ -25,121 +21,225 @@
             <span>CURRENCY <span class="accent">GUARDIAN AI</span></span>
         </div>
         <div class="nav-links">
-            <a href="http://localhost:8501" class="theme-switch" title="Go to Main Pro UI"
-                style="text-decoration:none; width:auto; padding:0 15px; border-radius:12px;">
-                <i class="fas fa-rocket" style="margin-right:8px;"></i> Main UI
-            </a>
-            <button class="theme-switch" id="theme-toggle" title="Toggle Light/Dark Mode">
-                <i class="fas fa-sun"></i>
-                <i class="fas fa-moon"></i>
-            </button>
-            <span class="status-badge"><i class="fas fa-circle"></i> System Active</span>
+            <span class="status-badge" id="model-status" title="">
+                <i class="fas fa-circle"></i> <span data-i18n="statusChecking">Checking model…</span>
+            </span>
+            <button class="icon-btn" id="tips-btn" title="How to take photos"><i class="fas fa-lightbulb"></i></button>
+            <button class="icon-btn" id="lang-toggle" title="English / বাংলা"><span id="lang-label">বাং</span></button>
+            <button class="icon-btn" id="theme-toggle" title="Toggle light/dark"><i class="fas fa-sun"></i><i class="fas fa-moon"></i></button>
+            <a href="http://localhost:8501" class="icon-btn wide" title="Open Pro UI"><i class="fas fa-rocket"></i> <span data-i18n="proUi">Pro UI</span></a>
         </div>
     </nav>
 
     <main class="container">
         <header class="hero">
-            <h1>Next-Gen <span class="gradient-text">Counterfeit Detection</span></h1>
-            <p>Deploying advanced biometric and structural analysis to safeguard your transactions.</p>
+            <h1><span data-i18n="heroTitle1">Is your Taka</span> <span class="gradient-text" data-i18n="heroTitle2">genuine?</span></h1>
+            <p data-i18n="heroSub">Upload close photos of a Tk 500 or Tk 1000 note. The AI checks print texture and security features in seconds.</p>
         </header>
 
-        <section class="scanner-section">
-            <div class="upload-container" id="drop-zone">
-                <input type="file" id="file-input" hidden accept="image/*">
+        <!-- Step indicator -->
+        <ol class="steps" id="steps">
+            <li class="active" data-step="1"><span>1</span> <b data-i18n="step1">Add photos</b></li>
+            <li data-step="2"><span>2</span> <b data-i18n="step2">Analyze</b></li>
+            <li data-step="3"><span>3</span> <b data-i18n="step3">Result</b></li>
+        </ol>
+
+        <!-- ============ INPUT ============ -->
+        <section class="panel glass" id="input-panel">
+            <div class="upload-container" id="drop-zone" tabindex="0">
+                <input type="file" id="file-input" hidden accept="image/*" multiple>
                 <div class="upload-content">
-                    <div class="icon-box">
-                        <i class="fas fa-cloud-upload-alt"></i>
+                    <div class="icon-box"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <h3 data-i18n="dropTitle">Drop photos here</h3>
+                    <p data-i18n="dropSub">or click to browse · paste with Ctrl+V · up to 6 photos of the SAME note</p>
+                    <div class="upload-actions">
+                        <button class="btn-ghost" id="browse-btn" type="button"><i class="fas fa-folder-open"></i> <span data-i18n="browse">Browse</span></button>
+                        <button class="btn-ghost" id="camera-btn" type="button"><i class="fas fa-camera"></i> <span data-i18n="camera">Camera</span></button>
                     </div>
-                    <h3>Upload Banknote Image</h3>
-                    <p>Drag and drop or click to browse</p>
-                    <span class="file-info">(Supports JPG, PNG, WEBP)</span>
-                </div>
-                <div class="scanning-overlay hidden" id="scanner">
-                    <div class="scan-line"></div>
-                    <div class="pulse"></div>
                 </div>
             </div>
 
-            <div class="results-container hidden" id="results-panel">
-                <div class="result-header">
-                    <div class="result-badge" id="main-status">
-                        <i class="fas fa-check-circle"></i>
-                        <span>AUTHENTIC</span>
+            <div class="tray-header">
+                <h4><i class="fas fa-images"></i> <span data-i18n="trayTitle">Selected photos</span> <span class="count" id="tray-count">0/6</span></h4>
+                <button class="link-btn" id="clear-btn" type="button" data-i18n="clearAll">Clear all</button>
+            </div>
+            <div class="tray" id="tray"></div>
+            <p class="hint" id="tray-hint" data-i18n="trayHint">Tip: front (portrait side), back and the note held against light give the most reliable result.</p>
+
+            <div class="controls">
+                <div class="threshold-box">
+                    <label for="threshold"><span data-i18n="thresholdLabel">Required confidence for GENUINE</span>
+                        <i class="fas fa-circle-info" title="P(real) above this = GENUINE, below 50% = COUNTERFEIT, in between = UNCERTAIN"></i></label>
+                    <div class="range-row">
+                        <input type="range" id="threshold" min="50" max="95" value="70">
+                        <span class="range-val" id="threshold-val">70%</span>
                     </div>
-                    <div class="confidence-box">
-                        <span class="label">Confidence</span>
-                        <span class="value" id="confidence-val">98.5%</span>
+                </div>
+                <button class="btn-primary big" id="analyze-btn" type="button" disabled>
+                    <i class="fas fa-magnifying-glass"></i> <span data-i18n="analyze">Analyze note</span>
+                    <kbd>Enter</kbd>
+                </button>
+            </div>
+        </section>
+
+        <!-- ============ LOADING ============ -->
+        <section class="panel glass hidden" id="loading-panel">
+            <div class="scan-visual">
+                <img id="loading-img" alt="">
+                <div class="scan-line"></div>
+            </div>
+            <ul class="loading-steps" id="loading-steps">
+                <li data-i18n="load1">Uploading photos</li>
+                <li data-i18n="load2">Checking it is a Tk 500 / 1000 note</li>
+                <li data-i18n="load3">Analyzing print texture with AI</li>
+                <li data-i18n="load4">Building explanation heatmap</li>
+            </ul>
+            <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+        </section>
+
+        <!-- ============ RESULTS ============ -->
+        <section class="hidden" id="results-panel">
+            <div class="result-grid">
+                <!-- Verdict -->
+                <div class="glass verdict-card" id="verdict-card">
+                    <div class="result-badge" id="main-status"></div>
+                    <div class="gauge-wrap">
+                        <svg viewBox="0 0 200 120" class="gauge" id="gauge">
+                            <path class="g-zone fake" d="M20 100 A80 80 0 0 1 100 20" />
+                            <path class="g-zone unsure" id="g-unsure" />
+                            <path class="g-zone real" id="g-real" />
+                            <line id="g-thr" class="g-thr" x1="100" y1="100" x2="100" y2="14" />
+                            <line id="g-needle" class="g-needle" x1="100" y1="100" x2="100" y2="30" />
+                            <circle cx="100" cy="100" r="6" class="g-hub" />
+                        </svg>
+                        <div class="gauge-label">
+                            <span class="value" id="p-real-val">–</span>
+                            <span class="label" data-i18n="pReal">chance it is real</span>
+                        </div>
+                    </div>
+                    <p class="verdict-message" id="verdict-message"></p>
+                    <div class="threshold-box compact">
+                        <label for="threshold2" data-i18n="thresholdLive">Strictness (updates the verdict live)</label>
+                        <div class="range-row">
+                            <input type="range" id="threshold2" min="50" max="95" value="70">
+                            <span class="range-val" id="threshold2-val">70%</span>
+                        </div>
+                    </div>
+                    <div class="meta-row">
+                        <div><span class="label" data-i18n="confidence">Confidence</span><b id="confidence-val">–</b></div>
+                        <div><span class="label" data-i18n="photosUsed">Photos used</span><b id="photos-used">–</b></div>
                     </div>
                 </div>
 
-                <div class="analysis-grid">
-                    <div class="preview-box glass">
-                        <h4>Raw Input Scan</h4>
-                        <div class="img-wrapper">
-                            <img id="orig-preview" src="" alt="Banknote">
+                <!-- Inspector -->
+                <div class="glass inspector">
+                    <div class="inspector-toolbar">
+                        <div class="seg" id="view-modes">
+                            <button class="active" data-mode="heatmap"><i class="fas fa-fire"></i> <span data-i18n="modeHeat">AI focus</span></button>
+                            <button data-mode="compare"><i class="fas fa-left-right"></i> <span data-i18n="modeCompare">Compare</span></button>
+                            <button data-mode="edges"><i class="fas fa-wave-square"></i> <span data-i18n="modeEdges">Edges</span></button>
+                            <button data-mode="original"><i class="fas fa-image"></i> <span data-i18n="modeOriginal">Original</span></button>
+                        </div>
+                        <div class="tool-btns">
+                            <button class="icon-btn small" id="lens-btn" title="Magnifier"><i class="fas fa-magnifying-glass-plus"></i></button>
+                            <button class="icon-btn small" id="fullscreen-btn" title="Fullscreen"><i class="fas fa-expand"></i></button>
                         </div>
                     </div>
 
-                    <div class="metrics-card glass">
-                        <h4>Security Parameters</h4>
-                        <div class="feature-list" id="feature-list">
-                            <!-- Populated by JS -->
-                        </div>
+                    <div class="viewer" id="viewer">
+                        <img id="v-base" alt="Banknote">
+                        <img id="v-layer" class="layer" alt="">
+                        <div class="compare-handle hidden" id="compare-handle"><span><i class="fas fa-left-right"></i></span></div>
+                        <div class="lens hidden" id="lens"></div>
                     </div>
-                </div>
 
-                <div class="visualization-tabs">
-                    <div class="tab-header">
-                        <button class="tab-btn active" data-tab="edges">Edge Map</button>
-                        <button class="tab-btn" data-tab="hough">Structural</button>
-                        <button class="tab-btn" data-tab="faces">Portrait</button>
-                        <button class="tab-btn" data-tab="ocr">OCR Data</button>
+                    <div class="opacity-row" id="opacity-row">
+                        <i class="fas fa-image"></i>
+                        <input type="range" id="opacity" min="0" max="100" value="55">
+                        <i class="fas fa-fire"></i>
+                        <span class="hint" data-i18n="heatHint">Red = regions that influenced the AI most</span>
                     </div>
-                    <div class="tab-content glass">
-                        <div class="tab-pane active" id="edges-pane">
-                            <img id="edge-img" src="" alt="Edge Analysis">
-                        </div>
-                        <div class="tab-pane" id="hough-pane">
-                            <img id="hough-img" src="" alt="Hough Analysis">
-                        </div>
-                        <div class="tab-pane" id="faces-pane">
-                            <img id="face-img" src="" alt="Face Analysis">
-                        </div>
-                        <div class="tab-pane" id="ocr-pane">
-                            <pre id="ocr-content"></pre>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="action-footer">
-                    <button class="btn-primary" onclick="resetUI()">
-                        <i class="fas fa-redo"></i> Scan Another
-                    </button>
+                    <div class="strip" id="photo-strip"></div>
                 </div>
             </div>
+
+            <div class="action-footer">
+                <button class="btn-ghost" id="report-btn"><i class="fas fa-print"></i> <span data-i18n="report">Print report</span></button>
+                <button class="btn-primary" id="new-scan-btn"><i class="fas fa-redo"></i> <span data-i18n="newScan">Scan another note</span> <kbd>Esc</kbd></button>
+            </div>
+        </section>
+
+        <!-- ============ HISTORY ============ -->
+        <section class="glass history" id="history-panel">
+            <div class="tray-header">
+                <h4><i class="fas fa-clock-rotate-left"></i> <span data-i18n="history">Recent scans</span></h4>
+                <button class="link-btn" id="history-clear" data-i18n="clearAll">Clear all</button>
+            </div>
+            <div class="history-list" id="history-list"></div>
+            <p class="hint" id="history-empty" data-i18n="historyEmpty">No scans yet. Results are kept only in this browser.</p>
         </section>
 
         <section class="features-overview">
             <div class="feature-item">
-                <i class="fas fa-eye"></i>
-                <h5>ML Vision</h5>
-                <p>Pattern recognition for intricate security features.</p>
+                <i class="fas fa-database"></i>
+                <h5 data-i18n="f1t">Trained on real notes</h5>
+                <p data-i18n="f1d">EfficientNet model trained on 1,390 genuine and counterfeit Taka notes (JaalTaka).</p>
             </div>
             <div class="feature-item">
-                <i class="fas fa-microchip"></i>
-                <h5>AI Analysis</h5>
-                <p>Deep neural verification of serial fonts.</p>
+                <i class="fas fa-fire"></i>
+                <h5 data-i18n="f2t">Explainable</h5>
+                <p data-i18n="f2d">The heatmap shows which regions of the note drove the decision.</p>
             </div>
             <div class="feature-item">
-                <i class="fas fa-bolt"></i>
-                <h5>Real-time</h5>
-                <p>Instant results with sub-second latency.</p>
+                <i class="fas fa-ban"></i>
+                <h5 data-i18n="f3t">Safe rejection</h5>
+                <p data-i18n="f3d">Photos that are not a Tk 500 / Tk 1000 note are rejected instead of guessed.</p>
             </div>
         </section>
     </main>
 
+    <!-- Camera modal -->
+    <div class="modal hidden" id="camera-modal">
+        <div class="modal-box glass">
+            <div class="modal-head">
+                <h4><i class="fas fa-camera"></i> <span data-i18n="cameraTitle">Take a photo</span></h4>
+                <button class="icon-btn small" data-close><i class="fas fa-xmark"></i></button>
+            </div>
+            <div class="camera-view">
+                <video id="camera-video" autoplay playsinline muted></video>
+                <div class="camera-frame"></div>
+            </div>
+            <p class="hint" data-i18n="cameraHint">Fill the frame with the note, avoid glare. Take several shots: front, back, against light.</p>
+            <div class="modal-actions">
+                <button class="btn-ghost" id="camera-switch"><i class="fas fa-rotate"></i> <span data-i18n="switchCam">Switch camera</span></button>
+                <button class="btn-primary" id="camera-shot"><i class="fas fa-circle-dot"></i> <span data-i18n="capture">Capture</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips modal -->
+    <div class="modal hidden" id="tips-modal">
+        <div class="modal-box glass">
+            <div class="modal-head">
+                <h4><i class="fas fa-lightbulb"></i> <span data-i18n="tipsTitle">How to photograph a note</span></h4>
+                <button class="icon-btn small" data-close><i class="fas fa-xmark"></i></button>
+            </div>
+            <ul class="tips">
+                <li><i class="fas fa-crop-simple"></i> <span data-i18n="tip1">Get close: the note should fill most of the photo.</span></li>
+                <li><i class="fas fa-user"></i> <span data-i18n="tip2">Front side: portrait and the security thread.</span></li>
+                <li><i class="fas fa-repeat"></i> <span data-i18n="tip3">Back side of the note.</span></li>
+                <li><i class="fas fa-sun"></i> <span data-i18n="tip4">Hold the note against light to show the watermark.</span></li>
+                <li><i class="fas fa-ban"></i> <span data-i18n="tip5">Avoid glare, blur and scanned images.</span></li>
+                <li><i class="fas fa-building-columns"></i> <span data-i18n="tip6">This is decision support. Confirm suspicious notes at a bank.</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="toast-stack" id="toasts"></div>
+
     <footer class="main-footer">
-        <p>© 2025 AI Currency Guardian | Advanced Forensic Suite</p>
+        <p data-i18n="footer">© 2026 AI Currency Guardian · Decision support only. Confirm suspicious notes at a bank.</p>
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

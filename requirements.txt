@@ -1,12 +1,7 @@
 streamlit
 opencv-contrib-python
-pytesseract
 numpy
 pillow
-scikit-learn
-plotly
 flask
-flask-cors
 torch
 torchvision
-albumentations

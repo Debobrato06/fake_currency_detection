@@ -1,35 +1,38 @@
 from flask import Flask, render_template, request, jsonify
-import os
+
+from detector import analyze_currency, model_info
 
 app = Flask(__name__)
+app.config["MAX_CONTENT_LENGTH"] = 40 * 1024 * 1024  # 40 MB for up to ~6 phone photos
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+
+@app.route('/status')
+def status():
+    return jsonify(model_info())
+
+
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    if 'file' not in request.files:
+    files = [f for f in request.files.getlist('file') if f and f.filename]
+    if not files:
         return jsonify({"error": "No file uploaded"}), 400
-    
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-    
-    image_bytes = file.read()
-    
-    # Try elite analysis, fallback to legacy if needed
+
     try:
-        from detector import analyze_currency_elite
-        results, error = analyze_currency_elite(image_bytes)
-    except ImportError:
-        from detector import analyze_currency
-        results, error = analyze_currency(image_bytes)
-    
+        threshold = float(request.form.get('threshold', 0.7))
+    except ValueError:
+        threshold = 0.7
+    threshold = min(max(threshold, 0.5), 0.99)
+
+    results, error = analyze_currency([f.read() for f in files], threshold=threshold)
     if error:
         return jsonify({"error": error}), 400
-    
     return jsonify(results)
 
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=5000)

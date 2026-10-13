@@ -2,31 +2,10 @@
   You can now view your Streamlit app in your browser.
 
   Local URL: http://localhost:8501
-  Network URL: http://10.15.5.49:8501
+  Network URL: http://10.15.4.231:8501
 
-2026-02-18 11:16:08.236 `label` got an empty value. This is discouraged for accessibility reasons and may be disallowed in the future by raising an exception. Please provide a non-empty label and hide it with label_visibility if needed.
-Stack (most recent call last):
-  File "C:\Users\DEBO-ODCL\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1032, in _bootstrap
-    self._bootstrap_inner()
-  File "C:\Users\DEBO-ODCL\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1075, in _bootstrap_inner
-    self.run()
-  File "C:\Users\DEBO-ODCL\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1012, in run
-    self._target(*self._args, **self._kwargs)
-  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
-    self._run_script(request.rerun_data)
-  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
-    ) = exec_func_with_error_handling(code_to_exec, ctx)
-  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
-    result = func()
-  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
-    exec(code, module.__dict__)  # noqa: S102
-  File "D:\DebobratoResearch\fake_currency_detection\app.py", line 441, in <module>
-    uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\runtime\metrics_util.py", line 532, in wrapped_func
-    result = non_optional_func(*args, **kwargs)
-  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\elements\widgets\file_uploader.py", line 458, in file_uploader
-    return self._file_uploader(
-  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\elements\widgets\file_uploader.py", line 510, in _file_uploader
-    maybe_raise_label_warnings(label, label_visibility)
-  File "D:\DebobratoResearch\fake_currency_detection\venv\Lib\site-packages\streamlit\elements\lib\policies.py", line 184, in maybe_raise_label_warnings
-    _LOGGER.warning(
+forrtl: error (200): program aborting due to window-CLOSE event
+Image              PC                Routine            Line        Source             
+KERNELBASE.dll     00007FFFFD3E652D  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFFFE5ECD87  Unknown               Unknown  Unknown
+ntdll.dll          00007FFFFFE2CAEC  Unknown               Unknown  Unknown

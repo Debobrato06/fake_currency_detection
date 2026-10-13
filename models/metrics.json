@@ -1,0 +1,82 @@
+{
+  "dataset": "JaalTaka (Mendeley Data, doi:10.17632/2m7wk5cy4c.2, CC BY 4.0) - Tk 500 & Tk 1000",
+  "split": {
+    "train": {
+      "photos": 5844,
+      "notes": 974
+    },
+    "val": {
+      "photos": 1248,
+      "notes": 208
+    },
+    "test": {
+      "photos": 1248,
+      "notes": 208
+    }
+  },
+  "val_per_photo": {
+    "accuracy": 0.9904,
+    "auc": 0.9976,
+    "fake_detection_rate": 0.9886,
+    "real_acceptance_rate": 0.9917,
+    "confusion": {
+      "fake_as_fake": 522,
+      "fake_as_real": 6,
+      "real_as_fake": 6,
+      "real_as_real": 714
+    },
+    "n": 1248
+  },
+  "test_per_photo": {
+    "accuracy": 0.9808,
+    "auc": 0.9895,
+    "fake_detection_rate": 0.9773,
+    "real_acceptance_rate": 0.9833,
+    "confusion": {
+      "fake_as_fake": 516,
+      "fake_as_real": 12,
+      "real_as_fake": 12,
+      "real_as_real": 708
+    },
+    "n": 1248
+  },
+  "test_per_note_6_views": {
+    "accuracy": 0.9808,
+    "auc": 0.9939,
+    "fake_detection_rate": 0.9773,
+    "real_acceptance_rate": 0.9833,
+    "confusion": {
+      "fake_as_fake": 86,
+      "fake_as_real": 2,
+      "real_as_fake": 2,
+      "real_as_real": 118
+    },
+    "n": 208
+  },
+  "diagnostic_center_hidden": {
+    "accuracy": 0.7548,
+    "auc": 0.9592,
+    "fake_detection_rate": 0.9867,
+    "real_acceptance_rate": 0.5847,
+    "confusion": {
+      "fake_as_fake": 521,
+      "fake_as_real": 7,
+      "real_as_fake": 299,
+      "real_as_real": 421
+    },
+    "n": 1248
+  },
+  "diagnostic_border_hidden": {
+    "accuracy": 0.8894,
+    "auc": 0.957,
+    "fake_detection_rate": 0.9545,
+    "real_acceptance_rate": 0.8417,
+    "confusion": {
+      "fake_as_fake": 504,
+      "fake_as_real": 24,
+      "real_as_fake": 114,
+      "real_as_real": 606
+    },
+    "n": 1248
+  }
+}

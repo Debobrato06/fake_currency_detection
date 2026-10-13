@@ -1,13 +1,11 @@
 import streamlit as st
-import cv2
-import numpy as np
-import pytesseract
-from PIL import Image
-import plotly.express as px
-import time
 import os
+import io
 import base64
-from detector import analyze_currency_elite
+import hashlib
+import datetime
+from PIL import Image
+from detector import analyze_image, summarize, model_info
 
 st.set_page_config(
     page_title="AI Currency Guardian | Elite",
@@ -383,6 +381,64 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
+# --- Scanner helpers ---
+for _k, _v in {"camera_shots": [], "cam_key": 0, "history": []}.items():
+    st.session_state.setdefault(_k, _v)
+
+
+@st.cache_data(max_entries=48, show_spinner=False)
+def analyze_cached(image_bytes):
+    return analyze_image(image_bytes)
+
+
+def blend(orig_b64, heat_b64, alpha):
+    orig = Image.open(io.BytesIO(base64.b64decode(orig_b64))).convert("RGB")
+    heat = Image.open(io.BytesIO(base64.b64decode(heat_b64))).convert("RGB").resize(orig.size)
+    return Image.blend(orig, heat, alpha)
+
+
+def probability_bar(p, thr):
+    """Coloured P(real) scale: red below 50%, amber up to the threshold, green above, with a marker."""
+    marker = "" if p is None else (
+        f"<div style='position:absolute; left:calc({p * 100:.1f}% - 9px); top:-6px; width:18px; height:26px; "
+        f"border-radius:6px; background:#fff; border:3px solid #111; box-shadow:0 2px 8px rgba(0,0,0,.4);'></div>")
+    return f"""
+    <div style='margin:0.8rem 0 1.2rem;'>
+      <div style='position:relative; height:14px; border-radius:8px;
+           background:linear-gradient(90deg, #ef4444 0%, #ef4444 50%, #f59e0b 50%, #f59e0b {thr * 100:.0f}%,
+           #10b981 {thr * 100:.0f}%, #10b981 100%);'>{marker}</div>
+      <div style='display:flex; justify-content:space-between; font-size:0.75rem; opacity:0.7; margin-top:6px;'>
+        <span>Counterfeit</span><span>50%</span><span>Genuine ≥ {thr * 100:.0f}%</span>
+      </div>
+    </div>"""
+
+
+def build_report(r):
+    p_real = "-" if r["real_probability"] is None else f"{r['real_probability'] * 100:.1f}%"
+    lines = ["AI CURRENCY GUARDIAN - Banknote Authentication Report",
+             f"Date: {datetime.datetime.now():%Y-%m-%d %H:%M:%S}",
+             f"Supported notes: {r['supported_notes']}", "",
+             f"VERDICT: {r['verdict']}", r["message"],
+             f"P(real): {p_real}",
+             f"Required confidence for GENUINE: {r['threshold'] * 100:.0f}%",
+             f"Photos used: {r['photos_used']}/{r['photos_total']}", "", "Per photo:"]
+    for i, p in enumerate(r["per_image"]):
+        lines.append(f"  Photo {i + 1}: P(real) {p['real_probability'] * 100:.1f}%"
+                     + ("" if p["in_distribution"] else "  (ignored: not a supported note)"))
+    lines += ["", "Decision support only. Confirm suspicious notes at a bank."]
+    return "\n".join(lines)
+
+
+def render_history(box):
+    with box:
+        if not st.session_state.history:
+            st.caption("No scans yet in this session.")
+        icons = {"GENUINE": "🟢", "COUNTERFEIT": "🔴", "UNCERTAIN": "🟠", "NOT_SUPPORTED": "⚪"}
+        for h in st.session_state.history:
+            p = "" if h["p"] is None else f" · {h['p'] * 100:.0f}%"
+            st.caption(f"{icons[h['verdict']]} **{h['verdict'].replace('_', ' ')}**{p} · {h['n']} photo(s) · {h['time']}")
+
+
 # --- Content Logic ---
 if st.session_state.page == 'journal':
     st.markdown("<div style='height: 100px;'></div>", unsafe_allow_html=True)
@@ -390,7 +446,7 @@ if st.session_state.page == 'journal':
     with col_j2:
         st.markdown("<h1 style='text-align:center;'>TECHNICAL <span class='gradient-text'>JOURNAL</span></h1>", unsafe_allow_html=True)
         try:
-            with open("journal/JOURNAL.html", "r") as f: html_content = f.read()
+            with open("journal/JOURNAL.html", "r", encoding="utf-8") as f: html_content = f.read()
             st.components.v1.html(html_content, height=800, scrolling=True)
         except Exception as e: st.error(f"Error: {e}")
 
@@ -400,7 +456,7 @@ elif st.session_state.page == 'manual':
     with col_m2:
         st.markdown("<h1 style='text-align:center;'>USER <span class='gradient-text'>MANUAL</span></h1>", unsafe_allow_html=True)
         try:
-            with open("journal/USER_GUIDE.html", "r") as f: html_content = f.read()
+            with open("journal/USER_GUIDE.html", "r", encoding="utf-8") as f: html_content = f.read()
             st.components.v1.html(html_content, height=800, scrolling=True)
         except Exception as e: st.error(f"Error: {e}")
 
@@ -419,119 +475,137 @@ else:
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
     col_arena, col_intel = st.columns([3, 1])
-    
+
     with col_intel:
         st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
         st.subheader("🧬 Analysis Core")
-        watermark_enabled = st.toggle("Watermark (জলছাপ)", value=True)
-        thread_enabled = st.toggle("Security Thread (সুতা)", value=True)
-        intaglio_enabled = st.toggle("Intaglio (উঁচু ছাপা)", value=True)
-        microprint_enabled = st.toggle("Microprint (ক্ষুদ্র লেখা)", value=True)
-        ovi_enabled = st.toggle("Color Shift (রঙ পরিবর্তন)", value=True)
+        info = model_info()
+        if info["ready"]:
+            m = info["metrics"].get("test_per_note_6_views", {})
+            st.success("AI model loaded")
+            st.caption(f"Supported notes: {info['supported_notes']}")
+            if m:
+                st.caption(f"Held-out test accuracy: {m['accuracy'] * 100:.1f}% per note "
+                           f"(6 photos), counterfeit detection rate {m['fake_detection_rate'] * 100:.1f}%")
+        else:
+            st.error(info["error"])
         st.divider()
-        sensitivity = st.slider("Strictness Mode", 0, 20, 12)
+        threshold = st.slider("Required confidence for GENUINE (%)", 50, 95, 70,
+                              help="Above this P(real) the note is GENUINE, below 50% COUNTERFEIT, "
+                                   "in between UNCERTAIN.") / 100
         st.markdown("</div>", unsafe_allow_html=True)
-        
+
+        st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
+        st.subheader("📸 Photo Tips")
+        st.caption("Upload 1-6 photos of the SAME note: front (portrait side), back, and the note "
+                   "held against light (watermark). More photos = more reliable verdict. "
+                   "Fill the frame with the note, avoid glare.")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
+        st.subheader("🕘 Recent Scans")
+        history_box = st.container()
+        st.markdown("</div>", unsafe_allow_html=True)
+
         st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
         st.subheader("🛠️ System Config")
         st.session_state.font_scale = st.slider("Text Scaling", 0.7, 1.5, st.session_state.font_scale, 0.1)
         st.markdown("</div>", unsafe_allow_html=True)
 
     with col_arena:
-        uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
-        if uploaded_file:
-            file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-            image = cv2.imdecode(file_bytes, 1)
-            image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            
-            # --- Forensic Detection Modules ---
-            def analyze_watermark(img):
-                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                blur = cv2.GaussianBlur(gray, (7, 7), 0)
-                _, thresh = cv2.threshold(blur, 200, 255, cv2.THRESH_BINARY)
-                density = np.sum(thresh == 255) / thresh.size
-                return thresh, density > 0.05
+        # ---- input: upload or camera ----
+        src_upload, src_camera = st.tabs(["📁 Upload photos", "📷 Camera"])
+        with src_upload:
+            uploaded_files = st.file_uploader("Upload banknote photo(s)", type=["jpg", "jpeg", "png", "webp"],
+                                              accept_multiple_files=True, label_visibility="collapsed")
+        with src_camera:
+            shot = st.camera_input("Take a close photo of the note", key=f"cam_{st.session_state.cam_key}")
+            cam_cols = st.columns([1, 1, 2])
+            if cam_cols[0].button("➕ Add photo", disabled=shot is None, width="stretch"):
+                if len(st.session_state.camera_shots) < 6:
+                    st.session_state.camera_shots.append(shot.getvalue())
+                st.session_state.cam_key += 1  # reset the camera widget for the next shot
+                st.rerun()
+            if cam_cols[1].button("🗑️ Clear", disabled=not st.session_state.camera_shots, width="stretch"):
+                st.session_state.camera_shots = []
+                st.rerun()
+            cam_cols[2].caption(f"{len(st.session_state.camera_shots)}/6 camera photos added. "
+                                "Take front, back and against-light shots.")
 
-            def analyze_security_thread(img):
-                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                edges = cv2.Canny(gray, 50, 150)
-                lines = cv2.HoughLinesP(edges, 1, np.pi/180, 50, minLineLength=100, maxLineGap=20)
-                thread_img = img.copy()
-                valid = False
-                if lines is not None:
-                    for line in lines:
-                        x1, y1, x2, y2 = line[0]
-                        if abs(x1 - x2) < 25: 
-                            cv2.line(thread_img, (x1, y1), (x2, y2), (0, 255, 0), 3)
-                            valid = True
-                return thread_img, valid
+        images = ([f.getvalue() for f in (uploaded_files or [])] + st.session_state.camera_shots)[:6]
+        if images:
+            # per-photo AI results are cached, so moving the sliders never re-runs the model
+            with st.status("⚔️ Running AI authentication...", expanded=False) as status:
+                per_image, err = [], None
+                for b in images:
+                    r, err = analyze_cached(b)
+                    if err:
+                        break
+                    per_image.append(r)
+                status.update(label="Analysis Complete" if not err else "Analysis Failed",
+                              state="complete" if not err else "error")
 
-            def analyze_intaglio(img):
-                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                laplacian = cv2.Laplacian(gray, cv2.CV_64F)
-                variance = laplacian.var()
-                return cv2.convertScaleAbs(laplacian), variance > 400
+            if err:
+                st.error(err)
+                st.stop()
 
-            def analyze_microprint(img):
-                try:
-                    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                    text = pytesseract.image_to_string(gray).upper()
-                    found = any(word in text for word in ["BANGLADESH", "BANK", "TAKA"])
-                    return gray, found, text
-                except: return img, False, "OCR FAIL"
+            results = summarize(per_image, threshold)
+            verdict = results["verdict"]
+            style = {"GENUINE": ("verdict-real", "✅ GENUINE"),
+                     "COUNTERFEIT": ("verdict-fake", "⚠️ COUNTERFEIT"),
+                     "UNCERTAIN": ("verdict-fake", "❔ UNCERTAIN"),
+                     "NOT_SUPPORTED": ("verdict-fake", "🚫 NOT SUPPORTED")}[verdict]
+            first_idx = next((i for i, p in enumerate(results["per_image"]) if p["in_distribution"]), 0)
 
-            def analyze_ovi(img):
-                hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-                hist = cv2.calcHist([hsv], [0], None, [180], [0, 180])
-                variance = np.var(hist)
-                return hsv, variance > 800
-
-            with st.status("⚔️ Deploying Forensic Modules...", expanded=False) as status:
-                st.write("Initializing AI Forensic Engine...")
-                ai_results, ai_err = analyze_currency_elite(uploaded_file.getvalue(), strictness=sensitivity)
-                st.write("Running Structural Analysis...")
-                w_img, w_pass = analyze_watermark(image) if watermark_enabled else (None, False)
-                t_img, t_pass = analyze_security_thread(image) if thread_enabled else (None, False)
-                i_img, i_pass = analyze_intaglio(image) if intaglio_enabled else (None, False)
-                m_img, m_pass, m_text = analyze_microprint(image) if microprint_enabled else (None, False, "")
-                o_img, o_pass = analyze_ovi(image) if ovi_enabled else (None, False)
-                status.update(label="Forensic Analysis Complete", state="complete")
+            # remember this scan once per distinct set of photos
+            scan_id = hashlib.sha1(b"".join(hashlib.sha1(b).digest() for b in images)).hexdigest()[:12]
+            if not any(h["id"] == scan_id for h in st.session_state.history):
+                st.session_state.history.insert(0, {
+                    "id": scan_id, "time": datetime.datetime.now().strftime("%H:%M:%S"),
+                    "verdict": verdict, "p": results["real_probability"], "n": len(images)})
+                st.session_state.history = st.session_state.history[:8]
 
             res_col1, res_col2 = st.columns([1.2, 1])
             with res_col1:
-                st.markdown("<div class='glass-card' style='padding:0.5rem; border-radius:32px; overflow:hidden;'>", unsafe_allow_html=True)
-                st.image(image_rgb, use_container_width=True)
-                st.markdown("</div>", unsafe_allow_html=True)
+                st.image(base64.b64decode(results["per_image"][first_idx]["visuals"]["original"]), width="stretch")
             with res_col2:
-                # Combined logic
-                score = ai_results['score']
-                is_real = ai_results['is_real']
-                st.markdown(f"<div class='verdict-box {'verdict-real' if is_real else 'verdict-fake'}'><h1 style='font-size:3rem; margin:0;'>{'GENUINE' if is_real else 'SUSPICIOUS'}</h1><p>Forensic Score: {score}/20</p></div>", unsafe_allow_html=True)
-                
-                # New Metrics display
-                m_row1 = st.columns(3)
-                m_row1[0].metric("AI Confidence", f"{ai_results['ai_confidence']}%")
-                m_row1[1].metric("Anomaly Score", f"{ai_results['anomaly_score']}")
-                m_row1[2].metric("Thread", "PASS" if t_pass else "FAIL")
-                
-                m_row2 = st.columns(2)
-                m_row2[0].metric("Watermark", "PASS" if w_pass else "FAIL")
-                m_row2[1].metric("OVI Color", "PASS" if o_pass else "FAIL")
+                st.markdown(f"<div class='verdict-box {style[0]}'><h1 style='font-size:2.4rem; margin:0;'>{style[1]}</h1>"
+                            f"<p>{results['message']}</p></div>", unsafe_allow_html=True)
+                st.markdown(probability_bar(results["real_probability"], threshold), unsafe_allow_html=True)
+                m_row = st.columns(3)
+                m_row[0].metric("Confidence", "-" if results["confidence"] is None else f"{results['confidence']}%")
+                m_row[1].metric("P(real)", "-" if results["real_probability"] is None
+                                else f"{results['real_probability'] * 100:.1f}%")
+                m_row[2].metric("Photos used", f"{results['photos_used']}/{results['photos_total']}")
+                st.download_button("📄 Download report", build_report(results),
+                                   file_name=f"taka_report_{datetime.datetime.now():%Y%m%d_%H%M%S}.txt",
+                                   width="stretch")
 
-            st.markdown("### 🎛️ Forensic Streams")
-            tabs = st.tabs(["🧠 AI Forensic Core", "💧 Watermark", "🧵 Thread", "📐 Intaglio", "🔍 Microprint", "🌈 OVI"])
-            
-            with tabs[0]: 
-                t_col1, t_col2 = st.columns(2)
-                t_col1.image("data:image/jpeg;base64," + ai_results['visuals']['ai_attention'], caption="AI Attention Heatmap (SE-Block Focus)", use_container_width=True)
-                t_col2.image("data:image/jpeg;base64," + ai_results['visuals']['reconstruction'], caption="AI Reconstruction (Forensic Decoder)", use_container_width=True)
-                st.info("The AI model uses Attention Mechanisms to focus on micro-features and Anomaly Detection to flag deviations from a genuine note's distribution.")
-
-            with tabs[1]: st.image(w_img if w_img is not None else image, caption="Texture Analysis", use_container_width=True)
-            with tabs[2]: st.image(t_img if t_img is not None else image, caption="Security Thread Detection", use_container_width=True)
-            with tabs[3]: st.image(i_img if i_img is not None else image, caption="Edge Sharpness (Intaglio)", use_container_width=True)
-            with tabs[4]: st.code(m_text if m_text else "NO MICROPRINT DATA", language="txt")
-            with tabs[5]: st.image(o_img if o_img is not None else image, caption="Color Histogram Map", use_container_width=True)
+            st.markdown("### 🎛️ Per-photo Analysis")
+            if len(results["per_image"]) > 1:
+                st.bar_chart({"P(real) %": {f"Photo {i + 1}": round(p["real_probability"] * 100, 1)
+                                            for i, p in enumerate(results["per_image"])}},
+                             height=180, color="#10b981")
+            tabs = st.tabs([("⚠️ " if not p["in_distribution"] else "") + f"Photo {i + 1}"
+                            for i, p in enumerate(results["per_image"])])
+            for i, (tab, p) in enumerate(zip(tabs, results["per_image"])):
+                with tab:
+                    if not p["in_distribution"]:
+                        st.warning("This photo does not look like a Tk 500 / Tk 1000 note and was ignored "
+                                   f"(out-of-distribution score {p['ood_ratio']}).")
+                    st.caption(f"P(real) = {p['real_probability'] * 100:.1f}%")
+                    view = st.radio("View", ["AI focus", "Edges", "Original"], horizontal=True,
+                                    key=f"view_{scan_id}_{i}", label_visibility="collapsed")
+                    if view == "Edges":
+                        st.image(base64.b64decode(p["visuals"]["edges"]), caption="Edge map (print sharpness)",
+                                 width="stretch")
+                    elif view == "Original":
+                        st.image(base64.b64decode(p["visuals"]["original"]), width="stretch")
+                    else:
+                        alpha = st.slider("Heatmap opacity", 0, 100, 50, key=f"alpha_{scan_id}_{i}") / 100
+                        st.image(blend(p["visuals"]["original"], p["visuals"]["heatmap"], alpha),
+                                 caption="AI focus (Grad-CAM): red regions drove the decision most", width="stretch")
+            st.info("This is decision support, not a legal verdict. Always confirm a suspicious note at a bank.")
 
         else:
             st.markdown(f"""
@@ -550,5 +624,8 @@ else:
                         <div style='color:#a855f7'><i class='fas fa-microchip'></i> TPU V2</div>
                     </div>
                 </div>""", unsafe_allow_html=True)
+
+if st.session_state.page not in ('journal', 'manual'):
+    render_history(history_box)
 
 st.markdown("<br><br><br><p style='text-align:center; opacity:0.5;'>© 2026 AI CURRENCY GUARDIAN | ELITE FORENSIC SUITE</p>", unsafe_allow_html=True)

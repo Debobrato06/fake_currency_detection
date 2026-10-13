@@ -14,6 +14,11 @@ fi
 # Activate venv
 source venv/bin/activate
 
+# Trained model check
+if [ ! -f "models/taka_authenticator.pth" ]; then
+    echo "⚠️  Trained model not found. Run: python3 download_dataset.py && python3 train_ai.py"
+fi
+
 # Function to start streamlit
 start_streamlit() {
     if pgrep -f "streamlit run app.py" > /dev/null; then

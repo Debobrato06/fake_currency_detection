@@ -5,7 +5,7 @@ Welcome to the **AI Currency Guardian (Elite Forensic Suite)**. This guide will 
 ---
 
 ## 🚀 1. Getting Started
-1. **Launch the System**: Run the `start.sh` script or execute `streamlit run app.py`.
+1. **Launch the System**: First time only: `python download_dataset.py` then `python train_ai.py`. Then run `start.bat` (Windows) / `start.sh`, or `streamlit run app.py`.
 2. **Access the UI**: Open your browser and go to the local URL provided (usually `http://localhost:8501`).
 3. **Choose Theme**: Use the ☀️/🌙 icon in the top navigation bar to switch between Light and Dark mode.
 
@@ -14,32 +14,28 @@ Welcome to the **AI Currency Guardian (Elite Forensic Suite)**. This guide will 
 ## 🔍 2. Using the Intelligence Scanner
 The Scanner is the primary tool for analyzing banknotes.
 
-### Step 1: Upload Image
-- Click on the upload box or drag and drop a high-resolution image of the banknote (JPG, JPEG, PNG).
-- **Tip**: For best results, use a flat, well-lit image with a plain background.
+### Step 1: Upload Photo(s)
+- Click the upload box or drag and drop **1 to 6 photos of the same note** (JPG, PNG, WEBP).
+- Supported notes: **Tk 500 and Tk 1000**. Other notes are reported as *NOT SUPPORTED*.
+- **Tip**: Take close photos that fill the frame: the front (portrait and security thread), the back,
+  and the note held against light (watermark). More photos give a more reliable verdict.
 
-### Step 2: Analysis Core (Side Panel)
-You can toggle specific forensic modules on or off:
-- **Watermark (জলছাপ)**: Checks for pixel density and light transparency.
-- **Security Thread (সুতা)**: Verifies the continuity of the metallic thread.
-- **Intaglio (উঁচু ছাপা)**: Analyzes the sharpness of the printed ink texture.
-- **Microprint (ক্ষুদ্র লেখা)**: Attempts to read microscopic text using OCR.
-- **Color Shift (রঙ পরিবর্তন)**: Maps the color spectrum to check for OVI shift.
-
-### Step 3: Set Strictness Mode
-- Use the **Strictness Slider** to adjust the sensitivity. 
-- Higher values require more features to pass for a "GENUINE" verdict.
+### Step 2: Set the Required Confidence
+- The **"Required confidence for GENUINE"** slider (default 70%) sets how sure the AI must be before
+  calling a note genuine. Raise it to be stricter.
 
 ---
 
 ## 📊 3. Interpreting Results
-After the scan, the system provides a comprehensive verdict:
-
-1. **The Verdict Box**: 
-   - 🟢 **GENUINE**: The note passed the required forensic checks.
-   - 🔴 **SUSPICIOUS**: The note failed several security checks.
-2. **Forensic Score**: A score out of 20. Each enabled feature contributes 4 points if it passes.
-3. **Forensic Streams**: Scroll down to see the visual output for each module (e.g., the edge map for Intaglio or the pattern map for Watermark).
+1. **The Verdict Box**:
+   - 🟢 **GENUINE**: P(real) is above the required confidence.
+   - 🔴 **COUNTERFEIT**: P(real) is below 50%. Do not accept the note.
+   - 🟠 **UNCERTAIN**: P(real) is between 50% and the required confidence. Check by hand or add photos.
+   - ⚪ **NOT SUPPORTED**: The photo does not look like a Tk 500 / Tk 1000 note.
+2. **Per-photo Analysis**: each photo's own P(real), plus:
+   - **AI focus (Grad-CAM)**: red areas influenced the decision most.
+   - **Edge map**: shows print sharpness (blurry edges often mean a printed copy).
+3. Photos rejected by the gate are ignored in the final verdict.
 
 ---
 
@@ -51,14 +47,14 @@ After the scan, the system provides a comprehensive verdict:
 
 ## ⚙️ 5. Tips for High Accuracy
 - **Alignment**: Ensure the banknote is aligned straight in the photo.
-- **Resolution**: Use a camera with at least 12MP for Microprint detection.
-- **Lighting**: Avoid glares or shadows that might confuse the Color Shift analysis.
+- **Lighting**: Avoid glare and strong shadows.
+- **Decision support**: The AI can be wrong. Always confirm a suspicious note at a bank.
 
 ---
 
 ## 🛠️ Troubleshooting
 - **Text Not Readable**: Adjust the **Text Scaling** slider in the "System Config" section of the sidebar.
-- **Slow Processing**: Ensure your system has the necessary dependencies installed (`pytesseract`, `opencv-python`).
+- **"Trained model not found"**: run `python download_dataset.py` and `python train_ai.py`.
 - **Classic UI**: If you prefer the legacy dashboard, click the "Classic UI" link in the navigation bar.
 
 ---

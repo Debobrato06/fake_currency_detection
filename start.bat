@@ -18,6 +18,11 @@ if not exist "venv" (
     call venv\Scripts\activate
 )
 
+:: Trained model check
+if not exist "models	aka_authenticator.pth" (
+    echo ⚠️  Trained model not found. Run: python download_dataset.py  then  python train_ai.py
+)
+
 :: Function to start streamlit
 echo 🛡️  Starting Streamlit Pro UI at http://localhost:8501 ...
 start /B streamlit run app.py --server.port 8501 > streamlit.log 2>&1

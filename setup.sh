@@ -19,10 +19,9 @@ source venv/bin/activate
 echo "📥 Installing dependencies..."
 pip install -r requirements.txt
 
-# Check for Tesseract
-if ! command -v tesseract &> /dev/null
-then
-    echo "⚠️  Tesseract OCR not found. Please install it (sudo apt install tesseract-ocr)."
+# Trained model
+if [ ! -f "models/taka_authenticator.pth" ]; then
+    echo "⚠️  Trained model not found. Run: python3 download_dataset.py && python3 train_ai.py"
 fi
 
 echo "✅ Setup complete!"
