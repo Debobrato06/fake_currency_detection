@@ -5,3 +5,4 @@ pillow
 flask
 torch
 torchvision
+plotly

@@ -1,0 +1,26 @@
+# Pro UI theme. These are the dark-mode defaults; app.py switches the
+# colour options at runtime when the user toggles light / dark mode.
+[theme]
+base = "dark"
+primaryColor = "#10b981"
+backgroundColor = "#0b0f17"
+secondaryBackgroundColor = "#161d2a"
+textColor = "#e6eaf2"
+borderColor = "#253044"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap, sans-serif"
+headingFont = "Outfit:https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&display=swap, sans-serif"
+headingFontWeights = [800, 700, 700, 600, 600, 600]
+baseRadius = "0.7rem"
+buttonRadius = "0.65rem"
+showWidgetBorder = true
+greenColor = "#10b981"
+redColor = "#ef4444"
+orangeColor = "#f59e0b"
+blueColor = "#3b82f6"
+chartCategoricalColors = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#a855f7", "#14b8a6"]
+
+[client]
+toolbarMode = "minimal"
+
+[server]
+maxUploadSize = 40

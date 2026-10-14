@@ -6,224 +6,297 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currency Guardian AI | Fake Taka Detection</title>
     <meta name="description" content="AI-powered genuine vs counterfeit detection for Bangladeshi Tk 500 and Tk 1000 notes.">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;600;800&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        // apply the saved / system theme before first paint (no flash)
+        (function () {
+            var th = null;
+            try { th = JSON.parse(localStorage.getItem('cg_theme')); } catch (e) { /* storage unavailable */ }
+            if (th !== 'light-theme' && th !== 'dark-theme') {
+                th = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light-theme' : 'dark-theme';
+            }
+            document.documentElement.className = th;
+        })();
+    </script>
 </head>
 
-<body class="dark-theme">
-    <div class="hero-bg"></div>
-    <div class="glow-bg"></div>
+<body>
+    <div class="hero-bg" aria-hidden="true"></div>
+    <a class="skip-link" href="#workspace">Skip to scanner</a>
 
+    <!-- ============ NAVBAR ============ -->
     <nav class="navbar">
-        <div class="logo">
-            <i class="fas fa-shield-halved"></i>
-            <span>CURRENCY <span class="accent">GUARDIAN AI</span></span>
-        </div>
+        <a class="logo" href="/" aria-label="Currency Guardian AI home">
+            <span class="logo-mark"><i class="fas fa-shield-halved"></i></span>
+            <span class="logo-text">Currency<b>Guardian</b><small>AI · Classic</small></span>
+        </a>
         <div class="nav-links">
-            <span class="status-badge" id="model-status" title="">
+            <button class="status-badge" id="model-status" type="button" data-tip="Model details">
                 <i class="fas fa-circle"></i> <span data-i18n="statusChecking">Checking model…</span>
-            </span>
-            <button class="icon-btn" id="tips-btn" title="How to take photos"><i class="fas fa-lightbulb"></i></button>
-            <button class="icon-btn" id="lang-toggle" title="English / বাংলা"><span id="lang-label">বাং</span></button>
-            <button class="icon-btn" id="theme-toggle" title="Toggle light/dark"><i class="fas fa-sun"></i><i class="fas fa-moon"></i></button>
-            <a href="http://localhost:8501" class="icon-btn wide" title="Open Pro UI"><i class="fas fa-rocket"></i> <span data-i18n="proUi">Pro UI</span></a>
+            </button>
+            <button class="icon-btn" id="tips-btn" type="button" data-tip="Photo tips" aria-label="Photo tips"><i class="fas fa-lightbulb"></i></button>
+            <button class="icon-btn" id="keys-btn" type="button" data-tip="Shortcuts (?)" aria-label="Keyboard shortcuts"><i class="fas fa-keyboard"></i></button>
+            <button class="icon-btn" id="lang-toggle" type="button" data-tip="English / বাংলা" aria-label="Switch language"><span id="lang-label">বাং</span></button>
+            <button class="icon-btn" id="theme-toggle" type="button" data-tip="Light / dark (T)" aria-label="Toggle theme"><i class="fas fa-sun"></i><i class="fas fa-moon"></i></button>
+            <a href="http://localhost:8501" class="btn-outline nav-pro" target="_blank" rel="noopener"><i class="fas fa-rocket"></i> <span data-i18n="proUi">Pro UI</span></a>
         </div>
     </nav>
 
     <main class="container">
         <header class="hero">
+            <span class="eyebrow"><i class="fas fa-microchip"></i> <span data-i18n="eyebrow">Explainable AI · Tk 500 &amp; Tk 1000</span></span>
             <h1><span data-i18n="heroTitle1">Is your Taka</span> <span class="gradient-text" data-i18n="heroTitle2">genuine?</span></h1>
             <p data-i18n="heroSub">Upload close photos of a Tk 500 or Tk 1000 note. The AI checks print texture and security features in seconds.</p>
+            <div class="hero-stats" id="hero-stats">
+                <div><b id="hs-acc">–</b><span data-i18n="hsAcc">test accuracy</span></div>
+                <div><b id="hs-fdr">–</b><span data-i18n="hsFdr">fakes caught</span></div>
+                <div><b>6</b><span data-i18n="hsPhotos">photos per note</span></div>
+            </div>
         </header>
 
         <!-- Step indicator -->
         <ol class="steps" id="steps">
             <li class="active" data-step="1"><span>1</span> <b data-i18n="step1">Add photos</b></li>
+            <li class="sep" aria-hidden="true"></li>
             <li data-step="2"><span>2</span> <b data-i18n="step2">Analyze</b></li>
+            <li class="sep" aria-hidden="true"></li>
             <li data-step="3"><span>3</span> <b data-i18n="step3">Result</b></li>
         </ol>
 
-        <!-- ============ INPUT ============ -->
-        <section class="panel glass" id="input-panel">
-            <div class="upload-container" id="drop-zone" tabindex="0">
-                <input type="file" id="file-input" hidden accept="image/*" multiple>
-                <div class="upload-content">
-                    <div class="icon-box"><i class="fas fa-cloud-upload-alt"></i></div>
-                    <h3 data-i18n="dropTitle">Drop photos here</h3>
-                    <p data-i18n="dropSub">or click to browse · paste with Ctrl+V · up to 6 photos of the SAME note</p>
-                    <div class="upload-actions">
-                        <button class="btn-ghost" id="browse-btn" type="button"><i class="fas fa-folder-open"></i> <span data-i18n="browse">Browse</span></button>
-                        <button class="btn-ghost" id="camera-btn" type="button"><i class="fas fa-camera"></i> <span data-i18n="camera">Camera</span></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tray-header">
-                <h4><i class="fas fa-images"></i> <span data-i18n="trayTitle">Selected photos</span> <span class="count" id="tray-count">0/6</span></h4>
-                <button class="link-btn" id="clear-btn" type="button" data-i18n="clearAll">Clear all</button>
-            </div>
-            <div class="tray" id="tray"></div>
-            <p class="hint" id="tray-hint" data-i18n="trayHint">Tip: front (portrait side), back and the note held against light give the most reliable result.</p>
-
-            <div class="controls">
-                <div class="threshold-box">
-                    <label for="threshold"><span data-i18n="thresholdLabel">Required confidence for GENUINE</span>
-                        <i class="fas fa-circle-info" title="P(real) above this = GENUINE, below 50% = COUNTERFEIT, in between = UNCERTAIN"></i></label>
-                    <div class="range-row">
-                        <input type="range" id="threshold" min="50" max="95" value="70">
-                        <span class="range-val" id="threshold-val">70%</span>
-                    </div>
-                </div>
-                <button class="btn-primary big" id="analyze-btn" type="button" disabled>
-                    <i class="fas fa-magnifying-glass"></i> <span data-i18n="analyze">Analyze note</span>
-                    <kbd>Enter</kbd>
-                </button>
-            </div>
-        </section>
-
-        <!-- ============ LOADING ============ -->
-        <section class="panel glass hidden" id="loading-panel">
-            <div class="scan-visual">
-                <img id="loading-img" alt="">
-                <div class="scan-line"></div>
-            </div>
-            <ul class="loading-steps" id="loading-steps">
-                <li data-i18n="load1">Uploading photos</li>
-                <li data-i18n="load2">Checking it is a Tk 500 / 1000 note</li>
-                <li data-i18n="load3">Analyzing print texture with AI</li>
-                <li data-i18n="load4">Building explanation heatmap</li>
-            </ul>
-            <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
-        </section>
-
-        <!-- ============ RESULTS ============ -->
-        <section class="hidden" id="results-panel">
-            <div class="result-grid">
-                <!-- Verdict -->
-                <div class="glass verdict-card" id="verdict-card">
-                    <div class="result-badge" id="main-status"></div>
-                    <div class="gauge-wrap">
-                        <svg viewBox="0 0 200 120" class="gauge" id="gauge">
-                            <path class="g-zone fake" d="M20 100 A80 80 0 0 1 100 20" />
-                            <path class="g-zone unsure" id="g-unsure" />
-                            <path class="g-zone real" id="g-real" />
-                            <line id="g-thr" class="g-thr" x1="100" y1="100" x2="100" y2="14" />
-                            <line id="g-needle" class="g-needle" x1="100" y1="100" x2="100" y2="30" />
-                            <circle cx="100" cy="100" r="6" class="g-hub" />
-                        </svg>
-                        <div class="gauge-label">
-                            <span class="value" id="p-real-val">–</span>
-                            <span class="label" data-i18n="pReal">chance it is real</span>
-                        </div>
-                    </div>
-                    <p class="verdict-message" id="verdict-message"></p>
-                    <div class="threshold-box compact">
-                        <label for="threshold2" data-i18n="thresholdLive">Strictness (updates the verdict live)</label>
-                        <div class="range-row">
-                            <input type="range" id="threshold2" min="50" max="95" value="70">
-                            <span class="range-val" id="threshold2-val">70%</span>
-                        </div>
-                    </div>
-                    <div class="meta-row">
-                        <div><span class="label" data-i18n="confidence">Confidence</span><b id="confidence-val">–</b></div>
-                        <div><span class="label" data-i18n="photosUsed">Photos used</span><b id="photos-used">–</b></div>
-                    </div>
-                </div>
-
-                <!-- Inspector -->
-                <div class="glass inspector">
-                    <div class="inspector-toolbar">
-                        <div class="seg" id="view-modes">
-                            <button class="active" data-mode="heatmap"><i class="fas fa-fire"></i> <span data-i18n="modeHeat">AI focus</span></button>
-                            <button data-mode="compare"><i class="fas fa-left-right"></i> <span data-i18n="modeCompare">Compare</span></button>
-                            <button data-mode="edges"><i class="fas fa-wave-square"></i> <span data-i18n="modeEdges">Edges</span></button>
-                            <button data-mode="original"><i class="fas fa-image"></i> <span data-i18n="modeOriginal">Original</span></button>
-                        </div>
-                        <div class="tool-btns">
-                            <button class="icon-btn small" id="lens-btn" title="Magnifier"><i class="fas fa-magnifying-glass-plus"></i></button>
-                            <button class="icon-btn small" id="fullscreen-btn" title="Fullscreen"><i class="fas fa-expand"></i></button>
+        <div class="workspace" id="workspace">
+            <div class="main-col">
+                <!-- ============ INPUT ============ -->
+                <section class="panel card" id="input-panel">
+                    <div class="upload-container" id="drop-zone" tabindex="0" role="button" aria-label="Add photos">
+                        <input type="file" id="file-input" hidden accept="image/*" multiple>
+                        <div class="upload-content">
+                            <div class="icon-box"><i class="fas fa-cloud-arrow-up"></i></div>
+                            <h3 data-i18n="dropTitle">Drop photos here</h3>
+                            <p data-i18n="dropSub">or click to browse · paste with Ctrl+V · up to 6 photos of the SAME note</p>
+                            <div class="upload-actions">
+                                <button class="btn-ghost" id="browse-btn" type="button"><i class="fas fa-folder-open"></i> <span data-i18n="browse">Browse</span></button>
+                                <button class="btn-ghost" id="camera-btn" type="button"><i class="fas fa-camera"></i> <span data-i18n="camera">Camera</span></button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="viewer" id="viewer">
-                        <img id="v-base" alt="Banknote">
-                        <img id="v-layer" class="layer" alt="">
-                        <div class="compare-handle hidden" id="compare-handle"><span><i class="fas fa-left-right"></i></span></div>
-                        <div class="lens hidden" id="lens"></div>
+                    <div class="tray-header">
+                        <h4><i class="fas fa-images"></i> <span data-i18n="trayTitle">Selected photos</span> <span class="count" id="tray-count">0/6</span></h4>
+                        <button class="link-btn" id="clear-btn" type="button"><i class="fas fa-trash-can"></i> <span data-i18n="clearAll">Clear all</span></button>
+                    </div>
+                    <div class="tray" id="tray"></div>
+                    <div class="coverage">
+                        <div class="coverage-bar"><i id="coverage-fill"></i></div>
+                        <span class="hint" id="coverage-text"></span>
+                    </div>
+                    <p class="hint" id="tray-hint" data-i18n="trayHint">Tip: front (portrait side), back and the note held against light give the most reliable result. Drag to reorder, click to preview.</p>
+
+                    <div class="controls">
+                        <div class="threshold-box">
+                            <label for="threshold"><span data-i18n="thresholdLabel">Required confidence for GENUINE</span>
+                                <i class="fas fa-circle-info" data-tip="P(real) above this = GENUINE, below 50% = COUNTERFEIT, in between = UNCERTAIN"></i></label>
+                            <div class="range-row">
+                                <input type="range" id="threshold" min="50" max="95" value="70">
+                                <span class="range-val" id="threshold-val">70%</span>
+                            </div>
+                            <div class="presets" id="presets">
+                                <button type="button" data-v="60" data-i18n="pLenient">Lenient</button>
+                                <button type="button" data-v="70" data-i18n="pBalanced">Balanced</button>
+                                <button type="button" data-v="85" data-i18n="pStrict">Strict</button>
+                            </div>
+                        </div>
+                        <button class="btn-primary big" id="analyze-btn" type="button" disabled>
+                            <i class="fas fa-magnifying-glass"></i> <span data-i18n="analyze">Analyze note</span>
+                            <kbd>Enter</kbd>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- ============ LOADING ============ -->
+                <section class="panel card hidden" id="loading-panel" aria-live="polite">
+                    <div class="scan-visual">
+                        <img id="loading-img" alt="">
+                        <div class="scan-grid"></div>
+                        <div class="scan-line"></div>
+                    </div>
+                    <div>
+                        <h4 class="loading-title" data-i18n="loadingTitle">Authenticating note…</h4>
+                        <ul class="loading-steps" id="loading-steps">
+                            <li data-i18n="load1">Uploading photos</li>
+                            <li data-i18n="load2">Checking it is a Tk 500 / 1000 note</li>
+                            <li data-i18n="load3">Analyzing print texture with AI</li>
+                            <li data-i18n="load4">Building explanation heatmap</li>
+                        </ul>
+                    </div>
+                    <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+                </section>
+
+                <!-- ============ RESULTS ============ -->
+                <section class="hidden" id="results-panel">
+                    <div class="result-grid">
+                        <!-- Verdict -->
+                        <div class="card verdict-card" id="verdict-card">
+                            <div class="result-badge" id="main-status" aria-live="polite"></div>
+                            <div class="gauge-wrap">
+                                <svg viewBox="0 0 200 120" class="gauge" id="gauge" role="img" aria-label="Probability gauge">
+                                    <path class="g-track" d="M20 100 A80 80 0 0 1 180 100" />
+                                    <path class="g-zone fake" d="M20 100 A80 80 0 0 1 100 20" />
+                                    <path class="g-zone unsure" id="g-unsure" />
+                                    <path class="g-zone real" id="g-real" />
+                                    <line id="g-thr" class="g-thr" x1="100" y1="100" x2="100" y2="12" />
+                                    <line id="g-needle" class="g-needle" x1="100" y1="100" x2="100" y2="30" />
+                                    <circle cx="100" cy="100" r="7" class="g-hub" />
+                                </svg>
+                                <div class="gauge-label">
+                                    <span class="value" id="p-real-val">–</span>
+                                    <span class="label" data-i18n="pReal">chance it is real</span>
+                                </div>
+                            </div>
+                            <p class="verdict-message" id="verdict-message"></p>
+
+                            <!-- per-photo consensus scale -->
+                            <div class="consensus" id="consensus">
+                                <div class="consensus-head"><span data-i18n="consensus">Per-photo agreement</span><span class="hint" id="consensus-sd"></span></div>
+                                <div class="c-scale" id="c-scale">
+                                    <div class="c-zone fake"></div><div class="c-zone unsure" id="c-unsure"></div><div class="c-zone real" id="c-real"></div>
+                                    <div class="c-thr" id="c-thr"></div>
+                                </div>
+                                <div class="c-axis"><span>0%</span><span>50%</span><span>100%</span></div>
+                            </div>
+
+                            <div class="threshold-box compact">
+                                <label for="threshold2" data-i18n="thresholdLive">Strictness (updates the verdict live)</label>
+                                <div class="range-row">
+                                    <input type="range" id="threshold2" min="50" max="95" value="70">
+                                    <span class="range-val" id="threshold2-val">70%</span>
+                                </div>
+                            </div>
+                            <div class="meta-row">
+                                <div><span class="label" data-i18n="confidence">Confidence</span><b id="confidence-val">–</b></div>
+                                <div><span class="label" data-i18n="photosUsed">Photos used</span><b id="photos-used">–</b></div>
+                            </div>
+                        </div>
+
+                        <!-- Inspector -->
+                        <div class="card inspector">
+                            <div class="inspector-toolbar">
+                                <div class="seg" id="view-modes" role="tablist">
+                                    <button class="active" data-mode="heatmap" role="tab"><i class="fas fa-fire"></i> <span data-i18n="modeHeat">AI focus</span></button>
+                                    <button data-mode="compare" role="tab"><i class="fas fa-left-right"></i> <span data-i18n="modeCompare">Compare</span></button>
+                                    <button data-mode="edges" role="tab"><i class="fas fa-wave-square"></i> <span data-i18n="modeEdges">Edges</span></button>
+                                    <button data-mode="original" role="tab"><i class="fas fa-image"></i> <span data-i18n="modeOriginal">Original</span></button>
+                                </div>
+                                <div class="tool-btns">
+                                    <button class="icon-btn small" id="zoom-out" data-tip="Zoom out (−)" aria-label="Zoom out"><i class="fas fa-minus"></i></button>
+                                    <span class="zoom-val" id="zoom-val">100%</span>
+                                    <button class="icon-btn small" id="zoom-in" data-tip="Zoom in (+)" aria-label="Zoom in"><i class="fas fa-plus"></i></button>
+                                    <button class="icon-btn small" id="lens-btn" data-tip="Magnifier (M)" aria-label="Magnifier"><i class="fas fa-magnifying-glass-plus"></i></button>
+                                    <button class="icon-btn small" id="download-view" data-tip="Download this view" aria-label="Download view"><i class="fas fa-download"></i></button>
+                                    <button class="icon-btn small" id="fullscreen-btn" data-tip="Fullscreen (F)" aria-label="Fullscreen"><i class="fas fa-expand"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="viewer" id="viewer">
+                                <div class="stage" id="stage">
+                                    <img id="v-base" alt="Banknote">
+                                    <img id="v-layer" class="layer" alt="">
+                                </div>
+                                <div class="compare-handle hidden" id="compare-handle"><span><i class="fas fa-left-right"></i></span></div>
+                                <div class="lens hidden" id="lens"></div>
+                                <button class="nav-arrow prev" id="prev-photo" aria-label="Previous photo"><i class="fas fa-chevron-left"></i></button>
+                                <button class="nav-arrow next" id="next-photo" aria-label="Next photo"><i class="fas fa-chevron-right"></i></button>
+                                <div class="viewer-chip" id="viewer-chip"></div>
+                                <div class="compare-labels hidden" id="compare-labels"><span data-i18n="modeOriginal">Original</span><span data-i18n="modeHeat">AI focus</span></div>
+                            </div>
+
+                            <div class="opacity-row" id="opacity-row">
+                                <i class="fas fa-image"></i>
+                                <input type="range" id="opacity" min="0" max="100" value="55" aria-label="Heatmap opacity">
+                                <i class="fas fa-fire"></i>
+                                <span class="heat-legend"><span data-i18n="low">Low</span><i></i><span data-i18n="high">High</span></span>
+                            </div>
+                            <p class="hint" data-i18n="heatHint">Red = regions that influenced the AI most · scroll to zoom, drag to pan</p>
+
+                            <div class="strip" id="photo-strip"></div>
+                        </div>
                     </div>
 
-                    <div class="opacity-row" id="opacity-row">
-                        <i class="fas fa-image"></i>
-                        <input type="range" id="opacity" min="0" max="100" value="55">
-                        <i class="fas fa-fire"></i>
-                        <span class="hint" data-i18n="heatHint">Red = regions that influenced the AI most</span>
+                    <div class="action-footer">
+                        <button class="btn-ghost" id="copy-btn"><i class="fas fa-copy"></i> <span data-i18n="copy">Copy summary</span></button>
+                        <button class="btn-ghost" id="download-btn"><i class="fas fa-file-arrow-down"></i> <span data-i18n="download">Download report</span></button>
+                        <button class="btn-ghost" id="report-btn"><i class="fas fa-print"></i> <span data-i18n="report">Print report</span></button>
+                        <button class="btn-primary" id="new-scan-btn"><i class="fas fa-rotate-right"></i> <span data-i18n="newScan">Scan another note</span> <kbd>Esc</kbd></button>
                     </div>
-
-                    <div class="strip" id="photo-strip"></div>
-                </div>
+                </section>
             </div>
 
-            <div class="action-footer">
-                <button class="btn-ghost" id="report-btn"><i class="fas fa-print"></i> <span data-i18n="report">Print report</span></button>
-                <button class="btn-primary" id="new-scan-btn"><i class="fas fa-redo"></i> <span data-i18n="newScan">Scan another note</span> <kbd>Esc</kbd></button>
-            </div>
-        </section>
+            <!-- ============ SIDEBAR ============ -->
+            <aside class="side-col">
+                <section class="card model-card" id="model-card">
+                    <div class="card-head">
+                        <h4><i class="fas fa-brain"></i> <span data-i18n="modelTitle">AI model</span></h4>
+                        <button class="link-btn" id="model-more" type="button"><span data-i18n="details">Details</span> <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="kpis">
+                        <div class="kpi"><span class="ring" id="ring-acc" style="--v:0"><b>–</b></span><span data-i18n="kAcc">Accuracy</span></div>
+                        <div class="kpi"><span class="ring" id="ring-fdr" style="--v:0"><b>–</b></span><span data-i18n="kFdr">Fakes caught</span></div>
+                        <div class="kpi"><span class="ring" id="ring-auc" style="--v:0"><b>–</b></span><span>AUC</span></div>
+                    </div>
+                    <p class="hint" id="model-notes"></p>
+                </section>
 
-        <!-- ============ HISTORY ============ -->
-        <section class="glass history" id="history-panel">
-            <div class="tray-header">
-                <h4><i class="fas fa-clock-rotate-left"></i> <span data-i18n="history">Recent scans</span></h4>
-                <button class="link-btn" id="history-clear" data-i18n="clearAll">Clear all</button>
-            </div>
-            <div class="history-list" id="history-list"></div>
-            <p class="hint" id="history-empty" data-i18n="historyEmpty">No scans yet. Results are kept only in this browser.</p>
-        </section>
+                <section class="card history" id="history-panel">
+                    <div class="card-head">
+                        <h4><i class="fas fa-clock-rotate-left"></i> <span data-i18n="history">Recent scans</span></h4>
+                        <button class="link-btn" id="history-clear" type="button" data-i18n="clearAll">Clear all</button>
+                    </div>
+                    <div class="history-summary" id="history-summary"></div>
+                    <div class="history-list" id="history-list"></div>
+                    <p class="hint" id="history-empty" data-i18n="historyEmpty">No scans yet. Results are kept only in this browser.</p>
+                </section>
 
-        <section class="features-overview">
-            <div class="feature-item">
-                <i class="fas fa-database"></i>
-                <h5 data-i18n="f1t">Trained on real notes</h5>
-                <p data-i18n="f1d">EfficientNet model trained on 1,390 genuine and counterfeit Taka notes (JaalTaka).</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-fire"></i>
-                <h5 data-i18n="f2t">Explainable</h5>
-                <p data-i18n="f2d">The heatmap shows which regions of the note drove the decision.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-ban"></i>
-                <h5 data-i18n="f3t">Safe rejection</h5>
-                <p data-i18n="f3d">Photos that are not a Tk 500 / Tk 1000 note are rejected instead of guessed.</p>
-            </div>
-        </section>
+                <section class="card how">
+                    <h4><i class="fas fa-route"></i> <span data-i18n="howTitle">How it works</span></h4>
+                    <ol class="how-list">
+                        <li><i class="fas fa-database"></i><div><b data-i18n="f1t">Trained on real notes</b><p data-i18n="f1d">EfficientNet model trained on 1,390 genuine and counterfeit Taka notes (JaalTaka).</p></div></li>
+                        <li><i class="fas fa-fire"></i><div><b data-i18n="f2t">Explainable</b><p data-i18n="f2d">The heatmap shows which regions of the note drove the decision.</p></div></li>
+                        <li><i class="fas fa-ban"></i><div><b data-i18n="f3t">Safe rejection</b><p data-i18n="f3d">Photos that are not a Tk 500 / Tk 1000 note are rejected instead of guessed.</p></div></li>
+                    </ol>
+                </section>
+            </aside>
+        </div>
     </main>
 
     <!-- Camera modal -->
-    <div class="modal hidden" id="camera-modal">
-        <div class="modal-box glass">
+    <div class="modal hidden" id="camera-modal" role="dialog" aria-modal="true">
+        <div class="modal-box card">
             <div class="modal-head">
-                <h4><i class="fas fa-camera"></i> <span data-i18n="cameraTitle">Take a photo</span></h4>
-                <button class="icon-btn small" data-close><i class="fas fa-xmark"></i></button>
+                <h4><i class="fas fa-camera"></i> <span data-i18n="cameraTitle">Take a photo</span> <span class="count" id="cam-count">0/6</span></h4>
+                <button class="icon-btn small" data-close aria-label="Close"><i class="fas fa-xmark"></i></button>
             </div>
             <div class="camera-view">
                 <video id="camera-video" autoplay playsinline muted></video>
-                <div class="camera-frame"></div>
+                <div class="camera-frame"><span id="cam-guide"></span></div>
             </div>
             <p class="hint" data-i18n="cameraHint">Fill the frame with the note, avoid glare. Take several shots: front, back, against light.</p>
             <div class="modal-actions">
                 <button class="btn-ghost" id="camera-switch"><i class="fas fa-rotate"></i> <span data-i18n="switchCam">Switch camera</span></button>
-                <button class="btn-primary" id="camera-shot"><i class="fas fa-circle-dot"></i> <span data-i18n="capture">Capture</span></button>
+                <button class="shutter" id="camera-shot" aria-label="Capture"><span></span></button>
+                <button class="btn-ghost" data-close><i class="fas fa-check"></i> <span data-i18n="done">Done</span></button>
             </div>
         </div>
     </div>
 
     <!-- Tips modal -->
-    <div class="modal hidden" id="tips-modal">
-        <div class="modal-box glass">
+    <div class="modal hidden" id="tips-modal" role="dialog" aria-modal="true">
+        <div class="modal-box card">
             <div class="modal-head">
                 <h4><i class="fas fa-lightbulb"></i> <span data-i18n="tipsTitle">How to photograph a note</span></h4>
-                <button class="icon-btn small" data-close><i class="fas fa-xmark"></i></button>
+                <button class="icon-btn small" data-close aria-label="Close"><i class="fas fa-xmark"></i></button>
             </div>
             <ul class="tips">
                 <li><i class="fas fa-crop-simple"></i> <span data-i18n="tip1">Get close: the note should fill most of the photo.</span></li>
@@ -236,7 +309,47 @@
         </div>
     </div>
 
-    <div class="toast-stack" id="toasts"></div>
+    <!-- Model details modal -->
+    <div class="modal hidden" id="model-modal" role="dialog" aria-modal="true">
+        <div class="modal-box card wide">
+            <div class="modal-head">
+                <h4><i class="fas fa-chart-simple"></i> <span data-i18n="modelTitle">AI model</span></h4>
+                <button class="icon-btn small" data-close aria-label="Close"><i class="fas fa-xmark"></i></button>
+            </div>
+            <div class="seg small" id="split-tabs"></div>
+            <div class="model-body" id="model-body"></div>
+        </div>
+    </div>
+
+    <!-- Shortcuts modal -->
+    <div class="modal hidden" id="keys-modal" role="dialog" aria-modal="true">
+        <div class="modal-box card">
+            <div class="modal-head">
+                <h4><i class="fas fa-keyboard"></i> <span data-i18n="keysTitle">Keyboard shortcuts</span></h4>
+                <button class="icon-btn small" data-close aria-label="Close"><i class="fas fa-xmark"></i></button>
+            </div>
+            <dl class="keys">
+                <dt><kbd>Ctrl</kbd>+<kbd>V</kbd></dt><dd data-i18n="kPaste">Paste a photo</dd>
+                <dt><kbd>Enter</kbd></dt><dd data-i18n="kEnter">Analyze / capture</dd>
+                <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd data-i18n="kArrows">Previous / next photo</dd>
+                <dt><kbd>1</kbd>–<kbd>4</kbd></dt><dd data-i18n="kModes">Switch view mode</dd>
+                <dt><kbd>+</kbd> <kbd>−</kbd> <kbd>0</kbd></dt><dd data-i18n="kZoom">Zoom in / out / reset</dd>
+                <dt><kbd>M</kbd></dt><dd data-i18n="kLens">Magnifier</dd>
+                <dt><kbd>F</kbd></dt><dd data-i18n="kFull">Fullscreen viewer</dd>
+                <dt><kbd>T</kbd></dt><dd data-i18n="kTheme">Light / dark theme</dd>
+                <dt><kbd>Esc</kbd></dt><dd data-i18n="kEsc">Close / new scan</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Photo preview (lightbox) -->
+    <div class="modal hidden lightbox" id="preview-modal" role="dialog" aria-modal="true">
+        <img id="preview-img" alt="">
+        <button class="icon-btn small lb-close" data-close aria-label="Close"><i class="fas fa-xmark"></i></button>
+    </div>
+
+    <div class="tooltip hidden" id="tooltip" role="tooltip"></div>
+    <div class="toast-stack" id="toasts" aria-live="polite"></div>
 
     <footer class="main-footer">
         <p data-i18n="footer">© 2026 AI Currency Guardian · Decision support only. Confirm suspicious notes at a bank.</p>
