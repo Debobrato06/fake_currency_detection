@@ -1,0 +1,688 @@
+%% ======================================================================
+%%  Springer Nature journal paper, TWO-COLUMN (sn-jnl class, template v3.1, Dec 2024)
+%%
+%%  Build:  pdflatex Springer_paper_twocolumn -> bibtex Springer_paper_twocolumn -> pdflatex x2
+%%  Overleaf: upload this folder (Springer_paper_twocolumn.tex, sn-jnl.cls,
+%%            sn-mathphys-num.bst, references.bib, figures/),
+%%            compiler = pdfLaTeX.
+%%
+%%  Content is the same study as ../IEEE/IEEE_paper.tex. Every number is
+%%  produced by the scripts in scripts/ from the trained model
+%%  models/taka_authenticator.pth and the public JaalTaka dataset.
+%% ======================================================================
+
+%% Two-column Springer Nature layout (option iicol). Single-column version:
+%% Springer_paper.tex. For line numbers, add the "lineno" option.
+\documentclass[pdflatex,iicol,sn-mathphys-num]{sn-jnl}
+
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{booktabs}%
+
+\graphicspath{{figures/}}
+\hyphenation{bank-note bank-notes counter-feit counter-feits Efficient-Net}
+
+\raggedbottom
+
+\begin{document}
+
+\title[Reliable Smartphone-Based Detection of Counterfeit Bangladeshi Banknotes]{Reliable
+Smartphone-Based Detection of Counterfeit Bangladeshi Banknotes: Multi-View Deep Learning
+with Out-of-Distribution Rejection and a Benchmark Audit}
+
+\author*[1]{\fnm{Debobrato} \sur{Biswas}}\email{biswas2305343003@diu.edu.bd}
+
+\author[1]{\fnm{Imran} \sur{Mahmud}}
+
+\affil*[1]{\orgdiv{Department of Software Engineering},
+\orgname{Daffodil International University},
+\orgaddress{\city{Dhaka}, \postcode{1207}, \country{Bangladesh}}}
+
+%% Structured abstract (Springer Nature style: no citations or equations)
+\abstract{\textbf{Background:} Counterfeit high-value banknotes harm retailers and
+individuals who cannot afford verification hardware.
+
+\textbf{Methods:} We present a smartphone-based authenticator for Bangladeshi Tk~500 and
+Tk~1000 notes, evaluated on JaalTaka (1{,}390 notes: 802 genuine, 588 seized
+counterfeits; six photographs each). It fine-tunes EfficientNet-B0, fuses up to six
+photographs per note, returns a genuine, uncertain, or counterfeit verdict, rejects
+unsupported inputs, and explains decisions with Grad-CAM. We audited the benchmark for
+duplicates.
+
+\textbf{Results:} On 208 held-out test notes, the system reaches 98.08\% accuracy (95\%
+CI 95.16--99.25\%) and an ROC-AUC of 0.994 at 37~ms per photograph. However, the 1{,}390
+notes form only 846 distinct photograph sets, 116 test notes have a copy in training or
+validation, and 12 duplicate groups carry both labels, causing all four test errors. On
+the 92 test notes without a copy, the system and two simple baselines are error-free.
+On a group-aware split without shared photographs, nearest-neighbour classification
+on generic features is still error-free on all 205 test notes.
+
+\textbf{Conclusion:} The benchmark is saturated. We release the duplicate groups and
+recommend group-aware, counterfeit-family hold-out evaluation.}
+
+\keywords{Counterfeit banknote detection, Bangladeshi Taka, Benchmark audit, Data leakage,
+Out-of-distribution detection, Explainable AI}
+
+\maketitle
+
+%% Plain Language Summary and Word Count, as requested by manuscript screening.
+\section*{Plain Language Summary}
+Fake Tk~500 and Tk~1000 notes are hard to spot by eye. We built a tool that checks a
+banknote from one to six phone photographs, answers ``genuine'', ``counterfeit'', or
+``uncertain'', refuses pictures of other objects, and highlights the parts of the note
+behind its answer. It was correct for 98\% of the test notes of a public photo
+collection. That collection, however, contains many repeated photographs, some labelled
+both genuine and fake, and these explained every mistake. The tool may therefore not
+catch new kinds of fakes. We share the repeated photographs and suggest fairer tests.
+
+\section*{Word Count}
+4{,}121 words excluding references (main text: 3{,}067 words; abstract: 179 words);
+9 figures; 6 tables.
+
+%% ======================================================================
+\section{Introduction}\label{sec:intro}
+
+Whoever accepts a counterfeit Tk~500 or Tk~1000 note bears its full value as a loss.
+Banks screen notes with ultraviolet, infrared, and magnetic sorters, but shopkeepers and
+private citizens usually have only visual and tactile checks, which require training and
+attention. Image-based authentication with an ordinary smartphone camera is therefore an
+attractive complement, and it has been studied for other currencies, including as an aid
+for visually impaired users~\cite{pham2020,pham2022}.
+
+The JaalTaka dataset~\cite{piyas2025jaaltaka} enabled such work for Bangladeshi notes by
+releasing smartphone photographs of genuine notes and of counterfeits seized by the Rapid
+Action Battalion (RAB); its authors reported 97.4--98.9\% accuracy for five ImageNet
+CNNs. High benchmark accuracy is necessary but not sufficient for a tool that people
+trust with money. It must also (i)~handle unsupported inputs, (ii)~admit uncertainty,
+(iii)~explain its decisions, and (iv)~be evaluated in a way that predicts behaviour on
+unseen notes. The last point is easy to get wrong: networks exploit
+shortcuts~\cite{geirhos2020shortcut}, and duplicates across splits inflate
+accuracy~\cite{kaufman2012leakage,barz2020cifair,kapoor2023leakage}.
+
+We therefore ask two research questions. \emph{RQ1:} Does the near-perfect accuracy
+reported on JaalTaka measure the ability to recognise counterfeits, or properties of the
+benchmark itself? \emph{RQ2:} Can a smartphone authenticator meet requirements
+(i)--(iii) in real time on a CPU without losing accuracy? Our contributions are:
+\begin{enumerate}
+\item a duplicate audit of JaalTaka, the first for a counterfeit-banknote benchmark to
+our knowledge, showing that its 1{,}390 notes form only 846 distinct photograph sets,
+that label conflicts between copied notes cause every test error, and that the
+benchmark is saturated even for nearest-neighbour classification on generic features;
+we release the duplicate groups and re-evaluate on a group-aware split;
+\item a rigorous evaluation protocol with note-disjoint and group-aware splits,
+group-level bootstrap confidence intervals, paired significance tests, frozen-feature
+baselines, and an occlusion test that reveals signal outside the note's centre; and
+\item an open, CPU-real-time pipeline~(Fig.~\ref{fig:pipeline}) combining
+EfficientNet-B0~\cite{tan2019efficientnet}, fusion of up to six photographs, a three-way
+decision with adjustable strictness, an out-of-distribution (OOD) gate, and
+Grad-CAM~\cite{selvaraju2017gradcam}.
+\end{enumerate}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{fig_pipeline}
+\caption{Overview of the system. Each photograph is classified by a fine-tuned
+EfficientNet-B0; photographs failing the OOD test are excluded, the remaining genuine
+probabilities are averaged, and a three-way verdict is returned with Grad-CAM maps}
+\label{fig:pipeline}
+\end{figure*}
+
+%% ======================================================================
+\section{Related Work}\label{sec:related}
+
+\paragraph{Hand-crafted counterfeit detection.} Early detectors used luminance
+histograms with multiple-kernel SVMs~\cite{yeh2011}, the texture of scanned background
+printing~\cite{berenguel2016}, the multispectral response of inks~\cite{baek2018}, and
+individual security features of Bangladeshi notes~\cite{uddin2016}; a mobile application
+was also proposed~\cite{dittimi2018}. These methods reach high accuracy, but they depend
+on controlled imaging (scanners or multispectral sensors) and on features tuned to one
+denomination, which limits their use with hand-held phone cameras.
+
+\paragraph{Deep learning and Bangladeshi notes.} Transfer learning from
+ImageNet~\cite{deng2009imagenet,yosinski2014transferable} lets CNNs learn from few
+images. Pham et~al. detected fake banknotes in visible-light smartphone
+images~\cite{pham2020} and later evaluated their models across datasets of several
+currencies~\cite{pham2022}, one of the few studies that tests generalisation beyond the
+training distribution. For Bangladeshi notes, denominations were recognised with neural
+networks and lightweight CNNs~\cite{jahangir2007,linkon2020}, and the BanglaTaka
+dataset~\cite{nuhash2025banglataka} targets denomination classification rather than
+authentication. Counterfeit detection became possible at scale with
+JaalTaka~\cite{piyas2025jaaltaka}, which was benchmarked with
+DenseNet121~\cite{huang2017densenet}, ResNet50~\cite{he2016resnet},
+VGG16~\cite{simonyan2015vgg}, MobileNetV2~\cite{sandler2018mobilenetv2}, and
+InceptionV3~\cite{szegedy2016inception}, and transfer learning was also applied to
+Bangladeshi counterfeits~\cite{tabassum2025}.
+These studies compare architectures by test accuracy on random splits; as summarised in
+Table~\ref{tab:related}, none of them reports OOD rejection, an explicit uncertain
+outcome, or a check for duplicates between training and test data, so a high score
+cannot be separated from memorisation of near-identical images.
+
+\paragraph{Reliable prediction.} Maximum softmax probability is a weak OOD
+signal~\cite{hendrycks2017baseline}. Stronger post-hoc detectors use Mahalanobis
+distances on network features~\cite{lee2018mahalanobis}, energy
+scores~\cite{liu2020energy}, or nearest-neighbour distances~\cite{sun2022knn}; we adapt
+the Mahalanobis approach to a low-dimensional subspace because it needs only the training
+embeddings and adds negligible cost on a CPU. Miscalibrated
+probabilities~\cite{guo2017calibration} motivate an explicit ``uncertain'' outcome, and
+Grad-CAM~\cite{selvaraju2017gradcam} shows the regions supporting a class.
+
+\paragraph{Leakage and benchmark audits.} Information shared between training and test
+data inflates reported performance~\cite{kaufman2012leakage,kapoor2023leakage}.
+Barz and Denzler found near-duplicates of test images in the training sets of CIFAR and
+showed that removing them changes model rankings~\cite{barz2020cifair}, and grouped data
+require splits that keep each group in one partition~\cite{roberts2017cv}. Shortcut
+learning~\cite{geirhos2020shortcut} adds a related risk: a network can succeed by
+exploiting acquisition artefacts. We apply these ideas to a counterfeit benchmark, where
+augmented copies were distributed as separate notes.
+
+\begin{table*}[!t]
+\caption{Scope of prior banknote studies compared with this work (\checkmark: addressed;
+--: not reported)}\label{tab:related}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lllcc}
+\toprule
+Study & Task & Approach & OOD/uncertain & Dupl. audit \\
+\midrule
+\cite{yeh2011,berenguel2016,baek2018} & Counterfeit & Hand-crafted features & -- & -- \\
+\cite{uddin2016} & Counterfeit (Tk) & Image processing & -- & -- \\
+\cite{pham2020,pham2022} & Counterfeit & CNN, smartphone & -- & -- \\
+\cite{jahangir2007,linkon2020,nuhash2025banglataka} & Denomination (Tk) & Neural net, CNN & -- & -- \\
+\cite{piyas2025jaaltaka,tabassum2025} & Counterfeit (Tk) & CNN, transfer learning & -- & -- \\
+This work & Counterfeit (Tk) & CNN, multi-view fusion & \checkmark & \checkmark \\
+\botrule
+\end{tabular*}
+\end{table*}
+
+%% ======================================================================
+\section{Materials and Methods}\label{sec:method}
+
+\subsection{Dataset}\label{sec:data}
+
+JaalTaka~\cite{piyas2025jaaltaka,jaaltaka_data} (CC~BY~4.0) contains 1{,}390 notes:
+802 genuine (398 Tk~500, 404 Tk~1000) from three national banks and 588 counterfeit
+(320 Tk~500, 268 Tk~1000) supplied by RAB. Each note was photographed six times, showing
+different segments~(Fig.~\ref{fig:samples}), with one of four smartphones (Samsung Galaxy
+A50 and M31, Redmi Note~8 and Note~9~Pro), giving 8{,}340 images, which we resized to a
+longer side of 1{,}024 pixels. According to the dataset description, 649 original notes
+(502 genuine, 147 counterfeit) were expanded to 1{,}390 by augmentation.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{fig_samples}
+\caption{The six photographs of a genuine Tk~1000 note (top) and a counterfeit Tk~500
+note (bottom) from the test split; colour, lighting, and background vary with the phone
+and session}
+\label{fig:samples}
+\end{figure*}
+
+\subsection{Evaluation protocol}\label{sec:protocol}
+
+Because the photographs of a note are correlated, we split by note: within each class,
+notes were shuffled (seed 42) and assigned 70/15/15\% to training (562 genuine, 412
+counterfeit; 5{,}844 photographs), validation, and test (120 genuine, 88 counterfeit;
+1{,}248 photographs each). Validation serves model selection and OOD calibration; the
+test split is used once. Section~\ref{sec:audit} shows that this note-disjoint split is
+\emph{not} sufficient, because distinct notes can share photographs; we therefore also
+re-split by duplicate group (Section~\ref{sec:groupsplit}). Genuine is the
+positive class. We report accuracy with a 95\% Wilson
+interval~\cite{wilson1927probable}, the counterfeit detection rate (specificity), the
+genuine acceptance rate (recall), and ROC-AUC~\cite{fawcett2006roc}, per photograph
+($n=1{,}248$) and per note ($n=208$), at threshold 0.5 unless stated otherwise.
+The Wilson interval assumes independent samples, which photographs of one note, and
+notes that share photographs, are not. We therefore also give a group-level bootstrap
+interval~\cite{efron1993bootstrap}: the 191 duplicate groups (Section~\ref{sec:audit})
+among the test notes are resampled with replacement 10{,}000 times, and the 2.5th and
+97.5th percentiles of accuracy are reported. Methods are compared on the same test notes
+with the exact McNemar test~\cite{mcnemar1947,dietterich1998tests}.
+
+\paragraph{Baselines.} To measure what fine-tuning adds, two baselines use \emph{frozen}
+ImageNet EfficientNet-B0 embeddings (L2-normalised, same preprocessing as at
+evaluation). The 1-nearest-neighbour (1-NN) baseline gives each test photograph the
+label of the training photograph with the highest cosine similarity; the linear probe is
+a class-balanced logistic regression ($C=1$) on the training photographs. For both, the
+note score is the mean of the six photograph scores, as in Eq.~(\ref{eq:fusion}).
+
+\subsection{Classifier and training}\label{sec:training}
+
+EfficientNet-B0~\cite{tan2019efficientnet}, chosen for its accuracy--cost trade-off on
+CPUs and initialised with ImageNet weights~\cite{deng2009imagenet}, maps a
+$288\times288$ input $x$ to a $1280\times9\times9$ feature map; global average pooling
+yields the embedding $\mathbf{e}=f(x)\in\mathbb{R}^{1280}$. The head is dropout
+($p=0.3$) and a linear layer:
+\begin{equation}
+p(x) = \operatorname{softmax}\!\left(\mathbf{W}\mathbf{e}+\mathbf{b}\right)_{\text{genuine}} .
+\label{eq:prob}
+\end{equation}
+The model has 4.01~M parameters. Training uses random resized crops (scale 0.35--1.0,
+aspect 0.75--1.33), rotations up to $\pm10^\circ$, colour jitter (brightness and contrast
+$\pm0.4$, saturation $\pm0.3$, hue $\pm0.04$), and Gaussian blur ($p=0.2$). At
+evaluation, the shorter side is resized to 331 pixels and the central $288\times288$
+crop is kept. The stem and first three MBConv stages are frozen with their ImageNet
+batch-norm statistics; the rest is fine-tuned with the class-weighted,
+label-smoothed~\cite{szegedy2016inception} cross-entropy
+\begin{align}
+\mathcal{L} &= -\sum_{c\in\{0,1\}} w_c\, q_c \log \hat{y}_c, \nonumber\\
+q_c &= (1-\varepsilon)\,\mathbb{1}[c=y] + \tfrac{\varepsilon}{2},
+\label{eq:loss}
+\end{align}
+with $\varepsilon=0.05$ and $w_c=N/(2N_c)$. We use AdamW~\cite{loshchilov2019adamw}
+(weight decay $10^{-4}$), a one-cycle schedule~\cite{smith2019superconvergence} (peak
+$3\times10^{-4}$, 15\% warm-up), batch size 12, and six epochs, keeping the epoch with
+the highest validation accuracy plus AUC; accuracy rose from 98.80\% after the first
+epoch to 99.04\% (AUC 0.9976) after the sixth, which was selected. Hyperparameters were
+fixed before evaluation and were not tuned on the test split; only the epoch was chosen,
+on validation data. Training took about 55~min on an Intel Core i5-12400 CPU with
+PyTorch~\cite{paszke2019pytorch}; all results come from this single run (seed 42).
+
+\subsection{Multi-view fusion and three-way decision}\label{sec:decision}
+
+Let $\mathcal{V}$ be the photographs of a note that pass the OOD gate. The note-level
+probability is the mean, a late-fusion form of multi-view pooling~\cite{su2015mvcnn},
+\begin{equation}
+\bar{p} = \frac{1}{|\mathcal{V}|}\sum_{i\in\mathcal{V}} p(x_i),
+\label{eq:fusion}
+\end{equation}
+and, for a strictness threshold $\tau\in[0.5,1)$ (default 0.7), the verdict is
+\begin{equation}
+\text{verdict} =
+\begin{cases}
+\text{not supported} & \text{if } \mathcal{V}=\emptyset,\\
+\text{genuine} & \text{if } \bar{p}\ge\tau,\\
+\text{counterfeit} & \text{if } \bar{p}<0.5,\\
+\text{uncertain} & \text{otherwise.}
+\end{cases}
+\label{eq:decision}
+\end{equation}
+Averaging needs no extra training and accepts any number of views. The asymmetry
+reflects costs: accepting a counterfeit causes a loss, whereas ``uncertain'' only asks
+the user to check the note by hand or add photographs. Users can choose
+$\tau\in\{0.6,0.7,0.85\}$ or any other value.
+
+\subsection{Out-of-distribution gate}\label{sec:ood}
+
+Following~\cite{lee2018mahalanobis}, let $\boldsymbol{\mu}$ be the mean training
+embedding and $\mathbf{U}_k$ its first $k=64$ principal directions with variances
+$\sigma_j^2$. With $\mathbf{z}=\mathbf{U}_k^{\top}(\mathbf{e}-\boldsymbol{\mu})$, we
+compute the in-subspace Mahalanobis distance and the out-of-subspace residual
+\begin{equation}
+m(\mathbf{e}) = \sum_{j=1}^{k}\frac{z_j^2}{\sigma_j^2},\qquad
+\rho(\mathbf{e}) = \left\lVert(\mathbf{e}-\boldsymbol{\mu})-\mathbf{U}_k\mathbf{z}\right\rVert_2^2 .
+\label{eq:ood}
+\end{equation}
+Thresholds $\theta_m$ and $\theta_\rho$ are the 99.5th validation percentiles. A
+photograph is accepted when $r(\mathbf{e})=\max\{m/\theta_m,\ \rho/\theta_\rho\}\le1$
+and its Laplacian variance (a texture measure) is at least 30, which rejects blank and
+blurred images. The residual catches embeddings that leave the banknote subspace, which
+the in-subspace distance alone cannot detect.
+
+\subsection{Explanation and deployment}\label{sec:deploy}
+
+Grad-CAM~\cite{selvaraju2017gradcam} is computed on the last feature map
+$A\in\mathbb{R}^{1280\times9\times9}$ for the predicted class $c$:
+\begin{equation}
+\alpha_k = \frac{1}{81}\sum_{u,v}\frac{\partial y^{c}}{\partial A^{k}_{uv}},\qquad
+L^{c} = \operatorname{ReLU}\!\Big(\sum_{k}\alpha_k A^{k}\Big),
+\label{eq:gradcam}
+\end{equation}
+where $y^c$ is the logit of class $c$; the map is normalised, upsampled, and overlaid on
+the photograph. The model runs in 37~ms per photograph (median of 30 runs, six CPU
+threads). The deployed Flask and Streamlit interfaces also average a full-frame crop;
+all reported results use the central crop only.
+
+%% ======================================================================
+\section{Results}\label{sec:results}
+
+\subsection{Main results and baselines}\label{sec:main}
+
+Per note, the system rejects 86 of 88 counterfeits and accepts 118 of 120 genuine notes~(Table~\ref{tab:main},~Fig.~\ref{fig:confusion}), and both ROC curves in~Fig.~\ref{fig:roc} rise almost vertically. The per-note confusion matrix equals the
+per-photograph matrix divided by six, and each view position alone reaches 98.08\%:
+every error comes from all six photographs of one of four notes. Because the errors are
+clustered, the group-bootstrap interval of the per-photograph accuracy (96.10--99.53\%)
+is about twice as wide as the Wilson interval that treats the 1{,}248 photographs as
+independent (97.15--98.70\%); the effective sample size is the number of distinct notes,
+not of photographs.
+
+\begin{table*}[!t]
+\caption{Test results of the proposed system (threshold 0.5)}\label{tab:main}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcc}
+\toprule
+Metric & Per photograph & Per note (6 views) \\
+\midrule
+Samples (genuine / counterfeit) & 1{,}248 (720 / 528) & 208 (120 / 88) \\
+Accuracy (\%) & 98.08 & 98.08 \\
+\quad 95\% Wilson CI (\%) & 97.15--98.70 & 95.16--99.25 \\
+\quad 95\% group-bootstrap CI (\%) & 96.10--99.53 & 96.10--99.53 \\
+Counterfeit detection (\%) & 97.73 & 97.73 (86/88) \\
+Genuine acceptance (\%) & 98.33 & 98.33 (118/120) \\
+Balanced accuracy (\%) & 98.03 & 98.03 \\
+F1, genuine class & 0.983 & 0.983 \\
+ROC-AUC & 0.990 & 0.994 \\
+\botrule
+\end{tabular*}
+\end{table*}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_confusion}
+\caption{Test confusion matrices per photograph (left) and per note (right)}
+\label{fig:confusion}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_roc}
+\caption{Test ROC curves for per-note fusion, single photographs, and the occlusion
+diagnostics of Section~\ref{sec:shortcut}}
+\label{fig:roc}
+\end{figure}
+
+Against the frozen-feature baselines of Section~\ref{sec:protocol}~(Table~\ref{tab:baselines}),
+fine-tuning adds 1.4--1.6 points of per-photograph accuracy, but at note level the probe
+matches it and 1-NN errs on only six notes. Neither note-level difference is
+significant: the model is right and 1-NN wrong on two notes, never the reverse (exact
+McNemar $p=0.50$), and the model and the probe err on the same four notes ($p=1.0$).
+The JaalTaka authors' results (97.4--98.9\%~\cite{piyas2025jaaltaka}) used a different
+split and are not directly comparable; we did not retrain their five CNNs, because
+Section~\ref{sec:audit} shows that the remaining errors are label noise that no
+architecture can resolve.
+
+\begin{table*}[!t]
+\caption{Comparison with frozen-feature baselines on the test split}\label{tab:baselines}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
+\toprule
+& \multicolumn{2}{@{}c@{}}{Per photograph} & \multicolumn{2}{@{}c@{}}{Per note} \\
+\cmidrule{2-3}\cmidrule{4-5}
+Method & Acc.\ (\%) & AUC & Acc.\ (\%) & AUC \\
+\midrule
+1-NN, frozen ImageNet features & 96.71 & 0.967 & 97.12 & 0.979 \\
+Linear probe, frozen features  & 96.47 & 0.981 & 98.08 & 0.983 \\
+Fine-tuned EfficientNet-B0 (ours) & \textbf{98.08} & \textbf{0.990} & \textbf{98.08} & \textbf{0.994} \\
+\botrule
+\end{tabular*}
+\end{table*}
+
+\subsection{Fusion and the strictness threshold}\label{sec:threshold}
+
+Over all $\binom{6}{k}$ subsets of $k$ views, accuracy stays at 98.08\% while the mean
+AUC rises monotonically from 0.9900 ($k=1$) through 0.9912, 0.9917, 0.9925, and 0.9930
+to 0.9939 ($k=6$): fusion makes the ranking of notes more reliable. The fused scores are
+strongly bimodal~(Fig.~\ref{fig:scores}): correctly classified genuine notes have
+$\bar{p}>0.86$ and counterfeits $\bar{p}<0.10$, so outcomes are unchanged for
+$\tau\le0.85$, and at $\tau=0.90$ one genuine note (0.8\%) becomes ``uncertain''. The two
+accepted counterfeits ($\bar{p}\approx0.95$) would need $\tau>0.954$, which would send
+most genuine notes to manual inspection.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{fig_scores}
+\caption{\textbf{a} Fused genuine probability $\bar{p}$ of the 208 test notes.
+\textbf{b} Share of test notes accepted, ``uncertain'', or wrongly accepted versus the
+threshold $\tau$}
+\label{fig:scores}
+\end{figure*}
+
+\subsection{Out-of-distribution gate}\label{sec:oodres}
+
+The gate rejects 4 of 1{,}248 test photographs (0.32\%) versus 0.72\% on validation,
+with a median test ratio of 0.26~(Fig.~\ref{fig:ood}); no test note was ``not
+supported''. In a preliminary check, it rejected 100 of 105 photographs of other
+denominations (Tk~2--200) and blank, noise, and unrelated images; a systematic OOD
+benchmark remains future work.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_ood}
+\caption{OOD ratio $r(\mathbf{e})$ of validation and test photographs; the dashed line
+is the rejection limit}
+\label{fig:ood}
+\end{figure}
+
+\subsection{Visual explanations}\label{sec:gradcam}
+
+In~Fig.~\ref{fig:gradcam}, Grad-CAM concentrates on the portrait and the denomination
+and ornament panels for correct decisions, and also on the security band for the
+counterfeit in row~b. The wrongly accepted note in row~c looks genuine to the model, as
+expected because an identical copy appears in training labelled genuine
+(Section~\ref{sec:audit}).
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{fig_gradcam}
+\caption{Grad-CAM on test notes (views~1 and~2). \textbf{a} Genuine, accepted.
+\textbf{b} Counterfeit, rejected. \textbf{c} Counterfeit, wrongly accepted; its
+photographs occur in training under the genuine label}
+\label{fig:gradcam}
+\end{figure*}
+
+\subsection{Shortcut diagnostic}\label{sec:shortcut}
+
+As shown in~Fig.~\ref{fig:shortcut}, we blacked out either the centre (keeping a 20\%
+border) or the border of each test input. Hiding the border gives 88.94\% accuracy (AUC
+0.957). Hiding the centre gives 75.48\%, as most genuine photographs are rejected
+(acceptance 58.47\%), yet the AUC remains 0.959 and 98.67\% of counterfeits are
+recognised. The border, which holds the note's margins but often also the table or hand
+beneath it, thus suffices to rank most photographs. Because genuine and counterfeit
+notes came from different sources (banks and RAB), capture conditions may contribute to
+decisions~\cite{geirhos2020shortcut}.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{fig_shortcut}
+\caption{Occlusion diagnostic. \textbf{a}--\textbf{c} Inputs with the centre or the
+20\% border hidden. \textbf{d} Per-photograph test results under each condition}
+\label{fig:shortcut}
+\end{figure*}
+
+\subsection{Benchmark audit: duplicates and label conflicts}\label{sec:audit}
+
+The perfect agreement between a note's photographs, the strong frozen baselines, and the
+documented augmentation led us to search for duplicates. For every pair of notes, we
+computed the normalised cross-correlation (NCC) of $48\times48$ grey-scale thumbnails of
+corresponding views, averaged over the six views and maximised over flips. The
+best-match distribution is bimodal~(Fig.~\ref{fig:leakage}a): for validation and test
+notes, no match lies between 0.963 and 0.997. We therefore grouped notes with
+NCC~$>0.98$~(Table~\ref{tab:audit}). The grouping is stable: any threshold from 0.95 to
+0.99 yields 843--846 groups, the same 12 label-conflict groups, and 116--118 test notes
+with a copy in training or validation. At 0.90 the groups merge to 709, closer to the 649
+original notes in the dataset description. Some augmented copies therefore differ more
+than a near-identical photograph, and our counts are a \emph{lower} bound on duplication.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{fig_leakage}
+\caption{Duplicate audit. \textbf{a} Best NCC match of each test note to any training
+note; dashed line: threshold 0.98. \textbf{b}--\textbf{d} A test note (top) and its
+matching training note (bottom); green frame: genuine, red: counterfeit. \textbf{b}
+Augmented copy, same label. \textbf{c}, \textbf{d} Identical photographs with opposite
+labels}
+\label{fig:leakage}
+\end{figure*}
+
+\begin{table}[!t]
+\caption{Duplicate audit of JaalTaka (pixel NCC $>0.98$ over six views)}\label{tab:audit}
+\footnotesize
+\begin{tabular*}{\columnwidth}{@{\extracolsep\fill}lr}
+\toprule
+Quantity & Value \\
+\midrule
+Notes / distinct photograph sets & 1{,}390 / 846 \\
+Groups of size 1 / 2 / 3 & 449 / 250 / 147 \\
+Notes sharing photographs with another & 941 (67.7\%) \\
+Counterfeit-only / genuine-only groups & 289 / 545 \\
+Groups containing \emph{both} labels & 12 (31 notes) \\
+\midrule
+Test notes with a copy in train/val & 116/208 (55.8\%) \\
+\quad counterfeit / genuine & 60/88 / 56/120 \\
+Test notes in label-conflict groups & 6 \\
+Test errors due to label conflicts & 4 of 4 \\
+\botrule
+\end{tabular*}
+\end{table}
+
+The augmented copies were thus stored as independent notes, and a note-level split
+places copies of 55.8\% of test notes in training or validation. Twelve groups contain
+genuine- and counterfeit-labelled copies of the \emph{same} photographs (e.g., genuine
+notes 400--406 duplicate counterfeit notes 106--112 and 547--553, and counterfeit notes
+400 and 403--406 duplicate genuine notes 802 and 1--4), so at least one label per group
+is wrong; genuine-labelled notes 402 and 403 carry serial number 1843834, which also
+appears on counterfeit-labelled notes. \emph{All four} test errors are notes from these
+groups, each predicted with the label of its training copy. On the 92 \emph{clean} test
+notes, whose group has no member in training or validation, and on the 202 notes outside
+label-conflict groups, all three methods are error-free~(Table~\ref{tab:clean}). The
+98.08\% accuracy is thus limited by label noise, not by the model, and the task is
+saturated even for 1-NN on generic features.
+
+\subsection{Re-evaluation on a group-aware split}\label{sec:groupsplit}
+
+To remove the leakage, we re-split the data by duplicate group: the 31 notes of the 12
+label-conflict groups were excluded, and the remaining groups were shuffled within each
+class (seed 42) and assigned to training (949 notes in 584 groups), validation (205
+notes, 124 groups), and test (205 notes, 126 groups: 119 genuine, 86 counterfeit), so
+that no photograph set occurs in two splits~\cite{roberts2017cv}. Table~\ref{tab:group}
+shows that the task does not become harder. 1-NN on frozen ImageNet features classifies
+all 205 test notes correctly (95\% Wilson CI 98.16--100\%), although none of them has a
+copy in training, and the linear probe errs on three notes. Distinct notes of the same
+class are thus still close to each other in a generic feature space, consistent with
+shared counterfeit batches and capture sessions rather than with learned security
+features (Section~\ref{sec:shortcut}). A group-aware split removes copies but not this
+correlation; only holding out whole counterfeit families and devices can.
+
+\begin{table*}[!t]
+\caption{Test results on the group-aware split (205 notes, no shared photograph sets)}\label{tab:group}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccc}
+\toprule
+& \multicolumn{2}{@{}c@{}}{Per photograph} & \multicolumn{2}{@{}c@{}}{Per note} \\
+\cmidrule{2-3}\cmidrule{4-5}
+Method & Acc.\ (\%) & AUC & Acc.\ (\%) [95\% Wilson CI] & AUC \\
+\midrule
+1-NN, frozen ImageNet features & 99.84 & 0.998 & 100.0 [98.16--100] & 1.000 \\
+Linear probe, frozen features  & 97.15 & 0.995 & 98.54 [95.79--99.50] & 1.000 \\
+%% GROUP_MODEL_ROW: fine-tuned EfficientNet-B0 trained with train_ai.py --split group
+%% (best epoch saved; final test evaluation pending, see scripts/eval_group.py)
+\botrule
+\end{tabular*}
+\end{table*}
+
+\begin{table*}[!t]
+\caption{Note-level accuracy (\%) on audited test subsets}\label{tab:clean}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lccc}
+\toprule
+Test subset & All & Without label conflicts & Clean (no copy) \\
+\midrule
+Notes (genuine / counterfeit) & 208 (120/88) & 202 (117/85) & 92 (64/28) \\
+\midrule
+1-NN, frozen features & 97.12 & 100.0 & 100.0 \\
+Linear probe, frozen & 98.08 & 100.0 & 100.0 \\
+Ours (fine-tuned) & 98.08 & 100.0 & 100.0 \\
+\quad 95\% Wilson CI & 95.16--99.25 & 98.13--100 & 95.99--100 \\
+\botrule
+\end{tabular*}
+\end{table*}
+
+%% ======================================================================
+\section{Discussion}\label{sec:discussion}
+
+Within JaalTaka, the system is error-free once label conflicts are removed (lower 95\%
+bound 96.0\% on the 92 clean notes), its errors are fully explained, and it runs in real
+time on a CPU. This does not show that it will detect \emph{new} counterfeits: the 588
+counterfeits collapse into 289 photograph sets, those we inspected share a few serial
+numbers, and they were collected separately from the genuine notes. A model, even 1-NN,
+can therefore succeed by recognising known batches or capture sessions, as the occlusion
+test suggests. The saturated benchmark also cannot rank methods, since differences
+between published CNNs are smaller than its label noise.
+
+These findings answer RQ1. The 97.4--98.9\% accuracies of the five CNNs in the original
+benchmark~\cite{piyas2025jaaltaka} and our 98.08\% all lie within the range that label
+noise allows, and the paired tests find no difference between a fine-tuned network and
+generic features. This mirrors the near-duplicate problem that Barz and Denzler found in
+CIFAR~\cite{barz2020cifair} and the leakage pattern described by Kapoor and
+Narayanan~\cite{kapoor2023leakage}: when copies of test items are in training data,
+accuracy measures recall of the copies. Removing the copies
+(Section~
+ef{sec:groupsplit}) does not make the task harder, which shows that the
+remaining signal separates batches and sessions, not necessarily genuine from forged
+security features. For RQ2, the system meets requirements
+(i)--(iii) at 37~ms per photograph on a CPU, and the three-way decision and OOD gate cost
+no accuracy on in-distribution notes. Whether its accuracy carries over to new
+counterfeits cannot be decided with JaalTaka.
+
+We recommend (i)~removing or relabelling the 12 conflict groups; (ii)~splitting by
+duplicate group, for which we release our list; (iii)~holding out counterfeit families
+(e.g., by serial number or seizure batch) and capture devices, to measure generalisation
+to unseen forgeries and phones; and (iv)~reporting confidence intervals and
+frozen-feature baselines, which immediately reveal saturation.
+
+\subsection{Limitations}\label{sec:limits}
+
+\emph{Scope.} The system covers only Tk~500 and Tk~1000. Visible-light photographs
+cannot capture ultraviolet, magnetic, or tactile features, so the output is decision
+support and suspicious notes should be confirmed at a bank. Scans and distant
+photographs are mostly rejected, and the data come from four phone models only.
+
+\emph{Internal validity.} All results come from one training run (seed 42); we did not
+measure variation across seeds. The validation split shares duplicates with training,
+so the selected epoch and the OOD thresholds were calibrated on partly leaked data. The
+OOD evaluation is preliminary (105 images, no comparison with other OOD scores), and
+probabilities are not calibrated on independent data~\cite{guo2017calibration}.
+Grad-CAM maps are shown for selected notes and were not evaluated quantitatively.
+
+\emph{Audit validity.} Pixel NCC on thumbnails detects near-identical copies but can
+miss copies changed by strong cropping or geometric augmentation, as the drop to 709
+groups at a threshold of 0.90 indicates; the reported leakage is therefore a lower bound.
+We cannot tell which label is wrong in the 12 conflict groups without the physical
+notes, and we compared with the original CNNs only through their published numbers.
+Holding out counterfeit families and capture devices is the most important next step.
+
+%% ======================================================================
+\section{Conclusion}\label{sec:conclusion}
+
+Our audit shows that JaalTaka, the public benchmark for Bangladeshi counterfeit
+detection, is saturated: its 1{,}390 notes form 846 distinct photograph sets, label
+conflicts among duplicated notes explain every test error, and nearest-neighbour
+classification on generic features is error-free both on duplicate-free test notes and
+on a group-aware split. Reported accuracies near 98\% therefore cannot rank methods or
+predict performance on new counterfeits. Our smartphone system combines multi-view
+fusion, a three-way decision, an OOD gate, and Grad-CAM, runs in real time on a CPU, and
+reaches 98.08\% note-level accuracy (AUC 0.994). Progress now depends on evaluation data
+that separates counterfeit families, sessions, and devices; we release the duplicate
+groups and splits to support it.
+
+%% ======================================================================
+\backmatter
+
+\bmhead{Acknowledgements}
+The authors thank the Department of Software Engineering, Daffodil International
+University, for its support and the JaalTaka creators for releasing their data.
+
+\section*{Declarations}
+
+\begin{itemize}
+\item \textbf{Funding:} This research received no external funding.
+\item \textbf{Competing interests:} The authors declare no competing interests.
+\item \textbf{Ethics approval and consent to participate:} Not applicable. This study
+involved no human participants, personal data, or animals; it used only banknote
+photographs from a public CC~BY~4.0 dataset~\cite{jaaltaka_data}.
+\item \textbf{Consent for publication:} Not applicable.
+\item \textbf{Data availability:} JaalTaka is available from Mendeley
+Data~\cite{jaaltaka_data}. The duplicate groups, the note-level and group-aware split
+assignments, and the per-note test predictions are provided as Supplementary
+Information with this article.
+\item \textbf{Materials availability:} Not applicable.
+\item \textbf{Code availability:} The training, evaluation, and audit scripts are
+provided as Supplementary Information with this article; the trained model weights are
+available from the corresponding author.
+\item \textbf{Author contributions:} D.~Biswas: conceptualisation, software,
+experiments, analysis, and original draft. I.~Mahmud: supervision, methodology review,
+and manuscript editing.
+\item \textbf{Use of generative AI:} An AI assistant (Claude, Anthropic) was used to
+help write analysis scripts and to copy-edit the text. The authors designed the study,
+reviewed and ran all code, verified every result and reference, and take full
+responsibility for the content.
+\end{itemize}
+
+%% ----------------------------------------------------------------------
+\bibliography{references}
+
+\end{document}

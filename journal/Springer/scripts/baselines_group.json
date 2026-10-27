@@ -1,0 +1,27 @@
+{
+ "knn1_per_photo": {
+  "accuracy": 0.9983739837398374,
+  "auc": 0.998062015503876,
+  "fake_detection": 0.9961240310077519,
+  "genuine_acceptance": 1.0
+ },
+ "knn1_per_note": {
+  "accuracy": 1.0,
+  "auc": 1.0,
+  "fake_detection": 1.0,
+  "genuine_acceptance": 1.0
+ },
+ "linear_probe_per_photo": {
+  "accuracy": 0.9715447154471545,
+  "auc": 0.9953097518076999,
+  "fake_detection": 0.9573643410852714,
+  "genuine_acceptance": 0.9817927170868347
+ },
+ "linear_probe_per_note": {
+  "accuracy": 0.9853658536585366,
+  "auc": 1.0,
+  "fake_detection": 0.9651162790697675,
+  "genuine_acceptance": 1.0
+ },
+ "test_notes": 205
+}

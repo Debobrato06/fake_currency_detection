@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<title>PhD Interview Guide — Fake Taka Detection</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+  :root { --ink:#1b2430; --muted:#5b6675; --accent:#0f5e9c; --accent2:#0b7a5a; --warn:#a4461b; --line:#d8dee6; --soft:#f3f6f9; }
+  * { box-sizing: border-box; }
+  body { font-family: "Nirmala UI", "Kalpurush", "Segoe UI", sans-serif; color: var(--ink); font-size: 10.6pt; line-height: 1.55; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4px; color: var(--accent); line-height: 1.25; }
+  h2 { font-size: 15pt; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 3px; margin: 20px 0 10px; break-after: avoid; }
+  h3 { font-size: 12pt; margin: 14px 0 6px; color: var(--ink); break-after: avoid; }
+  p { margin: 5px 0; }
+  ul, ol { margin: 4px 0 6px; padding-left: 20px; }
+  li { margin: 2px 0; }
+  .page-break { break-before: page; }
+  .cover { border: 2px solid var(--accent); border-radius: 10px; padding: 20px 22px; margin-bottom: 14px; background: linear-gradient(180deg,#f5f9fd,#fff); }
+  .cover .sub { color: var(--muted); font-size: 11pt; }
+  .meta { margin-top: 10px; font-size: 9.5pt; color: var(--muted); }
+  .box { border-left: 4px solid var(--accent); background: var(--soft); padding: 8px 12px; margin: 8px 0; border-radius: 0 6px 6px 0; break-inside: avoid; }
+  .box.green { border-color: var(--accent2); background: #eef8f3; }
+  .box.warn { border-color: var(--warn); background: #fbf1ec; }
+  .big { font-size: 12pt; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 9.6pt; break-inside: avoid; }
+  th, td { border: 1px solid var(--line); padding: 4px 7px; vertical-align: top; text-align: left; }
+  th { background: #e7eef6; }
+  td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .qa { border: 1px solid var(--line); border-radius: 7px; padding: 7px 11px; margin: 7px 0; break-inside: avoid; }
+  .q { font-weight: 700; color: var(--accent); }
+  .q::before { content: "প্রশ্ন: "; color: var(--muted); font-weight: 600; }
+  .a { margin-top: 3px; }
+  .en { margin-top: 4px; font-family: "Segoe UI", sans-serif; font-size: 9.6pt; color: #234; background: #f6f8fb; border-radius: 5px; padding: 4px 8px; }
+  .en::before { content: "Say in English → "; font-weight: 700; color: var(--accent2); }
+  .tag { display: inline-block; font-size: 8.5pt; padding: 1px 6px; border-radius: 9px; background: #e2ecf6; color: var(--accent); margin-right: 4px; font-weight: 600; }
+  .tag.hi { background: #e2f3ea; color: var(--accent2); }
+  .tag.mid { background: #fff1d6; color: #8a5a00; }
+  code, .mono { font-family: Consolas, monospace; font-size: 9.4pt; background: #eef1f5; padding: 0 3px; border-radius: 3px; }
+  .flow { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 8px 0; font-size: 9.4pt; }
+  .flow span.s { border: 1.5px solid var(--accent); border-radius: 6px; padding: 4px 8px; background: #fff; }
+  .flow span.ar { color: var(--muted); font-weight: 700; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .card { border: 1px solid var(--line); border-radius: 7px; padding: 7px 10px; break-inside: avoid; }
+  .card h4 { margin: 0 0 3px; font-size: 10.8pt; color: var(--accent2); }
+  .pitch { font-family: "Segoe UI", sans-serif; font-size: 10.2pt; background: #fbfcfe; border: 1px dashed var(--accent); border-radius: 8px; padding: 10px 14px; }
+  .small { font-size: 9pt; color: var(--muted); }
+  .toc li { margin: 1px 0; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>PhD Interview Preparation Guide</h1>
+  <div class="sub"><b>Reliable Smartphone-Based Detection of Counterfeit Bangladeshi Banknotes:</b><br>
+  Multi-View Deep Learning with Out-of-Distribution Rejection and a Benchmark Audit</div>
+  <div class="meta">Debobrato Biswas · Supervisor: Imran Mahmud · Dept. of Software Engineering, Daffodil International University<br>
+  Novelty, নতুন কী করেছি, সামনে কী update করা যায়, আর interview-এর সম্ভাব্য প্রশ্নের উত্তর এক জায়গায়</div>
+</div>
+
+<h3>সূচিপত্র</h3>
+<ol class="toc">
+  <li>এক নজরে: paper-টা কী, আর এর novelty কোথায়</li>
+  <li>Novelty-র তিনটা স্তর (বিস্তারিত)</li>
+  <li>আমাদের system-এ নতুন কী করেছি (আগের কাজের সাথে তুলনা)</li>
+  <li>System কীভাবে কাজ করে: step-by-step</li>
+  <li>মুখস্থ রাখার মতো সংখ্যা (cheat sheet)</li>
+  <li>Next features ও future update (system + research)</li>
+  <li>PhD interview প্রশ্নোত্তর (৪০+ প্রশ্ন)</li>
+  <li>২ মিনিটের research pitch (English)</li>
+  <li>Interview-এর শেষ মুহূর্তের tips</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>1. এক নজরে</h2>
+
+<div class="box big">
+এক লাইনে: আমরা একটা smartphone-ভিত্তিক Tk 500 / Tk 1000 authenticator বানিয়েছি, যেটা reject করতে পারে, "uncertain" বলতে পারে, আর সিদ্ধান্তের কারণ দেখাতে পারে। তারপর benchmark-টা audit করে দেখিয়েছি যে JaalTaka-র 98% accuracy আসলে duplicate আর label conflict দিয়ে সীমাবদ্ধ, আর benchmark-টা saturated।
+</div>
+
+<div class="grid2">
+  <div class="card"><h4>Problem</h4>Tk 500/1000-এর জাল নোট দোকানদার আর সাধারণ মানুষের ক্ষতি করে। UV/IR/magnetic machine ব্যয়বহুল, আর খালি চোখে যাচাই করা ধীর ও অনির্ভরযোগ্য। Smartphone সবার হাতেই আছে।</div>
+  <div class="card"><h4>Gap</h4>আগের সব কাজ শুধু accuracy report করেছে। কেউ OOD input, uncertainty বা dataset duplicate মূল্যায়ন করেনি। ফলে আগের কাজগুলোর high accuracy বিশ্বাসযোগ্য কিনা, সেটা অজানা ছিল।</div>
+  <div class="card"><h4>Solution</h4>EfficientNet-B0, ছয়টা view-এর fusion, three-way verdict, PCA-Mahalanobis OOD gate, Grad-CAM, CPU-তে 37 ms/photo।</div>
+  <div class="card"><h4>Key finding</h4>1,390টা note আসলে মাত্র 846টা আলাদা photo set। 12টা group-এ একই photo দুই label পেয়েছে। 4টা test error-এর 4টাই সেখান থেকে। Clean note-এ সব method 100%।</div>
+</div>
+
+<!-- ============================================================ -->
+<h2>2. Novelty-র তিনটা স্তর</h2>
+
+<h3><span class="tag hi">সবচেয়ে শক্ত</span> স্তর ১: Benchmark Audit, আমাদের মূল novelty</h3>
+<p>আমরাই প্রথম JaalTaka dataset-এর systematic duplicate audit করেছি। Dataset-এর authors-ও এটা করেননি।</p>
+<ul>
+  <li><b>পদ্ধতি:</b> প্রতিটা note জোড়ার জন্য ছয়টা view-এর 48×48 grayscale thumbnail থেকে <b>NCC (normalized cross-correlation)</b> বের করেছি, ছয় view-এ গড় নিয়েছি, আর flip সহ সর্বোচ্চ মান নিয়েছি। Best-match distribution পরিষ্কার bimodal: 0.963 থেকে 0.997-এর মাঝে কোনো মান নেই। তাই threshold 0.98 বসানো যুক্তিসঙ্গত।</li>
+  <li><b>Duplicate:</b> 1,390টা note → <b>846টা আলাদা group</b>। 941টা note-এর (67.7%) photo অন্য note-এর সাথে share হয়েছে। Dataset description বলছে 649টা আসল note augmentation করে 1,390 বানানো হয়েছিল, আর সেই copy-গুলো আলাদা note হিসেবে রাখা।</li>
+  <li><b>Leakage:</b> note-disjoint split-এও <b>208টা test note-এর 116টার (55.8%)</b> copy train বা val-এ আছে। শিক্ষা: <i>"note-wise split যথেষ্ট না, group-wise split লাগবে।"</i></li>
+  <li><b>Label conflict:</b> <b>12টা group (31টা note)</b>-এ হুবহু একই photo genuine ও counterfeit দুই label-এই আছে। যেমন genuine-labelled note 402 আর 403-এ serial 1843834, যেটা counterfeit-labelled note-এও আছে।</li>
+  <li><b>Error-এর ব্যাখ্যা:</b> <b>4টা test error-এর 4টাই</b> conflict group থেকে, আর প্রতিটার prediction তার training copy-র label। Model আসলে ভুল করছে না, সমস্যাটা label noise।</li>
+  <li><b>Saturation:</b> 92টা clean note-এ (যাদের কোনো copy train বা val-এ নেই) আমাদের model, linear probe আর 1-NN, <b>তিনটাই 100%</b>। তাই এই benchmark-এ CNN-গুলোর মধ্যে তুলনা অর্থহীন।</li>
+</ul>
+
+<h3><span class="tag mid">মাঝারি</span> স্তর ২: Shortcut Diagnostic</h3>
+<ul>
+  <li>Note-এর মাঝখান কালো করে শুধু 20% border রাখলেও <b>AUC 0.959</b> থাকে, আর <b>98.67%</b> counterfeit ধরা পড়ে।</li>
+  <li>মানে model background, টেবিল, হাত আর আলোর মতো capture condition-ও ব্যবহার করছে। কারণ genuine note এসেছে bank থেকে আর fake এসেছে RAB থেকে, আলাদা session-এ ছবি তোলা। এটা <b>source bias / shortcut learning</b> (Geirhos et al. 2020)।</li>
+  <li>এই সমস্যা আগে কেউ report করেনি।</li>
+</ul>
+
+<h3><span class="tag">integration</span> স্তর ৩: Reliable system design</h3>
+<p>আলাদা technique-গুলো নতুন না। নতুন হলো এগুলোকে <b>একসাথে</b> জুড়ে Bangladeshi taka-র জন্য প্রথমবার মূল্যায়ন করা, আর প্রতিটার আলাদা analysis দেওয়া (threshold sweep, view-subset analysis, OOD ratio distribution)।</p>
+
+<div class="box warn"><b>সৎ অবস্থান (interview-এ এটাই বলবেন):</b> "আমাদের claim নতুন architecture না। আমাদের claim: (ক) benchmark-এর প্রথম audit, যেটা প্রমাণ করে ceiling হলো label noise; (খ) এমন একটা reliable pipeline, যেটা প্রয়োজনে বলতে পারে 'জানি না'।"</div>
+
+<!-- ============================================================ -->
+<h2 class="page-break">3. আমাদের system-এ নতুন কী করেছি</h2>
+
+<table>
+  <tr><th style="width:24%">বিষয়</th><th style="width:33%">আগের কাজ (JaalTaka paper ও অন্যরা)</th><th>আমাদের কাজ</th></tr>
+  <tr><td>Evaluation unit</td><td>সাধারণত per-image split</td><td><b>Per-note split</b>, তার পরে duplicate audit। <b>Group-aware split</b>-এর প্রস্তাব।</td></tr>
+  <tr><td>Input</td><td>একটা ছবি → একটা উত্তর</td><td><b>১–৬টা ছবির late fusion</b> (mean)। View যত বাড়ে, AUC তত বাড়ে: 0.9900 → 0.9939।</td></tr>
+  <tr><td>Output</td><td>Genuine / Fake (binary)</td><td><b>Genuine / Uncertain / Counterfeit / Not supported</b>। ব্যবহারকারী strictness τ ঠিক করতে পারে (0.6 / 0.7 / 0.85)।</td></tr>
+  <tr><td>অপরিচিত input</td><td>যেকোনো ছবিতেই উত্তর দেয়, ভুল হলেও</td><td><b>OOD gate</b>: PCA-subspace Mahalanobis + residual + blur check। অন্য note বা object reject করে।</td></tr>
+  <tr><td>Explainability</td><td>নেই বা সীমিত</td><td><b>Grad-CAM</b> overlay, আর ভুল prediction-কে duplicate-এর সাথে মিলিয়ে ব্যাখ্যা।</td></tr>
+  <tr><td>Baseline</td><td>শুধু বিভিন্ন CNN-এর তুলনা</td><td><b>Frozen-feature 1-NN ও linear probe</b>। এগুলোই saturation ধরিয়ে দেয়।</td></tr>
+  <tr><td>Statistics</td><td>Point accuracy</td><td><b>95% Wilson CI</b>, ROC-AUC, balanced accuracy, per-photo ও per-note।</td></tr>
+  <tr><td>Robustness check</td><td>নেই</td><td><b>Occlusion test</b> (centre বা border ঢেকে)।</td></tr>
+  <tr><td>Deployment</td><td>সাধারণত শুধু notebook</td><td><b>CPU-তে real-time</b> (37 ms/photo), Streamlit Pro UI + Flask REST API (<code>POST /analyze</code>)।</td></tr>
+</table>
+
+<h3>Web app-এ যা আছে (demo দেখানোর সময় বলবেন)</h3>
+<ul>
+  <li><b>Upload বা Camera</b> থেকে একই note-এর ১–৬টা ছবি।</li>
+  <li><b>Strictness preset</b> (threshold slider), <b>gauge chart</b>, আর প্রতিটা ছবির probability chart।</li>
+  <li><b>Photo inspector</b>: AI focus, Grad-CAM overlay (alpha slider দিয়ে blend), edge map, original।</li>
+  <li><b>Scan history</b> (শেষ ১০টা), আর <b>report download</b> (.txt ও .json)।</li>
+  <li><b>এক ক্লিকে light/dark theme</b>, আর <b>Model page</b>-এ সব evaluation metric-এর interactive chart।</li>
+  <li>Flask API: <code>GET /status</code> দিয়ে model-এর অবস্থা, <code>POST /analyze</code> দিয়ে analysis। Threshold 0.5–0.99-এর মধ্যে রাখা হয়।</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>4. System কীভাবে কাজ করে</h2>
+
+<div class="flow">
+  <span class="s">১–৬টা photo</span><span class="ar">→</span>
+  <span class="s">Resize 331, centre crop 288</span><span class="ar">→</span>
+  <span class="s">EfficientNet-B0 → 1280-d embedding</span><span class="ar">→</span>
+  <span class="s">OOD gate (r ≤ 1, texture ≥ 30)</span><span class="ar">→</span>
+  <span class="s">p(genuine) গড়</span><span class="ar">→</span>
+  <span class="s">Three-way verdict (τ)</span><span class="ar">→</span>
+  <span class="s">Grad-CAM</span>
+</div>
+
+<table>
+  <tr><th style="width:22%">ধাপ</th><th>কী হয়, আর কেন</th></tr>
+  <tr><td>1. Dataset</td><td>JaalTaka: 1,390টা note (802 genuine, 588 counterfeit, যেগুলো RAB জব্দ করেছে), প্রতিটার ৬টা photo = 8,340টা ছবি, চারটা phone দিয়ে তোলা। Split 70/15/15 per note, seed 42।</td></tr>
+  <tr><td>2. Model</td><td>EfficientNet-B0 (ImageNet pretrained, 4.01M parameter)। CPU-তে accuracy আর cost-এর ভালো trade-off দেয়। Stem আর প্রথম ৩টা MBConv stage frozen। Head: dropout 0.3 + linear।</td></tr>
+  <tr><td>3. Training</td><td>Augmentation: random resized crop, ±10° rotation, color jitter, blur। Loss: class-weighted + label smoothing (ε = 0.05)। AdamW, one-cycle LR (peak 3e-4), batch 12, ৬ epoch। i5-12400 CPU-তে প্রায় 55 মিনিট।</td></tr>
+  <tr><td>4. Fusion</td><td><span class="mono">p̄ = mean p(xᵢ)</span>, শুধু OOD pass করা ছবিগুলোর উপর। এর জন্য আলাদা training লাগে না, আর যেকোনো সংখ্যক ছবি নেওয়া যায় (MVCNN-এর late fusion রূপ)।</td></tr>
+  <tr><td>5. Decision</td><td>p̄ ≥ τ হলে GENUINE; p̄ &lt; 0.5 হলে COUNTERFEIT; মাঝখানে হলে UNCERTAIN; কোনো ছবি pass না করলে NOT SUPPORTED। <b>Asymmetric</b>, কারণ জাল নোট নিয়ে নেওয়া আসল ক্ষতি, আর "uncertain" মানে শুধু হাতে দেখে নেওয়া।</td></tr>
+  <tr><td>6. OOD gate</td><td>Training embedding-এর mean μ আর top-64 PCA direction। <b>m</b> = subspace-এর ভেতরে Mahalanobis distance, <b>ρ</b> = subspace-এর বাইরের residual। Threshold = validation-এর 99.5th percentile। <span class="mono">r = max(m/θm, ρ/θρ) ≤ 1</span> আর Laplacian variance ≥ 30 হলে ছবি গ্রহণ। Residual দরকার, কারণ subspace থেকে বের হয়ে যাওয়া embedding শুধু m দিয়ে ধরা যায় না।</td></tr>
+  <tr><td>7. Grad-CAM</td><td>শেষ feature map (1280×9×9)-এ gradient-weighted activation দিয়ে heatmap, যেটা দেখায় সিদ্ধান্তটা note-এর কোন অংশ থেকে এসেছে।</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. মুখস্থ রাখার মতো সংখ্যা</h2>
+<table>
+  <tr><th>কী</th><th>মান</th><th>কী</th><th>মান</th></tr>
+  <tr><td>Test accuracy (note)</td><td class="num">98.08%</td><td>95% Wilson CI</td><td class="num">95.16–99.25%</td></tr>
+  <tr><td>ROC-AUC (note / photo)</td><td class="num">0.994 / 0.990</td><td>Inference</td><td class="num">37 ms/photo (CPU)</td></tr>
+  <tr><td>Counterfeit ধরা পড়েছে</td><td class="num">86/88 (97.73%)</td><td>Genuine গ্রহণ</td><td class="num">118/120 (98.33%)</td></tr>
+  <tr><td>Test set</td><td class="num">208 note / 1,248 photo</td><td>Train set</td><td class="num">974 note / 5,844 photo</td></tr>
+  <tr><td>আলাদা photo set</td><td class="num">846 (of 1,390)</td><td>Leaked test note</td><td class="num">116/208 (55.8%)</td></tr>
+  <tr><td>Label-conflict group</td><td class="num">12 (31 note)</td><td>Conflict থেকে আসা error</td><td class="num">4 of 4</td></tr>
+  <tr><td>Clean test note</td><td class="num">92, সব method 100%</td><td>Clean CI-এর lower bound</td><td class="num">96.0%</td></tr>
+  <tr><td>1-NN / Linear probe (note)</td><td class="num">97.12% / 98.08%</td><td>Fusion AUC, k = 1 → 6</td><td class="num">0.9900 → 0.9939</td></tr>
+  <tr><td>OOD-তে reject হওয়া test photo</td><td class="num">4/1,248 (0.32%)</td><td>অন্য note reject</td><td class="num">100/105 (≈95%)</td></tr>
+  <tr><td>Border ঢাকলে</td><td class="num">88.94%, AUC 0.957</td><td>Centre ঢাকলে</td><td class="num">75.48%, AUC 0.959</td></tr>
+  <tr><td>JaalTaka authors</td><td class="num">97.4–98.9% (অন্য split)</td><td>Parameters</td><td class="num">4.01M</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 class="page-break">6. Next features ও future update</h2>
+
+<h3>(ক) Research-এর দিক থেকে: paper-কে আরো শক্ত করবে</h3>
+<table>
+  <tr><th style="width:4%">#</th><th style="width:30%">Update</th><th>কেন দরকার / কী লাভ</th><th style="width:11%">Priority</th></tr>
+  <tr><td>1</td><td><b>Group-aware split-এ retrain</b></td><td>Audit-এর পরে "সত্যিকারের" accuracy দেখানো যাবে। Reviewer প্রথমেই এটা চাইবেন।</td><td><span class="tag hi">সর্বোচ্চ</span></td></tr>
+  <tr><td>2</td><td><b>Counterfeit-family hold-out</b> (serial number বা seizure batch দিয়ে)</td><td>নতুন বা অজানা ধরনের জাল নোটে generalisation মাপা যাবে। Real-world-এ এটাই সবচেয়ে গুরুত্বপূর্ণ।</td><td><span class="tag hi">সর্বোচ্চ</span></td></tr>
+  <tr><td>3</td><td><b>Device / session hold-out</b></td><td>একটা phone দিয়ে train করে অন্য phone-এ test। এতে capture shortcut কতটা আছে, সেটা মাপা যাবে।</td><td><span class="tag hi">উচ্চ</span></td></tr>
+  <tr><td>4</td><td><b>Note detection + background removal</b> (YOLO বা segmentation দিয়ে আগে note crop)</td><td>Border বা background shortcut সরাসরি কমবে। Occlusion finding-এর সরাসরি সমাধান।</td><td><span class="tag hi">উচ্চ</span></td></tr>
+  <tr><td>5</td><td><b>Systematic OOD benchmark</b></td><td>এখন শুধু 105টা ছবি দিয়ে দেখা। অন্য দেশের নোট, ফটোকপি, স্ক্রিন থেকে তোলা ছবি দিয়ে AUROC/FPR95 মাপা।</td><td><span class="tag mid">মাঝারি</span></td></tr>
+  <tr><td>6</td><td><b>Calibration</b> (temperature scaling) ও <b>conformal prediction</b></td><td>"Uncertain" zone-কে statistical guarantee দেওয়া যাবে, যেমন "৯৫% coverage"।</td><td><span class="tag mid">মাঝারি</span></td></tr>
+  <tr><td>7</td><td><b>One-class / anomaly detection</b> (শুধু genuine দিয়ে train)</td><td>Counterfeit-এর ধরন জানা না থাকলেও "এটা genuine-এর মতো না" বলা যাবে। অজানা জাল নোটের জন্য উপযোগী।</td><td><span class="tag mid">মাঝারি</span></td></tr>
+  <tr><td>8</td><td><b>Learned multi-view fusion</b> (attention বা transformer)</td><td>এখন সাধারণ mean ব্যবহার করি। Attention দিয়ে কোন view বেশি তথ্যপূর্ণ, সেটা শেখা যাবে। নতুন dataset-এ এটা কাজে লাগতে পারে।</td><td><span class="tag">পরে</span></td></tr>
+  <tr><td>9</td><td><b>নতুন, পরিষ্কার dataset সংগ্রহ</b> (Tk 100, 200 সহ)</td><td>Bangladesh Bank বা RAB-এর সাথে collaboration, একই setup-এ genuine আর fake দুটোরই ছবি, family label সহ।</td><td><span class="tag">PhD-scope</span></td></tr>
+  <tr><td>10</td><td><b>Multispectral</b> (UV/IR clip-on lens) বা <b>video</b> input</td><td>Visible light-এ UV feature ধরা পড়ে না। কম খরচের attachment বা tilt-video দিয়ে hologram ও OVI ধরা যাবে।</td><td><span class="tag">PhD-scope</span></td></tr>
+</table>
+
+<h3>(খ) System / product-এর দিক থেকে</h3>
+<div class="grid2">
+  <div class="card"><h4>📱 Offline mobile app</h4>ONNX/TFLite + INT8 quantization করে on-device চালানো, internet ছাড়াই। Model মাত্র ১৬ MB, তাই এটা সম্ভব।</div>
+  <div class="card"><h4>🎯 Live capture guidance</h4>Camera-তে real-time feedback: "আরো কাছে আনুন", "ঝাপসা", "glare আছে"। ভালো ছবি পেলে OOD reject কম হবে।</div>
+  <div class="card"><h4>🔢 Serial number OCR</h4>Note-এর serial পড়ে পরিচিত জাল serial-এর list-এর সাথে মেলানো। Audit-এ দেখা গেছে জাল নোটগুলো কয়েকটা serial-এ সীমাবদ্ধ।</div>
+  <div class="card"><h4>🗣 Bangla UI + voice output</h4>সাধারণ দোকানদার আর দৃষ্টি প্রতিবন্ধী মানুষের জন্য বাংলায় কথা বলে ফলাফল জানানো।</div>
+  <div class="card"><h4>🔁 Feedback loop / active learning</h4>Bank-এ যাচাই হওয়া "uncertain" কেসগুলো সংগ্রহ করে model আবার train করা (privacy মেনে)।</div>
+  <div class="card"><h4>💵 আরো denomination</h4>Tk 100 আর 200 যোগ করা। এখন OOD gate এগুলো "not supported" বলে দেয়।</div>
+  <div class="card"><h4>🛡 Adversarial robustness</h4>ছাপা adversarial pattern দিয়ে model-কে ধোঁকা দেওয়া যায় কিনা পরীক্ষা করা।</div>
+  <div class="card"><h4>🗺 Counterfeit heat-map dashboard</h4>(Opt-in) কোন এলাকায় জাল নোট বেশি পাওয়া যাচ্ছে, তা law enforcement-এর জন্য দেখানো।</div>
+</div>
+
+<div class="box green"><b>Interview-এ বলার মতো roadmap:</b> "Short term: group-aware split আর counterfeit-family hold-out দিয়ে retrain। Mid term: note segmentation আর conformal uncertainty দিয়ে shortcut ও calibration সমস্যার সমাধান। Long term (PhD): bank-এর সাথে নতুন multispectral dataset বানিয়ে one-class ও open-set detection, যাতে অজানা জাল নোটও ধরা যায়।"</div>
+
+<!-- ============================================================ -->
+<h2 class="page-break">7. PhD interview প্রশ্নোত্তর</h2>
+
+<h3>A. Motivation ও Novelty</h3>
+
+<div class="qa"><div class="q">আপনার research-টা এক বাক্যে বলুন।</div>
+<div class="a">Smartphone দিয়ে Tk 500/1000 যাচাই করার একটা reliable system, যেটা reject করতে, uncertain বলতে আর কারণ দেখাতে পারে, সাথে benchmark-এর audit, যেটা দেখায় যে বর্তমান 98% accuracy-র সীমা label noise।</div>
+<div class="en">I built a smartphone authenticator for Bangladeshi banknotes that can abstain and explain itself, and I showed that the public benchmark is saturated: every remaining error comes from duplicated notes with conflicting labels.</div></div>
+
+<div class="qa"><div class="q">আপনার মূল novelty কী?</div>
+<div class="a">প্রধানত benchmark audit: 846টা unique set, 55.8% leakage, 12টা conflict group, 4/4 error ব্যাখ্যা, আর clean note-এ সব method 100%। দ্বিতীয়ত occlusion দিয়ে shortcut ধরা। তৃতীয়ত fusion, three-way decision, OOD আর Grad-CAM একসাথে জুড়ে একটা reliable pipeline, যেটা এই domain-এ প্রথম।</div>
+<div class="en">The main novelty is the first duplicate and label audit of JaalTaka, which explains all test errors and shows saturation. The second is the shortcut diagnostic. The third is a reliability-oriented pipeline with abstention and OOD rejection, new for this domain.</div></div>
+
+<div class="qa"><div class="q">EfficientNet, Grad-CAM, Mahalanobis, সবই পুরনো। তাহলে নতুন কী?</div>
+<div class="a">ঠিক, আর আমি নতুন architecture দাবিও করি না। Contribution হলো evaluation science: ঠিকভাবে মাপলে কী দেখা যায়, সেটা দেখানো। Applied ML-এ benchmark-এর ত্রুটি ধরা একটা স্বীকৃত contribution (Kapoor & Narayanan 2023-এর leakage কাজ)। আর OOD gate-এ আমি Mahalanobis-কে PCA subspace আর residual দিয়ে adapt করেছি।</div>
+<div class="en">I do not claim a new architecture. The contribution is in evaluation: proper auditing shows the benchmark cannot rank models. That is the kind of finding that redirects a field, as in the leakage literature.</div></div>
+
+<div class="qa"><div class="q">নিজের dataset-এর দুর্বলতা দেখালে paper দুর্বল হয় না?</div>
+<div class="a">না, এটা scientific honesty। Duplicate list release করছি, আর group-aware ও family hold-out protocol প্রস্তাব করছি, যাতে পরের গবেষকরা ভুল সংখ্যার পেছনে না ছোটেন। Reviewer আর PhD supervisor এমন critical thinking-ই খোঁজেন।</div></div>
+
+<div class="qa"><div class="q">এই সমস্যা কেন গুরুত্বপূর্ণ?</div>
+<div class="a">Bangladesh-এ নগদ টাকাই প্রধান লেনদেন মাধ্যম। Tk 500/1000-এর জাল নোট গরিব দোকানদারের সরাসরি ক্ষতি করে। Verification machine ব্যয়বহুল, কিন্তু phone সবার কাছে আছে। আর ভুল "genuine" বললে সরাসরি আর্থিক ক্ষতি, তাই reliability জরুরি।</div></div>
+
+<h3>B. Dataset ও Evaluation</h3>
+
+<div class="qa"><div class="q">JaalTaka dataset সম্পর্কে বলুন।</div>
+<div class="a">Data in Brief 2025, CC BY 4.0। 1,390টা note (802 genuine, যেগুলো তিনটা bank থেকে; 588 counterfeit, যেগুলো RAB জব্দ করেছে)। প্রতিটা note-এর ৬টা photo, চারটা phone দিয়ে, মোট 8,340টা ছবি। Description অনুযায়ী 649টা আসল note augmentation করে 1,390 বানানো।</div></div>
+
+<div class="qa"><div class="q">Per-image split না করে per-note split কেন?</div>
+<div class="a">একই note-এর ৬টা ছবি একে অপরের সাথে correlated। Per-image split করলে একই note train আর test দুই জায়গায় থাকবে, আর accuracy কৃত্রিমভাবে বাড়বে। আর audit দেখিয়েছে per-note split-ও যথেষ্ট না, কারণ আলাদা note-ও একই photo share করে। তাই group-wise split দরকার।</div></div>
+
+<div class="qa"><div class="q">Duplicate কীভাবে খুঁজলেন? NCC কেন?</div>
+<div class="a">প্রতিটা view-এর 48×48 grayscale thumbnail নিয়ে, corresponding view-এর NCC বের করে, ৬ view-এ গড় নিয়ে, flip সহ সর্বোচ্চ মান নিয়েছি। NCC brightness আর contrast পরিবর্তনে invariant, আর augmented copy-তে মূলত এগুলোই বদলায়। Distribution bimodal (0.963 থেকে 0.997-এর মাঝে কিছু নেই), তাই threshold 0.98 স্পষ্টভাবে আলাদা করে। ছোট thumbnail নেওয়ায় 1,390² জোড়ার হিসাবও দ্রুত হয়।</div></div>
+
+<div class="qa"><div class="q">Threshold 0.98 কি arbitrary না?</div>
+<div class="a">না। Val আর test note-এর best-match distribution-এ 0.963 থেকে 0.997-এর মাঝে কোনো মান নেই। তাই 0.97 থেকে 0.99-এর মধ্যে যেকোনো threshold একই group দেয়, ফলাফল threshold-এর উপর নির্ভর করে না।</div></div>
+
+<div class="qa"><div class="q">Label conflict যে সত্যিই ভুল label, তা কীভাবে জানলেন?</div>
+<div class="a">হুবহু একই pixel-এর photo একই সাথে genuine আর counterfeit হতে পারে না, তাই প্রতিটা group-এ অন্তত একটা label ভুল। প্রমাণ হিসেবে, genuine-labelled note 402 আর 403-এর serial 1843834 counterfeit-labelled note-এও পাওয়া গেছে। কোনটা সঠিক label, তা শুধু dataset-এর authors বলতে পারবেন। তাই আমরা relabel করিনি, report করেছি।</div></div>
+
+<div class="qa"><div class="q">Wilson CI কেন, normal approximation কেন না?</div>
+<div class="a">Accuracy 100%-এর কাছে আর n ছোট (208 বা 92) হলে normal (Wald) interval ১-এর বাইরে চলে যায় বা শূন্য-প্রস্থ হয়ে যায়। Wilson interval তখনও সঠিক coverage দেয়, যেমন 92/92-এর জন্য lower bound 96.0%।</div></div>
+
+<div class="qa"><div class="q">JaalTaka authors 98.9% পেয়েছেন, আপনি 98.08%। আপনার model কি খারাপ?</div>
+<div class="a">Split আলাদা, তাই সরাসরি তুলনা করা যায় না। তার চেয়ে বড় কথা, ceiling ঠিক করে label noise। 12টা conflict group থাকলে কেউ নিখুঁত হতে পারবে না, আর clean note-এ আমরা 100%। Accuracy-র যে পার্থক্য দেখা যাচ্ছে, সেটা noise-এর চেয়েও ছোট, তাই এটা model-এর মান তুলনার মাপকাঠি না।</div>
+<div class="en">The splits differ, and more importantly the benchmark is label-noise limited. On clean notes we are at 100%, so differences of one percent are not meaningful.</div></div>
+
+<div class="qa"><div class="q">Frozen-feature baseline কেন দিলেন?</div>
+<div class="a">Task আসলে কতটা কঠিন, তা বোঝার জন্য। যদি generic ImageNet feature দিয়ে 1-NN-ই 97% পায়, তাহলে task-টা সহজ, বা কোথাও leakage আছে। ঠিক এই সংকেত থেকেই আমরা duplicate খুঁজতে শুরু করি। আমরা সুপারিশ করি, প্রতিটা benchmark paper এমন baseline report করুক।</div></div>
+
+<h3>C. Method</h3>
+
+<div class="qa"><div class="q">EfficientNet-B0 কেন? ViT বা ResNet কেন না?</div>
+<div class="a">মাত্র 4M parameter আর কম FLOPs, CPU-তে 37 ms, আর ImageNet-এ ResNet50-এর সমান বা বেশি accuracy। লক্ষ্য ছিল phone বা কম দামি কম্পিউটারে চালানো। আর benchmark saturated হওয়ায় বড় model দিয়ে বাড়তি কিছু পাওয়া যেত না। ViT-এর জন্য বেশি data লাগে, আর dataset-এ unique sample মাত্র 846টা।</div></div>
+
+<div class="qa"><div class="q">প্রথম তিনটা stage freeze করলেন কেন?</div>
+<div class="a">Low-level feature (edge, texture) generic, ImageNet থেকেই ভালো পাওয়া যায় (Yosinski 2014)। Freeze করলে overfitting কমে, CPU training দ্রুত হয়, আর ছোট batch (12) থাকায় BatchNorm statistics অস্থির হয় না।</div></div>
+
+<div class="qa"><div class="q">Label smoothing আর class weight কেন?</div>
+<div class="a">Class imbalance আছে (802 বনাম 588), তাই weight <span class="mono">w_c = N/(2N_c)</span>। Label smoothing (ε = 0.05) over-confidence কমায়। আর এখন আমরা জানি label-এ noise আছে, তাই smoothing এখানে বিশেষ উপযোগী।</div></div>
+
+<div class="qa"><div class="q">Fusion-এ mean কেন? Max বা voting কেন না?</div>
+<div class="a">Mean-এর জন্য training লাগে না, যেকোনো সংখ্যক ছবি নেওয়া যায়, আর ছবিগুলো আংশিক স্বাধীন হলে variance কমায়। Voting probability-র তথ্য ফেলে দেয়, আর max একটা ভুল ছবিতে খুব sensitive। ফলাফলে দেখা গেছে view বাড়লে AUC monotonic ভাবে বাড়ে (0.9900 → 0.9939)।</div></div>
+
+<div class="qa"><div class="q">Fusion-এ accuracy বাড়ল না কেন?</div>
+<div class="a">কারণ সব error এসেছে duplicate হওয়া note থেকে। Training-এ ওই note-এর ৬টা ছবিই অন্য label নিয়ে আছে, তাই ৬টা view একসাথে ভুল করে। Fusion আলাদা আলাদা ছবির noise কমায়, কিন্তু label-এর ভুল ঠিক করতে পারে না। তবে AUC বেড়েছে, মানে note-গুলোর ranking আরো নির্ভরযোগ্য হয়েছে।</div></div>
+
+<div class="qa"><div class="q">Three-way decision কেন? Threshold asymmetric কেন?</div>
+<div class="a">ভুলের খরচ সমান না। জাল নোটকে genuine বলা মানে টাকা হারানো, আর "uncertain" বলা মানে শুধু হাতে দেখে নেওয়া বা আরো ছবি দেওয়া। তাই genuine বলার জন্য উঁচু threshold (τ = 0.7), আর counterfeit বলার জন্য 0.5। এটা selective classification বা abstention-এর ধারণা।</div></div>
+
+<div class="qa"><div class="q">τ বাড়ালে কী হয়?</div>
+<div class="a">Score খুব bimodal: সঠিক genuine-এ p̄ > 0.86, counterfeit-এ p̄ &lt; 0.10। তাই τ ≤ 0.85 পর্যন্ত ফল বদলায় না, আর 0.90-তে একটা genuine note uncertain হয়ে যায়। ভুলভাবে গৃহীত দুটো counterfeit-এর p̄ ≈ 0.95, তাই এদের আটকাতে τ > 0.954 লাগবে, যেটা বেশিরভাগ genuine note-কেও manual check-এ পাঠাবে। এটাও প্রমাণ করে যে ওই error-গুলো model-এর না, label-এর।</div></div>
+
+<div class="qa"><div class="q">OOD gate-টা বুঝিয়ে বলুন। শুধু softmax confidence কেন যথেষ্ট না?</div>
+<div class="a">Softmax অপরিচিত ছবিতেও প্রায়ই খুব confident থাকে (Hendrycks 2017)। তাই আমরা embedding space-এ দেখি। Training embedding-এর top-64 PCA direction-এ Mahalanobis distance (m) মাপে "subspace-এর ভেতরে কতটা দূরে", আর residual (ρ) মাপে "subspace থেকে কতটা বাইরে"। দুটোকে validation-এর 99.5th percentile দিয়ে normalize করে max নিই। সাথে Laplacian variance দিয়ে blank বা ঝাপসা ছবি বাদ দিই।</div>
+<div class="en">Softmax is overconfident on unseen inputs, so I score the embedding: a Mahalanobis distance inside a 64-dimensional PCA subspace plus the residual outside it, each calibrated at the 99.5th validation percentile.</div></div>
+
+<div class="qa"><div class="q">PCA 64 কেন? পুরো 1280-d Mahalanobis কেন না?</div>
+<div class="a">1280-d covariance বের করতে প্রায় ৫,৮০০ sample (আর unique মাত্র কয়েকশো) যথেষ্ট না। Matrix singular বা unstable হয়ে যায়। Top-64 direction-এ estimate stable থাকে, আর বাকি অংশ residual দিয়ে ধরা পড়ে, তাই কোনো তথ্য হারায় না।</div></div>
+
+<div class="qa"><div class="q">Grad-CAM কী দেখাল?</div>
+<div class="a">সঠিক সিদ্ধান্তে portrait, denomination আর ornament panel-এ focus, counterfeit-এ security band-এও। ভুলভাবে গৃহীত জাল নোটটা model-এর কাছে genuine-এর মতো দেখায়, কারণ এর হুবহু copy training-এ genuine label নিয়ে আছে। তবে Grad-CAM দিয়ে কারণ প্রমাণ হয় না। তাই আমরা occlusion test-ও করেছি।</div></div>
+
+<div class="qa"><div class="q">Occlusion test থেকে কী শিখলেন?</div>
+<div class="a">মাঝখান ঢাকলেও AUC 0.959, মানে border-এ (margin, টেবিল, হাত) যথেষ্ট সংকেত আছে। Genuine আর fake আলাদা source থেকে আলাদা session-এ তোলা, তাই model capture condition শিখতে পারে। এটা shortcut learning-এর ঝুঁকি। সমাধান: note segmentation আর session বা device hold-out।</div></div>
+
+<div class="qa"><div class="q">Deployment-এ full-frame crop-ও average করেন, paper-এ করেননি কেন?</div>
+<div class="a">Paper-এর সংখ্যাগুলো reproducible রাখতে শুধু centre crop দিয়ে মাপা হয়েছে। App-এ light TTA (centre + full frame) যোগ করা হয়েছে, যাতে ভিন্ন framing-এ robustness বাড়ে। Paper-এ এটা স্পষ্টভাবে লেখা আছে।</div></div>
+
+<h3>D. Limitations ও Critical প্রশ্ন</h3>
+
+<div class="qa"><div class="q">আপনার system কি নতুন ধরনের জাল নোট ধরতে পারবে?</div>
+<div class="a">সৎ উত্তর: প্রমাণ নেই। 588টা counterfeit মাত্র 289টা photo set, আর কয়েকটা serial-এ সীমাবদ্ধ। Model, এমনকি 1-NN-ও, পরিচিত batch চিনে ফেলতে পারে। এটা মাপতে counterfeit-family hold-out লাগবে, আর সেটাই আমাদের প্রধান future work।</div>
+<div class="en">Honestly, this is not shown yet. The counterfeits come from few families, so a family hold-out is needed. That is my first next step.</div></div>
+
+<div class="qa"><div class="q">Phone camera দিয়ে কি UV watermark বা intaglio ধরা যায়?</div>
+<div class="a">না। Visible light-এ UV, magnetic বা tactile feature ধরা পড়ে না। তাই output হলো decision support, আর সন্দেহজনক নোট bank-এ যাচাই করতে হবে। Future-এ কম খরচের UV/IR attachment বা tilt-video দিয়ে hologram ধরা যায়।</div></div>
+
+<div class="qa"><div class="q">Scan বা দূর থেকে তোলা ছবিতে কী হয়?</div>
+<div class="a">বেশিরভাগই OOD gate reject করে, কারণ training-এর ছবি ছিল close-up phone photo। Reject না হলে ফলাফল অনির্ভরযোগ্য (scan-এ genuine-কেও অনেক সময় counterfeit বলে)। এটা limitation হিসেবে লেখা আছে।</div></div>
+
+<div class="qa"><div class="q">Probability কি calibrated?</div>
+<div class="a">স্বাধীন data-তে calibrate করা হয়নি। এটা স্বীকৃত limitation (Guo 2017)। পরের ধাপে temperature scaling আর conformal prediction।</div></div>
+
+<div class="qa"><div class="q">OOD evaluation দুর্বল না? মাত্র 105টা ছবি?</div>
+<div class="a">হ্যাঁ, এটা preliminary, paper-এও তাই লেখা আছে। Systematic benchmark (অন্য দেশের নোট, ফটোকপি, screen photo, AUROC/FPR95) future work।</div></div>
+
+<div class="qa"><div class="q">আবার শুরু করলে কী ভিন্নভাবে করতেন?</div>
+<div class="a">Training-এর আগেই duplicate audit করতাম, আর শুরু থেকেই group-aware ও family hold-out split ব্যবহার করতাম। এখান থেকে শিখেছি: data আগে, model পরে।</div></div>
+
+<h3>E. সাধারণ PhD প্রশ্ন</h3>
+
+<div class="qa"><div class="q">এই কাজ থেকে PhD-তে কোন দিকে যেতে চান?</div>
+<div class="a">Trustworthy ML for real-world vision: dataset auditing, shortcut learning, OOD ও open-set detection, uncertainty quantification। Banknote একটা উদাহরণ মাত্র। একই সমস্যা medical imaging, document forgery আর agriculture-এও আছে।</div>
+<div class="en">I want to work on trustworthy computer vision: auditing benchmarks, detecting shortcuts, and building models that know when they don't know.</div></div>
+
+<div class="qa"><div class="q">এই research থেকে কী শিখলেন?</div>
+<div class="a">(১) High accuracy মানেই ভালো model না, আগে data audit করতে হয়। (২) Simple baseline অনেক কিছু ধরিয়ে দেয়। (৩) Reliability (abstain, OOD, explain) accuracy-র মতোই গুরুত্বপূর্ণ। (৪) Negative result-ও মূল্যবান contribution।</div></div>
+
+<div class="qa"><div class="q">আপনার নিজের contribution কী, আর supervisor-এর কী?</div>
+<div class="a">Conceptualisation, পুরো software (training, OOD, Grad-CAM, web app), experiment, audit analysis আর প্রথম draft আমার। Supervisor methodology review আর manuscript editing করেছেন।</div></div>
+
+<div class="qa"><div class="q">AI tool ব্যবহার করেছেন?</div>
+<div class="a">হ্যাঁ, analysis script লেখা আর লেখা edit করার কাজে AI assistant ব্যবহার করেছি। Paper-এ সেটা declare করা আছে। সব code, result আর reference নিজে যাচাই করেছি, আর সব সংখ্যা scripts থেকে reproducible।</div></div>
+
+<div class="qa"><div class="q">Reproducibility কীভাবে নিশ্চিত করলেন?</div>
+<div class="a">Fixed seed (42), public CC BY 4.0 dataset, আর প্রতিটা সংখ্যা scripts থেকে তৈরি। Model, code আর duplicate list publication-এর পর public করা হবে। Training CPU-তে মাত্র এক ঘণ্টার মতো, তাই যে কেউ পুনরায় চালাতে পারবেন।</div></div>
+
+<div class="qa"><div class="q">আপনার research-এর সামাজিক প্রভাব কী?</div>
+<div class="a">কম আয়ের দোকানদার বিনা খরচে প্রাথমিক যাচাই করতে পারবেন। আর benchmark audit গবেষণা community-কে ভুল progress-এর পেছনে ছোটা থেকে বাঁচাবে। Abstention থাকায় system ভুল আত্মবিশ্বাস দেখায় না।</div></div>
+
+<div class="qa"><div class="q">Ethics বা misuse-এর ঝুঁকি আছে?</div>
+<div class="a">Forger-রা system দিয়ে পরীক্ষা করে নিজেদের জাল নোট উন্নত করতে পারে, যেটা adversarial ঝুঁকি। তাই এটা শুধু decision support, bank verification-এর বিকল্প না। Dataset-এ কোনো personal data নেই।</div></div>
+
+<h3>F. Technical "trap" প্রশ্ন (দ্রুত উত্তর)</h3>
+<table>
+  <tr><th style="width:42%">প্রশ্ন</th><th>সংক্ষিপ্ত উত্তর</th></tr>
+  <tr><td>Positive class কোনটা?</td><td>Genuine। Recall মানে genuine acceptance, specificity মানে counterfeit detection।</td></tr>
+  <tr><td>Per-note আর per-photo confusion matrix একই কেন?</td><td>Per-note matrix = per-photo ÷ 6। প্রতিটা ভুল note-এর ৬টা photo-ই ভুল, কারণ পুরো photo set duplicate।</td></tr>
+  <tr><td>Model selection কীসে?</td><td>Validation accuracy + AUC। 6th epoch: 99.04%, AUC 0.9976।</td></tr>
+  <tr><td>Input size?</td><td>Shorter side 331 → centre crop 288×288 → feature map 1280×9×9।</td></tr>
+  <tr><td>Optimizer ও schedule?</td><td>AdamW (wd 1e-4), one-cycle, peak 3e-4, 15% warm-up।</td></tr>
+  <tr><td>OOD threshold কীসে calibrate?</td><td>Validation-এর 99.5th percentile। Test-এ 0.32% reject, val-এ 0.72%।</td></tr>
+  <tr><td>Texture threshold 30 কেন?</td><td>Test photo-র সর্বনিম্ন Laplacian variance ছিল 56, তাই 30 নিরাপদ margin দিয়ে blank আর blur বাদ দেয়।</td></tr>
+  <tr><td>AUC আর accuracy-র পার্থক্য?</td><td>AUC threshold-নিরপেক্ষ ranking মাপে, accuracy একটা নির্দিষ্ট threshold-এ (0.5) মাপে।</td></tr>
+  <tr><td>Overfitting হয়েছে কি?</td><td>Val 99.04%, test 98.08%, পার্থক্য ছোট। আর clean note-এ 100%। আসল সমস্যা overfitting না, leakage আর label noise।</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2 class="page-break">8. ২ মিনিটের Research Pitch (English)</h2>
+<div class="pitch">
+<p>Counterfeit Tk 500 and Tk 1000 notes directly hurt small shopkeepers in Bangladesh, who cannot afford UV or magnetic verification machines but almost all carry a smartphone.</p>
+<p>I built a smartphone-based authenticator on the public JaalTaka dataset. It fine-tunes EfficientNet-B0, fuses up to six photographs of a note, and, instead of always answering, it can say <i>genuine</i>, <i>counterfeit</i>, <i>uncertain</i>, or <i>not supported</i>. An out-of-distribution gate based on a PCA-subspace Mahalanobis distance and residual rejects other denominations and unrelated images. Grad-CAM shows which regions drove the decision, and it runs in real time on a CPU at 37 milliseconds per photograph. On 208 held-out notes it reaches 98.1% accuracy and an AUC of 0.994.</p>
+<p>But the most important part of the work came next. Simple frozen-feature baselines were almost as good, which made me suspicious, so I audited the benchmark. The 1,390 notes contain only 846 distinct photograph sets. 56% of test notes have a copy in training, and 12 duplicate groups carry <i>both</i> labels. These conflicts explain <i>all four</i> test errors, and on the clean notes every method, even a nearest-neighbour baseline, is error-free. An occlusion test also showed that the border alone ranks most notes, which suggests capture-condition shortcuts.</p>
+<p>So the benchmark is saturated and cannot rank methods. I release the duplicate groups and propose group-aware, counterfeit-family hold-out evaluation. For my PhD, I want to continue in this direction: trustworthy computer vision, meaning models and benchmarks that reveal shortcuts and know when they don't know.</p>
+</div>
+
+<h3>৩০ সেকেন্ডের সংস্করণ</h3>
+<div class="pitch">I built a smartphone counterfeit-taka detector that can abstain, reject unknown inputs, and explain itself, reaching 98% accuracy on JaalTaka. Then I audited the dataset and found that duplicated notes with contradictory labels cause every remaining error, so the benchmark is saturated. My contribution is both a reliable system and a corrected evaluation protocol for the field.</div>
+
+<!-- ============================================================ -->
+<h2>9. শেষ মুহূর্তের Tips</h2>
+<ul>
+  <li><b>Audit দিয়ে শুরু করুন</b>, accuracy দিয়ে না। "98%" শুনলে কেউ মুগ্ধ হয় না, কিন্তু "সব error-এর কারণ খুঁজে পেয়েছি" শুনলে হয়।</li>
+  <li>দুর্বলতা নিয়ে প্রশ্ন এলে <b>আগেই স্বীকার করুন, তারপর সমাধান বলুন</b>: "হ্যাঁ, এটা limitation; আমার পরের ধাপ হলো …"।</li>
+  <li>সংখ্যা ঠিকভাবে বলুন: <b>846, 116/208, 12 group, 4/4, 92 clean = 100%, 37 ms, AUC 0.994</b>।</li>
+  <li>"Novel architecture" দাবি করবেন না। বলুন <b>"evaluation contribution + reliability-oriented system"</b>।</li>
+  <li>প্রতিটা উত্তর ৩০–৬০ সেকেন্ডে শেষ করুন। Interviewer চাইলে আরো গভীরে যাবেন।</li>
+  <li>Demo দেখাতে পারলে দেখান: একটা genuine note, একটা অন্য denomination (তখন "not supported" আসবে), আর Grad-CAM।</li>
+  <li>শেষে PhD direction-এর সাথে যোগ করুন: <b>trustworthy ML, dataset auditing, OOD/open-set, uncertainty</b>।</li>
+</ul>
+
+<p class="small" style="margin-top:14px">উৎস: journal/Springer/Springer_paper.tex, detector.py, app.py, models/metrics.json। সব সংখ্যা paper-এর সাথে মেলানো।</p>
+
+</body>
+</html>

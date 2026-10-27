@@ -1,0 +1,27 @@
+Dear Editor,
+
+We are pleased to submit our manuscript, "Reliable Smartphone-Based Detection of Counterfeit Bangladeshi Banknotes: Multi-View Deep Learning with Out-of-Distribution Rejection and a Benchmark Audit", for consideration as an Original Research Article in the Journal of Advanced Information and Intelligent Technology (JAIIT).
+
+The study presents a smartphone-based authenticator for Bangladeshi 500-taka and 1000-taka notes. It fine-tunes EfficientNet-B0, fuses up to six photographs of each note, gives a genuine, uncertain or counterfeit verdict, rejects unsupported inputs with an out-of-distribution gate, and explains its decisions with Grad-CAM. On the public JaalTaka benchmark it reaches 98.08% note-level accuracy (ROC-AUC 0.994) and runs in real time on an ordinary CPU.
+
+Beyond accuracy, the paper's main contribution is an audit of the benchmark itself. The 1,390 notes form only 846 distinct photograph sets, 55.8% of test notes have a copy in the training data, and label conflicts among duplicated notes explain every test error. We believe this finding is useful to researchers working on banknote authentication and, more generally, on dataset leakage in applied deep learning, which fits the journal's scope in intelligent technologies.
+
+We confirm the following:
+- The manuscript is original, has not been published before, and is not under consideration by any other journal.
+- All authors have approved the manuscript and agree to its submission to JAIIT.
+- The manuscript was prepared with the official JAIIT Word template on A4 paper, as the author guidelines require.
+- For double-blind review, the main manuscript file contains no author names, affiliations, email addresses, acknowledgments or other identifying information. These details are in the separate "Title Page" file.
+- The manuscript is uploaded in both editable (.docx) and PDF formats.
+- The study involved no human participants, personal data or animals. It uses only banknote photographs from a public dataset released under the CC BY 4.0 licence.
+- The authors declare no competing interests, and the research received no external funding.
+- An AI assistant was used to help write analysis scripts and edit the text. The authors checked all code, results and references and take full responsibility for the content. This is also disclosed in the manuscript's Declarations.
+
+Submitted files:
+1. JAIIT_manuscript_blind.docx / .pdf: anonymised main manuscript
+2. JAIIT_TitlePage.docx / .pdf: title, authors, affiliation, corresponding author details, acknowledgment, author contributions and biographies
+
+Thank you for considering our submission. We look forward to your response.
+
+Sincerely,
+The Authors
+(Corresponding author's contact details are provided in the Title Page file and in the submission metadata.)

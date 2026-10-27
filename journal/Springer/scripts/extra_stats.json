@@ -1,0 +1,55 @@
+{
+ "bootstrap": {
+  "n_boot": 10000,
+  "per_note_test_groups": 191,
+  "per_note_accuracy": 0.9807692307692307,
+  "per_note_ci95_group_bootstrap": [
+   0.9609756097560975,
+   0.9953271028037384
+  ],
+  "per_photo_accuracy": 0.9807692307692307,
+  "per_photo_ci95_group_bootstrap": [
+   0.9609756097560975,
+   0.9953271028037384
+  ]
+ },
+ "mcnemar_per_note": {
+  "knn1": {
+   "a_only_correct": 2,
+   "b_only_correct": 0,
+   "p": 0.5
+  },
+  "linear_probe": {
+   "a_only_correct": 0,
+   "b_only_correct": 0,
+   "p": 1.0
+  }
+ },
+ "ncc_threshold_sensitivity": {
+  "0.9": {
+   "groups": 709,
+   "mixed_label_groups": 12,
+   "test_notes_with_copy": 137
+  },
+  "0.95": {
+   "groups": 843,
+   "mixed_label_groups": 12,
+   "test_notes_with_copy": 118
+  },
+  "0.97": {
+   "groups": 846,
+   "mixed_label_groups": 12,
+   "test_notes_with_copy": 116
+  },
+  "0.98": {
+   "groups": 846,
+   "mixed_label_groups": 12,
+   "test_notes_with_copy": 116
+  },
+  "0.99": {
+   "groups": 846,
+   "mixed_label_groups": 12,
+   "test_notes_with_copy": 116
+  }
+ }
+}

@@ -64,6 +64,38 @@ def split_by_note(items, seed=42, val=0.15, test=0.15):
     return parts
 
 
+def split_by_group(items, groups, seed=42, val=0.15, test=0.15):
+    """Split on duplicate groups (journal/IEEE/scripts/duplicates.json) so augmented copies
+    of a note never cross splits. Groups holding both labels are dropped (labels unreliable)."""
+    by_note = defaultdict(list)
+    for it in items:
+        by_note[it[2]].append(it)
+    pure = {0: [], 1: []}
+    dropped = []
+    for g in groups:
+        labels = {by_note[k][0][1] for k in g}
+        if len(labels) > 1:
+            dropped.extend(g)
+        else:
+            pure[labels.pop()].append(sorted(g))
+    rng = random.Random(seed)
+    parts = {"train": [], "val": [], "test": []}
+    for label in sorted(pure):
+        gs = sorted(pure[label])
+        rng.shuffle(gs)
+        total = sum(len(g) for g in gs)
+        filled = {"test": 0, "val": 0}
+        for g in gs:
+            # fill test, then val, up to their share of NOTES; the rest goes to train
+            part = ("test" if filled["test"] < total * test else
+                    "val" if filled["val"] < total * val else "train")
+            if part in filled:
+                filled[part] += len(g)
+            for k in g:
+                parts[part].extend(by_note[k])
+    return parts, sorted(dropped)
+
+
 class NoteDataset(Dataset):
     def __init__(self, items, tf, mask=None):
         self.items, self.tf, self.mask = items, tf, mask
@@ -175,6 +207,10 @@ def main():
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--freeze", type=int, default=4, help="number of early EfficientNet stages to freeze")
     ap.add_argument("--resume", action="store_true", help="continue from the last finished epoch")
+    ap.add_argument("--split", choices=["note", "group"], default="note",
+                    help="note: per-note split; group: per duplicate group, label-conflict groups removed")
+    ap.add_argument("--groups", default="journal/IEEE/scripts/duplicates.json",
+                    help="duplicate groups from find_duplicates.py (used with --split group)")
     args = ap.parse_args()
 
     torch.manual_seed(args.seed); random.seed(args.seed); np.random.seed(args.seed)
@@ -183,7 +219,14 @@ def main():
         torch.set_num_threads(max(1, (os.cpu_count() or 2) // 2))
 
     items = collect(args.data)
-    parts = split_by_note(items, seed=args.seed)
+    dropped = []
+    if args.split == "group":
+        with open(args.groups) as f:
+            groups = json.load(f)["groups"]["all"]
+        parts, dropped = split_by_group(items, groups, seed=args.seed)
+        print(f"group split: {len(groups)} groups, {len(dropped)} notes in label-conflict groups dropped")
+    else:
+        parts = split_by_note(items, seed=args.seed)
     for k, v in parts.items():
         print(f"{k:5s}: {len(v)} photos, {len({i[2] for i in v})} notes, "
               f"{sum(i[1] == 1 for i in v)} real / {sum(i[1] == 0 for i in v)} fake photos")
@@ -218,7 +261,9 @@ def main():
     scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=args.lr, total_steps=steps, pct_start=0.15)
 
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
-    state_path = os.path.join(os.path.dirname(args.out), "train_state.pth")
+    stem = os.path.splitext(args.out)[0]
+    state_path = os.path.join(os.path.dirname(args.out), "train_state.pth") if args.split == "note" \
+        else stem + "_train_state.pth"
     best_auc, best_state, start_epoch, start_step = -1, None, 0, 0
     if args.resume and os.path.exists(state_path):
         st = torch.load(state_path, map_location="cpu", weights_only=False)
@@ -273,7 +318,11 @@ def main():
 
     report = {
         "dataset": "JaalTaka (Mendeley Data, doi:10.17632/2m7wk5cy4c.2, CC BY 4.0) - Tk 500 & Tk 1000",
-        "split": {k: {"photos": len(v), "notes": len({i[2] for i in v})} for k, v in parts.items()},
+        "split_mode": args.split,
+        "dropped_conflict_notes": dropped,
+        "split": {k: {"photos": len(v), "notes": len({i[2] for i in v}),
+                      "real_notes": len({i[2] for i in v if i[1] == 1}),
+                      "fake_notes": len({i[2] for i in v if i[1] == 0})} for k, v in parts.items()},
         "val_per_photo": metrics(vy, vp),
         "test_per_photo": metrics(ty, tp),
         "test_per_note_6_views": metrics(*note_level(parts["test"], tp)),
@@ -294,7 +343,9 @@ def main():
         "metrics": report,
         "test_notes": sorted({i[2] for i in parts["test"]}),
     }, args.out)
-    with open(os.path.join(os.path.dirname(args.out), "metrics.json"), "w") as f:
+    metrics_path = os.path.join(os.path.dirname(args.out), "metrics.json") if args.split == "note" \
+        else stem + "_metrics.json"
+    with open(metrics_path, "w") as f:
         json.dump(report, f, indent=2)
     if os.path.exists(state_path):
         os.remove(state_path)

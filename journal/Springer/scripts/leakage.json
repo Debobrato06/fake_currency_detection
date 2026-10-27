@@ -1,0 +1,217 @@
+{
+ "definition": "clean = no member of the note's duplicate group (NCC>0.98) in train or val",
+ "test_notes_with_copy_in_train_or_val": 116,
+ "test_notes_in_mixed_label_groups": 6,
+ "test_errors": [
+  {
+   "note": "fake_400",
+   "p": 0.9539623260498047,
+   "group": [
+    "fake_400",
+    "real_802"
+   ]
+  },
+  {
+   "note": "fake_404",
+   "p": 0.9532505869865417,
+   "group": [
+    "fake_404",
+    "real_002"
+   ]
+  },
+  {
+   "note": "real_402",
+   "p": 0.09788892418146133,
+   "group": [
+    "fake_108",
+    "fake_549",
+    "real_402"
+   ]
+  },
+  {
+   "note": "real_403",
+   "p": 0.08610447496175766,
+   "group": [
+    "fake_109",
+    "fake_550",
+    "real_403"
+   ]
+  }
+ ],
+ "all": {
+  "model": {
+   "n": 208,
+   "n_fake": 88,
+   "n_real": 120,
+   "accuracy": 0.9807692307692307,
+   "acc_ci95": [
+    0.9516047665112359,
+    0.9924968641411005
+   ],
+   "auc": 0.9939393939393939,
+   "fake_detection": 0.9772727272727273,
+   "genuine_acceptance": 0.9833333333333333,
+   "errors": 4
+  },
+  "knn1": {
+   "n": 208,
+   "n_fake": 88,
+   "n_real": 120,
+   "accuracy": 0.9711538461538461,
+   "acc_ci95": [
+    0.9385055234066901,
+    0.9867140746325997
+   ],
+   "auc": 0.9790719696969697,
+   "fake_detection": 0.9659090909090909,
+   "genuine_acceptance": 0.975,
+   "errors": 6
+  },
+  "linear_probe": {
+   "n": 208,
+   "n_fake": 88,
+   "n_real": 120,
+   "accuracy": 0.9807692307692307,
+   "acc_ci95": [
+    0.9516047665112359,
+    0.9924968641411005
+   ],
+   "auc": 0.9828598484848485,
+   "fake_detection": 0.9772727272727273,
+   "genuine_acceptance": 0.9833333333333333,
+   "errors": 4
+  }
+ },
+ "leaked": {
+  "model": {
+   "n": 116,
+   "n_fake": 60,
+   "n_real": 56,
+   "accuracy": 0.9655172413793104,
+   "acc_ci95": [
+    0.9146791795449883,
+    0.986510390687719
+   ],
+   "auc": 0.986904761904762,
+   "fake_detection": 0.9666666666666667,
+   "genuine_acceptance": 0.9642857142857143,
+   "errors": 4
+  },
+  "knn1": {
+   "n": 116,
+   "n_fake": 60,
+   "n_real": 56,
+   "accuracy": 0.9482758620689655,
+   "acc_ci95": [
+    0.8917305061462193,
+    0.9760816725963877
+   ],
+   "auc": 0.9633928571428572,
+   "fake_detection": 0.95,
+   "genuine_acceptance": 0.9464285714285714,
+   "errors": 6
+  },
+  "linear_probe": {
+   "n": 116,
+   "n_fake": 60,
+   "n_real": 56,
+   "accuracy": 0.9655172413793104,
+   "acc_ci95": [
+    0.9146791795449883,
+    0.986510390687719
+   ],
+   "auc": 0.9657738095238095,
+   "fake_detection": 0.9666666666666667,
+   "genuine_acceptance": 0.9642857142857143,
+   "errors": 4
+  }
+ },
+ "clean": {
+  "model": {
+   "n": 92,
+   "n_fake": 28,
+   "n_real": 64,
+   "accuracy": 1.0,
+   "acc_ci95": [
+    0.9599171967079014,
+    1.0
+   ],
+   "auc": 1.0,
+   "fake_detection": 1.0,
+   "genuine_acceptance": 1.0,
+   "errors": 0
+  },
+  "knn1": {
+   "n": 92,
+   "n_fake": 28,
+   "n_real": 64,
+   "accuracy": 1.0,
+   "acc_ci95": [
+    0.9599171967079014,
+    1.0
+   ],
+   "auc": 1.0,
+   "fake_detection": 1.0,
+   "genuine_acceptance": 1.0,
+   "errors": 0
+  },
+  "linear_probe": {
+   "n": 92,
+   "n_fake": 28,
+   "n_real": 64,
+   "accuracy": 1.0,
+   "acc_ci95": [
+    0.9599171967079014,
+    1.0
+   ],
+   "auc": 1.0,
+   "fake_detection": 1.0,
+   "genuine_acceptance": 1.0,
+   "errors": 0
+  }
+ },
+ "all_minus_mixed": {
+  "model": {
+   "n": 202,
+   "n_fake": 85,
+   "n_real": 117,
+   "accuracy": 1.0,
+   "acc_ci95": [
+    0.9813371058134022,
+    1.0
+   ],
+   "auc": 1.0,
+   "fake_detection": 1.0,
+   "genuine_acceptance": 1.0,
+   "errors": 0
+  },
+  "knn1": {
+   "n": 202,
+   "n_fake": 85,
+   "n_real": 117,
+   "accuracy": 1.0,
+   "acc_ci95": [
+    0.9813371058134022,
+    1.0
+   ],
+   "auc": 1.0,
+   "fake_detection": 1.0,
+   "genuine_acceptance": 1.0,
+   "errors": 0
+  },
+  "linear_probe": {
+   "n": 202,
+   "n_fake": 85,
+   "n_real": 117,
+   "accuracy": 1.0,
+   "acc_ci95": [
+    0.9813371058134022,
+    1.0
+   ],
+   "auc": 1.0,
+   "fake_detection": 1.0,
+   "genuine_acceptance": 1.0,
+   "errors": 0
+  }
+ }
+}
