@@ -1,0 +1,62 @@
+\documentclass[10pt]{letter}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+\signature{Debobrato Biswas\\
+Department of Software Engineering\\
+Daffodil International University, Dhaka 1207, Bangladesh\\
+\href{mailto:biswas2305343003@diu.edu.bd}{biswas2305343003@diu.edu.bd}\\
+ORCID: \href{https://orcid.org/0009-0005-0088-8657}{0009-0005-0088-8657}}
+\address{}
+\date{\today}
+
+\begin{document}
+\begin{letter}{The Editor-in-Chief\\
+SN Computer Science\\
+Springer Nature}
+
+\opening{Dear Editor,}
+
+We submit our manuscript \emph{``Reliable Smartphone-Based Detection of Counterfeit
+Bangladeshi Banknotes: Multi-View Deep Learning with Out-of-Distribution Rejection and a
+Benchmark Audit''} for consideration as an original research article in
+\emph{SN Computer Science}.
+
+JaalTaka is the public benchmark for detecting counterfeit Bangladeshi Tk~500 and
+Tk~1000 notes, and published CNNs report 97--99\% accuracy on it. Our study asks whether
+this accuracy measures counterfeit recognition at all. The main findings are:
+
+\begin{itemize}
+\item A duplicate audit, to our knowledge the first for a counterfeit-banknote benchmark,
+shows that the 1{,}390 notes form only 846 distinct photograph sets, that 116 of 208
+test notes have a copy in training or validation, and that 12 duplicate groups carry
+both labels and explain every test error.
+\item On a group-aware split without shared photographs, both our fine-tuned model and
+nearest-neighbour classification on generic ImageNet features classify all 205 test
+notes correctly, and an occlusion test shows that the image border alone separates the
+classes. The benchmark is therefore saturated and cannot rank methods.
+\item An open, CPU-real-time smartphone pipeline (37~ms per photograph) adds multi-view
+fusion, a three-way decision with an ``uncertain'' outcome, an out-of-distribution gate,
+and Grad-CAM explanations, evaluated with group-level bootstrap intervals and paired
+McNemar tests.
+\end{itemize}
+
+We think the work suits the journal's readership in applied machine learning and
+computer vision. It combines a practical system with a reproducible analysis of
+evaluation pitfalls (data leakage, label noise, and shortcut learning) that apply to
+many small image benchmarks. The duplicate groups, split assignments, test predictions,
+and all analysis code are provided as Online Resource~1.
+
+We confirm that this manuscript is original, has not been published elsewhere, and is
+not under consideration by any other journal. Both authors have approved the manuscript
+and agree with its submission. The authors declare no competing interests, and the study
+received no external funding. The study uses only a public CC~BY~4.0 dataset and
+involves no human participants or animals.
+
+Thank you for considering our manuscript.
+
+\closing{Sincerely,}
+
+\end{letter}
+\end{document}

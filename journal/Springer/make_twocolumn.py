@@ -20,6 +20,16 @@ s = s.replace("%% For double line spacing during review, add the \"referee\" opt
               "%% Springer_paper.tex. For line numbers, add the \"lineno\" option.\n"
               "\\documentclass[pdflatex,iicol,sn-mathphys-num]{sn-jnl}")
 
+# two-column: a float barrier at every section leaves half-empty pages before the
+# Discussion, because page-wide floats can only go to the top of the next page
+s = s.replace("\\usepackage[section]{placeins}% floats stay in their section, in citation order",
+              "\\usepackage{placeins}% no section barrier in two-column (avoids half-empty pages)")
+assert "[section]{placeins}" not in s
+
+# tighter reference spacing (class default 1em) so the last reference does not spill onto
+# a page of its own
+s = s.replace("\\bibliography{references}", "\\setlength{\\bibsep}{2pt}\n\\bibliography{references}")
+
 # floats: column-wide unless listed here
 NARROW_FIG = {"fig:confusion", "fig:roc", "fig:ood"}
 NARROW_TAB = {"tab:audit"}
@@ -49,7 +59,7 @@ q_c &= (1-\\varepsilon)\\,\\mathbb{1}[c=y] + \\tfrac{\\varepsilon}{2},
 \\end{align}""")
 
 for a, b in [
-    ("3{,}877 words excluding references", "3{,}862 words excluding references"),
+    ("3{,}973 words excluding references", "3{,}958 words excluding references"),
     ("Notes / distinct photograph sets (groups) &", "Notes / distinct photograph sets &"),
     ("Notes sharing their photographs with another note &", "Notes sharing photographs with another &"),
     ("Groups with only counterfeit / only genuine labels &", "Counterfeit-only / genuine-only groups &"),

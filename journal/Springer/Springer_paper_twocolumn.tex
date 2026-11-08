@@ -21,12 +21,15 @@
 \usepackage{xcolor}%
 \usepackage{textcomp}%
 \usepackage{booktabs}%
-\usepackage[section]{placeins}% floats stay in their section, in citation order
+\usepackage{placeins}% no section barrier in two-column (avoids half-empty pages)
 
 \graphicspath{{figures/}}
 \hyphenation{bank-note bank-notes counter-feit counter-feits Efficient-Net}
 
 \raggedbottom
+
+%% ORCID shown as a text link (the class default needs Orcidlogo.eps, which is not shipped)
+\gdef\orcidlogo{\textsc{orcid}}
 
 \begin{document}
 
@@ -34,7 +37,7 @@
 Smartphone-Based Detection of Counterfeit Bangladeshi Banknotes: Multi-View Deep Learning
 with Out-of-Distribution Rejection and a Benchmark Audit}
 
-\author*[1]{\fnm{Debobrato} \sur{Biswas}}\email{biswas2305343003@diu.edu.bd}
+\author*[1]{\fnm{Debobrato} \sur{Biswas}\,\orcid{https://orcid.org/0009-0005-0088-8657}}\email{biswas2305343003@diu.edu.bd}
 
 \author[1]{\fnm{Imran} \sur{Mahmud}}
 
@@ -58,8 +61,9 @@ CI 95.16--99.25\%) and an ROC-AUC of 0.994 at 37~ms per photograph. However, the
 notes form only 846 distinct photograph sets, 116 test notes have a copy in training or
 validation, and 12 duplicate groups carry both labels, causing all four test errors. On
 the 92 test notes without a copy, the system and two simple baselines are error-free.
-On a group-aware split without shared photographs, nearest-neighbour classification
-on generic features is still error-free on all 205 test notes.
+On a group-aware split without shared photographs, the retrained system and
+nearest-neighbour classification on generic features are both error-free on all 205
+test notes.
 
 \textbf{Conclusion:} The benchmark is saturated. We release the duplicate groups and
 recommend group-aware, counterfeit-family hold-out evaluation.}
@@ -80,7 +84,7 @@ both genuine and fake, and these explained every mistake. The tool may therefore
 catch new kinds of fakes. We share the repeated photographs and suggest fairer tests.
 
 \section*{Word Count}
-3{,}862 words excluding references (main text: 2{,}838 words; abstract: 179 words);
+3{,}958 words excluding references (main text: 2{,}922 words; abstract: 183 words);
 9 figures; 6 tables.
 
 %% ======================================================================
@@ -264,7 +268,8 @@ with $\varepsilon=0.05$ and $w_c=N/(2N_c)$. We use AdamW~\cite{loshchilov2019ada
 $3\times10^{-4}$, 15\% warm-up), batch size 12, and six epochs, keeping the epoch with
 the highest validation accuracy plus AUC (the sixth: 99.04\%, AUC 0.9976).
 Hyperparameters were fixed beforehand; only the epoch was chosen, on validation data. Training took about 55~min on an Intel Core i5-12400 CPU with
-PyTorch~\cite{paszke2019pytorch}; all results come from this single run (seed 42).
+PyTorch~\cite{paszke2019pytorch}; all results come from this single run (seed 42),
+except Section~\ref{sec:groupsplit}, where the model is retrained with identical settings.
 
 \subsection{Multi-view fusion and three-way decision}\label{sec:decision}
 
@@ -531,7 +536,12 @@ notes, 124 groups), and test (205 notes, 126 groups: 119 genuine, 86 counterfeit
 that no photograph set occurs in two splits~\cite{roberts2017cv}. Table~\ref{tab:group}
 shows that the task does not become harder. 1-NN on frozen ImageNet features classifies
 all 205 test notes correctly (95\% Wilson CI 98.16--100\%), although none of them has a
-copy in training, and the linear probe errs on three notes. Distinct notes of the same
+copy in training, and the linear probe errs on three notes. Our model, retrained on this
+split with the settings of Section~\ref{sec:training} (selected epoch: the third;
+validation accuracy 99.51\%, AUC 0.995), is error-free on all 1{,}230 test photographs (AUC 1.000); its advantage over
+the probe is not significant (exact McNemar $p=0.25$). With the centre of each photograph
+hidden as in Section~\ref{sec:shortcut}, it still reaches an AUC of 0.999 (accuracy
+87.72\%), so the border alone almost perfectly separates the classes. Distinct notes of the same
 class are thus still close to each other in a generic feature space, consistent with
 shared counterfeit batches and capture sessions rather than with learned security
 features (Section~\ref{sec:shortcut}). A group-aware split removes copies but not this
@@ -547,8 +557,7 @@ Method & Acc.\ (\%) & AUC & Acc.\ (\%) [95\% Wilson CI] & AUC \\
 \midrule
 1-NN, frozen ImageNet features & 99.84 & 0.998 & 100.0 [98.16--100] & 1.000 \\
 Linear probe, frozen features  & 97.15 & 0.995 & 98.54 [95.79--99.50] & 1.000 \\
-%% GROUP_MODEL_ROW: fine-tuned EfficientNet-B0 trained with train_ai.py --split group
-%% (best epoch saved; final test evaluation pending, see scripts/eval_group.py)
+Fine-tuned EfficientNet-B0 (ours) & \textbf{100.0} & \textbf{1.000} & \textbf{100.0} [98.16--100] & \textbf{1.000} \\
 \botrule
 \end{tabular*}
 \end{table*}
@@ -605,7 +614,7 @@ cannot capture ultraviolet, magnetic, or tactile features, so the output is deci
 support and suspicious notes should be confirmed at a bank. Scans and distant
 photographs are mostly rejected, and the data come from four phone models only.
 
-\emph{Internal validity.} All results come from one training run (seed 42); we did not
+\emph{Internal validity.} Each model was trained once per split (seed 42); we did not
 measure variation across seeds. The validation split shares duplicates with training,
 so the selected epoch and the OOD thresholds were calibrated on partly leaked data. The
 OOD evaluation is preliminary (105 images, no comparison with other OOD scores), and
@@ -624,7 +633,8 @@ numbers.
 Our audit shows that JaalTaka, the public benchmark for Bangladeshi counterfeit
 detection, is saturated: its 1{,}390 notes form 846 distinct photograph sets, label
 conflicts explain every test error, and nearest-neighbour classification on generic
-features is error-free on duplicate-free test notes and on a group-aware split.
+features is as error-free as our fine-tuned model on duplicate-free test notes and on a
+group-aware split.
 Accuracies near 98\% therefore cannot rank methods or predict performance on new
 counterfeits. Our CPU-real-time system with multi-view fusion, a three-way decision, an
 OOD gate, and Grad-CAM reaches 98.08\% note-level accuracy (AUC 0.994). Progress now
@@ -665,6 +675,7 @@ responsibility for the content.
 \end{itemize}
 
 %% ----------------------------------------------------------------------
+\setlength{\bibsep}{2pt}
 \bibliography{references}
 
 \end{document}

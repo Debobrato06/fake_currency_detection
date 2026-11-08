@@ -5,7 +5,7 @@ Same study as `../IEEE/IEEE_paper.tex`, set in the official Springer Nature LaTe
 
 | File | Content |
 |---|---|
-| `Springer_paper_twocolumn.tex` / `.pdf` | **Two-column** version (`sn-jnl` option `iicol`), 11 pages |
+| `Springer_paper_twocolumn.tex` / `.pdf` | **Two-column** version (`sn-jnl` option `iicol`), 13 pages |
 | `Springer_paper.tex` / `.pdf` | Single-column version (default `sn-jnl` manuscript layout), 15 pages |
 | `sn-jnl.cls`, `sn-mathphys-num.bst` | Springer Nature class and bibliography style |
 | `references.bib` | Same 32 references as the IEEE version |
@@ -93,3 +93,26 @@ Previous sources: `Springer_paper_v3_before_length_fix.tex`, `Springer_paper_two
    `placeins` keeps every float inside its section, so in the single-column PDF each figure follows its
    first citation. In both PDFs the only lines starting with "Fig. N" / "Table N" are the legends, in order.
    Upload the figure files in this numbered order if the system asks for separate figures.
+
+## Final submission version (8 Nov 2026)
+
+Previous files: `Springer_paper_v4_before_final_submission.tex`,
+`Springer_paper_twocolumn_v4_before_final_submission.tex/.pdf`.
+
+1. **Group-aware fine-tuned model (Table 5):** the pending row is filled. The model retrained on the
+   group-aware split (`models/taka_authenticator_group.pth`; selected epoch 3, validation 99.51% /
+   AUC 0.995) is error-free on all 205 test notes and 1,230 test photographs (AUC 1.000; exact McNemar
+   vs. linear probe p = 0.25). With the centre hidden it still reaches AUC 0.999 (accuracy 87.72%).
+   Sources: `scripts/group_eval.json`, `models/taka_authenticator_group_metrics.json`. Abstract,
+   Section 4.7, Section 3.3, Limitations and Conclusion updated accordingly.
+2. **ORCID** of the corresponding author (0009-0005-0088-8657) added as a link after the name
+   (`\orcidlogo` redefined as text because the class's `Orcidlogo.eps` is not shipped).
+3. **References:** tabassum2025 DOI verified on Crossref (IEEE ICCIT 2025, pp. 4384-4389); all other
+   DOIs resolve (Crossref, and DataCite for the Mendeley dataset).
+4. **Word count:** 3,973 (single-column) / 3,958 (two-column) excluding references; main text 2,922;
+   abstract 183.
+5. **Two-column layout:** `make_twocolumn.py` drops the `placeins` section barrier in the two-column
+   file only, which removed the empty column beside the Introduction and a half-empty page before
+   the Discussion, and sets `ibsep` to 2pt so the last reference no longer takes a page of its
+   own (15 -> 13 pages). Every page now has both columns filled.
+6. `supplementary.zip` regenerated; it now also contains `results_group_eval.json`.

@@ -1,0 +1,122 @@
+{
+  "dataset": "JaalTaka (Mendeley Data, doi:10.17632/2m7wk5cy4c.2, CC BY 4.0) - Tk 500 & Tk 1000",
+  "split_mode": "group",
+  "dropped_conflict_notes": [
+    "fake_106",
+    "fake_107",
+    "fake_108",
+    "fake_109",
+    "fake_110",
+    "fake_111",
+    "fake_112",
+    "fake_400",
+    "fake_403",
+    "fake_404",
+    "fake_405",
+    "fake_406",
+    "fake_547",
+    "fake_548",
+    "fake_549",
+    "fake_550",
+    "fake_551",
+    "fake_552",
+    "fake_553",
+    "real_001",
+    "real_002",
+    "real_003",
+    "real_004",
+    "real_400",
+    "real_401",
+    "real_402",
+    "real_403",
+    "real_404",
+    "real_405",
+    "real_406",
+    "real_802"
+  ],
+  "split": {
+    "train": {
+      "photos": 5694,
+      "notes": 949,
+      "real_notes": 552,
+      "fake_notes": 397
+    },
+    "val": {
+      "photos": 1230,
+      "notes": 205,
+      "real_notes": 119,
+      "fake_notes": 86
+    },
+    "test": {
+      "photos": 1230,
+      "notes": 205,
+      "real_notes": 119,
+      "fake_notes": 86
+    }
+  },
+  "val_per_photo": {
+    "accuracy": 0.9951,
+    "auc": 0.995,
+    "fake_detection_rate": 0.9884,
+    "real_acceptance_rate": 1.0,
+    "confusion": {
+      "fake_as_fake": 510,
+      "fake_as_real": 6,
+      "real_as_fake": 0,
+      "real_as_real": 714
+    },
+    "n": 1230
+  },
+  "test_per_photo": {
+    "accuracy": 1.0,
+    "auc": 1.0,
+    "fake_detection_rate": 1.0,
+    "real_acceptance_rate": 1.0,
+    "confusion": {
+      "fake_as_fake": 516,
+      "fake_as_real": 0,
+      "real_as_fake": 0,
+      "real_as_real": 714
+    },
+    "n": 1230
+  },
+  "test_per_note_6_views": {
+    "accuracy": 1.0,
+    "auc": 1.0,
+    "fake_detection_rate": 1.0,
+    "real_acceptance_rate": 1.0,
+    "confusion": {
+      "fake_as_fake": 86,
+      "fake_as_real": 0,
+      "real_as_fake": 0,
+      "real_as_real": 119
+    },
+    "n": 205
+  },
+  "diagnostic_center_hidden": {
+    "accuracy": 0.8772,
+    "auc": 0.999,
+    "fake_detection_rate": 1.0,
+    "real_acceptance_rate": 0.7885,
+    "confusion": {
+      "fake_as_fake": 516,
+      "fake_as_real": 0,
+      "real_as_fake": 151,
+      "real_as_real": 563
+    },
+    "n": 1230
+  },
+  "diagnostic_border_hidden": {
+    "accuracy": 0.9837,
+    "auc": 0.9985,
+    "fake_detection_rate": 0.9729,
+    "real_acceptance_rate": 0.9916,
+    "confusion": {
+      "fake_as_fake": 502,
+      "fake_as_real": 14,
+      "real_as_fake": 6,
+      "real_as_real": 708
+    },
+    "n": 1230
+  }
+}

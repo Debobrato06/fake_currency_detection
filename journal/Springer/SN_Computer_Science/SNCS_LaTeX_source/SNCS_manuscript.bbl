@@ -1,0 +1,712 @@
+%% BioMed_Central_Bib_Style_v1.01
+
+\begin{thebibliography}{41}
+% BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1}\fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1}\fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{#1}\fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1}\fi
+\ifx \bissue  \undefined \def \bissue#1{#1}\fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1}\fi
+\ifx \blpage  \undefined \def \blpage #1{#1}\fi
+\ifx \burl  \undefined \def \burl#1{\textsf{#1}}\fi
+\ifx \doiurl  \undefined \def \doiurl#1{\url{https://doi.org/#1}}\fi
+\ifx \betal  \undefined \def \betal{\textit{et al.}}\fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1}\fi
+\ifx \binstitutionaled  \undefined \def \binstitutionaled#1{#1}\fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1}\fi
+\ifx \beditor  \undefined \def \beditor#1{#1}\fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1}\fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{#1}\fi
+\ifx \bedition  \undefined \def \bedition#1{#1}\fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1}\fi
+\ifx \blocation  \undefined \def \blocation#1{#1}\fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1}\fi
+\ifx \bsnm \undefined \def \bsnm#1{#1}\fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1}\fi
+\ifx \bparticle \undefined \def \bparticle#1{#1}\fi
+\ifx \barticle \undefined \def \barticle#1{#1}\fi
+\bibcommenthead
+\ifx \bconfdate \undefined \def \bconfdate #1{#1}\fi
+\ifx \botherref \undefined \def \botherref #1{#1}\fi
+\ifx \url \undefined \def \url#1{\textsf{#1}}\fi
+\ifx \bchapter \undefined \def \bchapter#1{#1}\fi
+\ifx \bbook \undefined \def \bbook#1{#1}\fi
+\ifx \bcomment \undefined \def \bcomment#1{#1}\fi
+\ifx \oauthor \undefined \def \oauthor#1{#1}\fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1}\fi
+\ifx \endbibitem  \undefined \def \endbibitem {}\fi
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1}\fi
+\ifx \arxivurl  \undefined \def \arxivurl#1{\textsf{#1}}\fi
+\csname PreBibitemsHook\endcsname
+
+%%% 1
+\bibitem[\protect\citeauthoryear{Pham et~al.}{2020}]{pham2020}
+\begin{barticle}
+\bauthor{\bsnm{Pham}, \binits{T.D.}},
+\bauthor{\bsnm{Park}, \binits{C.}},
+\bauthor{\bsnm{Nguyen}, \binits{D.T.}},
+\bauthor{\bsnm{Batchuluun}, \binits{G.}},
+\bauthor{\bsnm{Park}, \binits{K.R.}}:
+\batitle{Deep learning-based fake-banknote detection for the visually impaired
+  people using visible-light images captured by smartphone cameras}.
+\bjtitle{IEEE Access}
+\bvolume{8},
+\bfpage{63144}--\blpage{63161}
+(\byear{2020})
+\doiurl{10.1109/ACCESS.2020.2984019}
+\end{barticle}
+\endbibitem
+
+%%% 2
+\bibitem[\protect\citeauthoryear{Pham et~al.}{2022}]{pham2022}
+\begin{barticle}
+\bauthor{\bsnm{Pham}, \binits{T.D.}},
+\bauthor{\bsnm{Lee}, \binits{Y.W.}},
+\bauthor{\bsnm{Park}, \binits{C.}},
+\bauthor{\bsnm{Park}, \binits{K.R.}}:
+\batitle{Deep learning-based detection of fake multinational banknotes in a
+  cross-dataset environment utilizing smartphone cameras for assisting visually
+  impaired individuals}.
+\bjtitle{Mathematics}
+\bvolume{10}(\bissue{9}),
+\bfpage{1616}
+(\byear{2022})
+\doiurl{10.3390/math10091616}
+\end{barticle}
+\endbibitem
+
+%%% 3
+\bibitem[\protect\citeauthoryear{Piyas et~al.}{2026}]{piyas2025jaaltaka}
+\begin{barticle}
+\bauthor{\bsnm{Piyas}, \binits{B.R.C.}},
+\bauthor{\bsnm{Tisha}, \binits{F.J.}},
+\bauthor{\bsnm{Rahman}, \binits{S.}},
+\bauthor{\bsnm{Islam}, \binits{S.}},
+\bauthor{\bsnm{Preenon}, \binits{B.R.C.}}:
+\batitle{{JaalTaka}: A benchmark dataset for detecting counterfeit
+  {Bangladeshi} banknotes}.
+\bjtitle{Data in Brief}
+\bvolume{64},
+\bfpage{112377}
+(\byear{2026})
+\doiurl{10.1016/j.dib.2025.112377}
+\end{barticle}
+\endbibitem
+
+%%% 4
+\bibitem[\protect\citeauthoryear{Geirhos et~al.}{2020}]{geirhos2020shortcut}
+\begin{barticle}
+\bauthor{\bsnm{Geirhos}, \binits{R.}},
+\bauthor{\bsnm{Jacobsen}, \binits{J.-H.}},
+\bauthor{\bsnm{Michaelis}, \binits{C.}},
+\bauthor{\bsnm{Zemel}, \binits{R.}},
+\bauthor{\bsnm{Brendel}, \binits{W.}},
+\bauthor{\bsnm{Bethge}, \binits{M.}},
+\bauthor{\bsnm{Wichmann}, \binits{F.A.}}:
+\batitle{Shortcut learning in deep neural networks}.
+\bjtitle{Nature Machine Intelligence}
+\bvolume{2}(\bissue{11}),
+\bfpage{665}--\blpage{673}
+(\byear{2020})
+\doiurl{10.1038/s42256-020-00257-z}
+\end{barticle}
+\endbibitem
+
+%%% 5
+\bibitem[\protect\citeauthoryear{Kaufman et~al.}{2012}]{kaufman2012leakage}
+\begin{barticle}
+\bauthor{\bsnm{Kaufman}, \binits{S.}},
+\bauthor{\bsnm{Rosset}, \binits{S.}},
+\bauthor{\bsnm{Perlich}, \binits{C.}},
+\bauthor{\bsnm{Stitelman}, \binits{O.}}:
+\batitle{Leakage in data mining: Formulation, detection, and avoidance}.
+\bjtitle{ACM Transactions on Knowledge Discovery from Data}
+\bvolume{6}(\bissue{4}),
+\bfpage{1}--\blpage{21}
+(\byear{2012})
+\doiurl{10.1145/2382577.2382579}
+\end{barticle}
+\endbibitem
+
+%%% 6
+\bibitem[\protect\citeauthoryear{Barz and Denzler}{2020}]{barz2020cifair}
+\begin{barticle}
+\bauthor{\bsnm{Barz}, \binits{B.}},
+\bauthor{\bsnm{Denzler}, \binits{J.}}:
+\batitle{Do we train on test data? {P}urging {CIFAR} of near-duplicates}.
+\bjtitle{Journal of Imaging}
+\bvolume{6}(\bissue{6}),
+\bfpage{41}
+(\byear{2020})
+\doiurl{10.3390/jimaging6060041}
+\end{barticle}
+\endbibitem
+
+%%% 7
+\bibitem[\protect\citeauthoryear{Kapoor and
+  Narayanan}{2023}]{kapoor2023leakage}
+\begin{barticle}
+\bauthor{\bsnm{Kapoor}, \binits{S.}},
+\bauthor{\bsnm{Narayanan}, \binits{A.}}:
+\batitle{Leakage and the reproducibility crisis in machine-learning-based
+  science}.
+\bjtitle{Patterns}
+\bvolume{4}(\bissue{9}),
+\bfpage{100804}
+(\byear{2023})
+\doiurl{10.1016/j.patter.2023.100804}
+\end{barticle}
+\endbibitem
+
+%%% 8
+\bibitem[\protect\citeauthoryear{Tan and Le}{2019}]{tan2019efficientnet}
+\begin{bchapter}
+\bauthor{\bsnm{Tan}, \binits{M.}},
+\bauthor{\bsnm{Le}, \binits{Q.V.}}:
+\bctitle{{EfficientNet}: Rethinking model scaling for convolutional neural
+  networks}.
+In: \bbtitle{Proc. 36th Int. Conf. Machine Learning (ICML)}.
+\bsertitle{Proceedings of Machine Learning Research},
+vol. \bseriesno{97},
+pp. \bfpage{6105}--\blpage{6114}.
+\bconflocation{Long Beach, CA, USA}
+(\byear{2019})
+\end{bchapter}
+\endbibitem
+
+%%% 9
+\bibitem[\protect\citeauthoryear{Selvaraju et~al.}{2017}]{selvaraju2017gradcam}
+\begin{bchapter}
+\bauthor{\bsnm{Selvaraju}, \binits{R.R.}},
+\bauthor{\bsnm{Cogswell}, \binits{M.}},
+\bauthor{\bsnm{Das}, \binits{A.}},
+\bauthor{\bsnm{Vedantam}, \binits{R.}},
+\bauthor{\bsnm{Parikh}, \binits{D.}},
+\bauthor{\bsnm{Batra}, \binits{D.}}:
+\bctitle{{Grad-CAM}: Visual explanations from deep networks via gradient-based
+  localization}.
+In: \bbtitle{Proc. IEEE Int. Conf. Computer Vision (ICCV)},
+\bconflocation{Venice, Italy},
+pp. \bfpage{618}--\blpage{626}
+(\byear{2017}).
+\doiurl{10.1109/ICCV.2017.74}
+\end{bchapter}
+\endbibitem
+
+%%% 10
+\bibitem[\protect\citeauthoryear{Yeh et~al.}{2011}]{yeh2011}
+\begin{barticle}
+\bauthor{\bsnm{Yeh}, \binits{C.-Y.}},
+\bauthor{\bsnm{Su}, \binits{W.-P.}},
+\bauthor{\bsnm{Lee}, \binits{S.-J.}}:
+\batitle{Employing multiple-kernel support vector machines for counterfeit
+  banknote recognition}.
+\bjtitle{Applied Soft Computing}
+\bvolume{11}(\bissue{1}),
+\bfpage{1439}--\blpage{1447}
+(\byear{2011})
+\doiurl{10.1016/j.asoc.2010.04.015}
+\end{barticle}
+\endbibitem
+
+%%% 11
+\bibitem[\protect\citeauthoryear{Berenguel et~al.}{2016}]{berenguel2016}
+\begin{bchapter}
+\bauthor{\bsnm{Berenguel}, \binits{A.}},
+\bauthor{\bsnm{Ramos~Terrades}, \binits{O.}},
+\bauthor{\bsnm{Llad{\'o}s}, \binits{J.}},
+\bauthor{\bsnm{Ca{\~n}ero}, \binits{C.}}:
+\bctitle{Banknote counterfeit detection through background texture printing
+  analysis}.
+In: \bbtitle{Proc. 12th IAPR Workshop on Document Analysis Systems (DAS)},
+\bconflocation{Santorini, Greece},
+pp. \bfpage{66}--\blpage{71}
+(\byear{2016}).
+\doiurl{10.1109/DAS.2016.34}
+\end{bchapter}
+\endbibitem
+
+%%% 12
+\bibitem[\protect\citeauthoryear{Baek et~al.}{2018}]{baek2018}
+\begin{barticle}
+\bauthor{\bsnm{Baek}, \binits{S.}},
+\bauthor{\bsnm{Choi}, \binits{E.}},
+\bauthor{\bsnm{Baek}, \binits{Y.}},
+\bauthor{\bsnm{Lee}, \binits{C.}}:
+\batitle{Detection of counterfeit banknotes using multispectral images}.
+\bjtitle{Digital Signal Processing}
+\bvolume{78},
+\bfpage{294}--\blpage{304}
+(\byear{2018})
+\doiurl{10.1016/j.dsp.2018.03.015}
+\end{barticle}
+\endbibitem
+
+%%% 13
+\bibitem[\protect\citeauthoryear{Uddin et~al.}{2016}]{uddin2016}
+\begin{bchapter}
+\bauthor{\bsnm{Uddin}, \binits{M.S.}},
+\bauthor{\bsnm{Das}, \binits{P.P.}},
+\bauthor{\bsnm{Roney}, \binits{M.S.A.}}:
+\bctitle{Image-based approach for the detection of counterfeit banknotes of
+  {Bangladesh}}.
+In: \bbtitle{Proc. 5th Int. Conf. Informatics, Electronics and Vision (ICIEV)},
+\bconflocation{Dhaka, Bangladesh},
+pp. \bfpage{1067}--\blpage{1072}
+(\byear{2016}).
+\doiurl{10.1109/ICIEV.2016.7760162}
+\end{bchapter}
+\endbibitem
+
+%%% 14
+\bibitem[\protect\citeauthoryear{Dittimi and Suen}{2018}]{dittimi2018}
+\begin{bchapter}
+\bauthor{\bsnm{Dittimi}, \binits{T.V.}},
+\bauthor{\bsnm{Suen}, \binits{C.Y.}}:
+\bctitle{Mobile app for detection of counterfeit banknotes}.
+In: \bbtitle{Advances in Artificial Intelligence (Canadian AI 2018)}.
+\bsertitle{Lecture Notes in Computer Science},
+vol. \bseriesno{10832},
+pp. \bfpage{156}--\blpage{168}.
+\bpublisher{Springer},
+\blocation{Cham, Switzerland}
+(\byear{2018}).
+\doiurl{10.1007/978-3-319-89656-4_13}
+\end{bchapter}
+\endbibitem
+
+%%% 15
+\bibitem[\protect\citeauthoryear{Deng et~al.}{2009}]{deng2009imagenet}
+\begin{bchapter}
+\bauthor{\bsnm{Deng}, \binits{J.}},
+\bauthor{\bsnm{Dong}, \binits{W.}},
+\bauthor{\bsnm{Socher}, \binits{R.}},
+\bauthor{\bsnm{Li}, \binits{L.-J.}},
+\bauthor{\bsnm{Li}, \binits{K.}},
+\bauthor{\bsnm{Fei-Fei}, \binits{L.}}:
+\bctitle{{ImageNet}: A large-scale hierarchical image database}.
+In: \bbtitle{Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR)},
+\bconflocation{Miami, FL, USA},
+pp. \bfpage{248}--\blpage{255}
+(\byear{2009}).
+\doiurl{10.1109/CVPR.2009.5206848}
+\end{bchapter}
+\endbibitem
+
+%%% 16
+\bibitem[\protect\citeauthoryear{Yosinski
+  et~al.}{2014}]{yosinski2014transferable}
+\begin{bchapter}
+\bauthor{\bsnm{Yosinski}, \binits{J.}},
+\bauthor{\bsnm{Clune}, \binits{J.}},
+\bauthor{\bsnm{Bengio}, \binits{Y.}},
+\bauthor{\bsnm{Lipson}, \binits{H.}}:
+\bctitle{How transferable are features in deep neural networks?}
+In: \bbtitle{Advances in Neural Information Processing Systems (NeurIPS)},
+vol. \bseriesno{27},
+pp. \bfpage{3320}--\blpage{3328}
+(\byear{2014})
+\end{bchapter}
+\endbibitem
+
+%%% 17
+\bibitem[\protect\citeauthoryear{Jahangir and Chowdhury}{2007}]{jahangir2007}
+\begin{bchapter}
+\bauthor{\bsnm{Jahangir}, \binits{N.}},
+\bauthor{\bsnm{Chowdhury}, \binits{A.R.}}:
+\bctitle{{Bangladeshi} banknote recognition by neural network with axis
+  symmetrical masks}.
+In: \bbtitle{Proc. 10th Int. Conf. Computer and Information Technology
+  (ICCIT)},
+\bconflocation{Dhaka, Bangladesh},
+pp. \bfpage{1}--\blpage{5}
+(\byear{2007}).
+\doiurl{10.1109/ICCITECHN.2007.4579423}
+\end{bchapter}
+\endbibitem
+
+%%% 18
+\bibitem[\protect\citeauthoryear{Linkon et~al.}{2020}]{linkon2020}
+\begin{bchapter}
+\bauthor{\bsnm{Linkon}, \binits{A.H.M.}},
+\bauthor{\bsnm{Labib}, \binits{M.M.}},
+\bauthor{\bsnm{Bappy}, \binits{F.H.}},
+\bauthor{\bsnm{Sarker}, \binits{S.}},
+\bauthor{\bsnm{Jannat}, \binits{M.-E.}},
+\bauthor{\bsnm{Islam}, \binits{M.S.}}:
+\bctitle{Deep learning approach combining lightweight {CNN} architecture with
+  transfer learning: An automatic approach for the detection and recognition of
+  {Bangladeshi} banknotes}.
+In: \bbtitle{Proc. 11th Int. Conf. Electrical and Computer Engineering
+  (ICECE)},
+\bconflocation{Dhaka, Bangladesh},
+pp. \bfpage{214}--\blpage{217}
+(\byear{2020}).
+\doiurl{10.1109/ICECE51571.2020.9393113}
+\end{bchapter}
+\endbibitem
+
+%%% 19
+\bibitem[\protect\citeauthoryear{Nuhash and Akter}{2025}]{nuhash2025banglataka}
+\begin{barticle}
+\bauthor{\bsnm{Nuhash}, \binits{M.N.I.}},
+\bauthor{\bsnm{Akter}, \binits{S.}}:
+\batitle{{BanglaTaka}: A dataset for classification of {Bangladeshi}
+  banknotes}.
+\bjtitle{Data in Brief}
+\bvolume{61},
+\bfpage{111853}
+(\byear{2025})
+\doiurl{10.1016/j.dib.2025.111853}
+\end{barticle}
+\endbibitem
+
+%%% 20
+\bibitem[\protect\citeauthoryear{Huang et~al.}{2017}]{huang2017densenet}
+\begin{bchapter}
+\bauthor{\bsnm{Huang}, \binits{G.}},
+\bauthor{\bsnm{Liu}, \binits{Z.}},
+\bauthor{\bsnm{Maaten}, \binits{L.}},
+\bauthor{\bsnm{Weinberger}, \binits{K.Q.}}:
+\bctitle{Densely connected convolutional networks}.
+In: \bbtitle{Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR)},
+\bconflocation{Honolulu, HI, USA},
+pp. \bfpage{4700}--\blpage{4708}
+(\byear{2017}).
+\doiurl{10.1109/CVPR.2017.243}
+\end{bchapter}
+\endbibitem
+
+%%% 21
+\bibitem[\protect\citeauthoryear{He et~al.}{2016}]{he2016resnet}
+\begin{bchapter}
+\bauthor{\bsnm{He}, \binits{K.}},
+\bauthor{\bsnm{Zhang}, \binits{X.}},
+\bauthor{\bsnm{Ren}, \binits{S.}},
+\bauthor{\bsnm{Sun}, \binits{J.}}:
+\bctitle{Deep residual learning for image recognition}.
+In: \bbtitle{Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR)},
+\bconflocation{Las Vegas, NV, USA},
+pp. \bfpage{770}--\blpage{778}
+(\byear{2016}).
+\doiurl{10.1109/CVPR.2016.90}
+\end{bchapter}
+\endbibitem
+
+%%% 22
+\bibitem[\protect\citeauthoryear{Simonyan and
+  Zisserman}{2015}]{simonyan2015vgg}
+\begin{bchapter}
+\bauthor{\bsnm{Simonyan}, \binits{K.}},
+\bauthor{\bsnm{Zisserman}, \binits{A.}}:
+\bctitle{Very deep convolutional networks for large-scale image recognition}.
+In: \bbtitle{Proc. Int. Conf. Learning Representations (ICLR)},
+\bconflocation{San Diego, CA, USA}
+(\byear{2015})
+\end{bchapter}
+\endbibitem
+
+%%% 23
+\bibitem[\protect\citeauthoryear{Sandler et~al.}{2018}]{sandler2018mobilenetv2}
+\begin{bchapter}
+\bauthor{\bsnm{Sandler}, \binits{M.}},
+\bauthor{\bsnm{Howard}, \binits{A.}},
+\bauthor{\bsnm{Zhu}, \binits{M.}},
+\bauthor{\bsnm{Zhmoginov}, \binits{A.}},
+\bauthor{\bsnm{Chen}, \binits{L.-C.}}:
+\bctitle{{MobileNetV2}: Inverted residuals and linear bottlenecks}.
+In: \bbtitle{Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition
+  (CVPR)},
+\bconflocation{Salt Lake City, UT, USA},
+pp. \bfpage{4510}--\blpage{4520}
+(\byear{2018}).
+\doiurl{10.1109/CVPR.2018.00474}
+\end{bchapter}
+\endbibitem
+
+%%% 24
+\bibitem[\protect\citeauthoryear{Szegedy et~al.}{2016}]{szegedy2016inception}
+\begin{bchapter}
+\bauthor{\bsnm{Szegedy}, \binits{C.}},
+\bauthor{\bsnm{Vanhoucke}, \binits{V.}},
+\bauthor{\bsnm{Ioffe}, \binits{S.}},
+\bauthor{\bsnm{Shlens}, \binits{J.}},
+\bauthor{\bsnm{Wojna}, \binits{Z.}}:
+\bctitle{Rethinking the {Inception} architecture for computer vision}.
+In: \bbtitle{Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR)},
+\bconflocation{Las Vegas, NV, USA},
+pp. \bfpage{2818}--\blpage{2826}
+(\byear{2016}).
+\doiurl{10.1109/CVPR.2016.308}
+\end{bchapter}
+\endbibitem
+
+%%% 25
+\bibitem[\protect\citeauthoryear{Tabassum et~al.}{2025}]{tabassum2025}
+\begin{bchapter}
+\bauthor{\bsnm{Tabassum}, \binits{B.}},
+\bauthor{\bsnm{Zubayer}, \binits{M.H.}},
+\bauthor{\bsnm{Masum}, \binits{A.K.M.}},
+\bauthor{\bsnm{Farid}, \binits{D.M.}}:
+\bctitle{Counterfeit {Bangladeshi} banknote detection using transfer learning}.
+In: \bbtitle{Proc. 28th Int. Conf. Computer and Information Technology
+  (ICCIT)},
+pp. \bfpage{4384}--\blpage{4389}
+(\byear{2025}).
+\doiurl{10.1109/ICCIT68739.2025.11491481}
+\end{bchapter}
+\endbibitem
+
+%%% 26
+\bibitem[\protect\citeauthoryear{Hendrycks and
+  Gimpel}{2017}]{hendrycks2017baseline}
+\begin{bchapter}
+\bauthor{\bsnm{Hendrycks}, \binits{D.}},
+\bauthor{\bsnm{Gimpel}, \binits{K.}}:
+\bctitle{A baseline for detecting misclassified and out-of-distribution
+  examples in neural networks}.
+In: \bbtitle{Proc. Int. Conf. Learning Representations (ICLR)},
+\bconflocation{Toulon, France}
+(\byear{2017})
+\end{bchapter}
+\endbibitem
+
+%%% 27
+\bibitem[\protect\citeauthoryear{Lee et~al.}{2018}]{lee2018mahalanobis}
+\begin{bchapter}
+\bauthor{\bsnm{Lee}, \binits{K.}},
+\bauthor{\bsnm{Lee}, \binits{K.}},
+\bauthor{\bsnm{Lee}, \binits{H.}},
+\bauthor{\bsnm{Shin}, \binits{J.}}:
+\bctitle{A simple unified framework for detecting out-of-distribution samples
+  and adversarial attacks}.
+In: \bbtitle{Advances in Neural Information Processing Systems (NeurIPS)},
+vol. \bseriesno{31},
+pp. \bfpage{7167}--\blpage{7177}
+(\byear{2018})
+\end{bchapter}
+\endbibitem
+
+%%% 28
+\bibitem[\protect\citeauthoryear{Liu et~al.}{2020}]{liu2020energy}
+\begin{bchapter}
+\bauthor{\bsnm{Liu}, \binits{W.}},
+\bauthor{\bsnm{Wang}, \binits{X.}},
+\bauthor{\bsnm{Owens}, \binits{J.}},
+\bauthor{\bsnm{Li}, \binits{Y.}}:
+\bctitle{Energy-based out-of-distribution detection}.
+In: \bbtitle{Advances in Neural Information Processing Systems (NeurIPS)},
+vol. \bseriesno{33}
+(\byear{2020})
+\end{bchapter}
+\endbibitem
+
+%%% 29
+\bibitem[\protect\citeauthoryear{Sun et~al.}{2022}]{sun2022knn}
+\begin{bchapter}
+\bauthor{\bsnm{Sun}, \binits{Y.}},
+\bauthor{\bsnm{Ming}, \binits{Y.}},
+\bauthor{\bsnm{Zhu}, \binits{X.}},
+\bauthor{\bsnm{Li}, \binits{Y.}}:
+\bctitle{Out-of-distribution detection with deep nearest neighbors}.
+In: \bbtitle{Proc. 39th Int. Conf. Machine Learning (ICML)}.
+\bsertitle{Proceedings of Machine Learning Research},
+vol. \bseriesno{162},
+pp. \bfpage{20827}--\blpage{20840}
+(\byear{2022})
+\end{bchapter}
+\endbibitem
+
+%%% 30
+\bibitem[\protect\citeauthoryear{Guo et~al.}{2017}]{guo2017calibration}
+\begin{bchapter}
+\bauthor{\bsnm{Guo}, \binits{C.}},
+\bauthor{\bsnm{Pleiss}, \binits{G.}},
+\bauthor{\bsnm{Sun}, \binits{Y.}},
+\bauthor{\bsnm{Weinberger}, \binits{K.Q.}}:
+\bctitle{On calibration of modern neural networks}.
+In: \bbtitle{Proc. 34th Int. Conf. Machine Learning (ICML)}.
+\bsertitle{Proceedings of Machine Learning Research},
+vol. \bseriesno{70},
+pp. \bfpage{1321}--\blpage{1330}.
+\bconflocation{Sydney, Australia}
+(\byear{2017})
+\end{bchapter}
+\endbibitem
+
+%%% 31
+\bibitem[\protect\citeauthoryear{Roberts et~al.}{2017}]{roberts2017cv}
+\begin{barticle}
+\bauthor{\bsnm{Roberts}, \binits{D.R.}},
+\bauthor{\bsnm{Bahn}, \binits{V.}},
+\bauthor{\bsnm{Ciuti}, \binits{S.}},
+\bauthor{\bsnm{Boyce}, \binits{M.S.}},
+\bauthor{\bsnm{Elith}, \binits{J.}},
+\bauthor{\bsnm{Guillera-Arroita}, \binits{G.}},
+\bauthor{\bsnm{Hauenstein}, \binits{S.}},
+\bauthor{\bsnm{Lahoz-Monfort}, \binits{J.J.}},
+\bauthor{\bsnm{Schr{\"o}der}, \binits{B.}},
+\bauthor{\bsnm{Thuiller}, \binits{W.}}, \betal:
+\batitle{Cross-validation strategies for data with temporal, spatial,
+  hierarchical, or phylogenetic structure}.
+\bjtitle{Ecography}
+\bvolume{40}(\bissue{8}),
+\bfpage{913}--\blpage{929}
+(\byear{2017})
+\doiurl{10.1111/ecog.02881}
+\end{barticle}
+\endbibitem
+
+%%% 32
+\bibitem[\protect\citeauthoryear{Piyas et~al.}{2025}]{jaaltaka_data}
+\begin{botherref}
+\oauthor{\bsnm{Piyas}, \binits{B.R.C.}}, et al.:
+{JaalTaka}: A Benchmark Dataset for Detecting Counterfeit {Bangladeshi}
+  Banknotes, Version~2.
+Mendeley Data.
+Licensed CC BY 4.0
+(2025).
+\doiurl{10.17632/2m7wk5cy4c.2}
+\end{botherref}
+\endbibitem
+
+%%% 33
+\bibitem[\protect\citeauthoryear{Wilson}{1927}]{wilson1927probable}
+\begin{barticle}
+\bauthor{\bsnm{Wilson}, \binits{E.B.}}:
+\batitle{Probable inference, the law of succession, and statistical inference}.
+\bjtitle{Journal of the American Statistical Association}
+\bvolume{22}(\bissue{158}),
+\bfpage{209}--\blpage{212}
+(\byear{1927})
+\doiurl{10.1080/01621459.1927.10502953}
+\end{barticle}
+\endbibitem
+
+%%% 34
+\bibitem[\protect\citeauthoryear{Fawcett}{2006}]{fawcett2006roc}
+\begin{barticle}
+\bauthor{\bsnm{Fawcett}, \binits{T.}}:
+\batitle{An introduction to {ROC} analysis}.
+\bjtitle{Pattern Recognition Letters}
+\bvolume{27}(\bissue{8}),
+\bfpage{861}--\blpage{874}
+(\byear{2006})
+\doiurl{10.1016/j.patrec.2005.10.010}
+\end{barticle}
+\endbibitem
+
+%%% 35
+\bibitem[\protect\citeauthoryear{Efron and
+  Tibshirani}{1993}]{efron1993bootstrap}
+\begin{bbook}
+\bauthor{\bsnm{Efron}, \binits{B.}},
+\bauthor{\bsnm{Tibshirani}, \binits{R.J.}}:
+\bbtitle{An Introduction to the Bootstrap}.
+\bpublisher{Chapman \& Hall},
+\blocation{New York, NY, USA}
+(\byear{1993})
+\end{bbook}
+\endbibitem
+
+%%% 36
+\bibitem[\protect\citeauthoryear{McNemar}{1947}]{mcnemar1947}
+\begin{barticle}
+\bauthor{\bsnm{McNemar}, \binits{Q.}}:
+\batitle{Note on the sampling error of the difference between correlated
+  proportions or percentages}.
+\bjtitle{Psychometrika}
+\bvolume{12}(\bissue{2}),
+\bfpage{153}--\blpage{157}
+(\byear{1947})
+\doiurl{10.1007/BF02295996}
+\end{barticle}
+\endbibitem
+
+%%% 37
+\bibitem[\protect\citeauthoryear{Dietterich}{1998}]{dietterich1998tests}
+\begin{barticle}
+\bauthor{\bsnm{Dietterich}, \binits{T.G.}}:
+\batitle{Approximate statistical tests for comparing supervised classification
+  learning algorithms}.
+\bjtitle{Neural Computation}
+\bvolume{10}(\bissue{7}),
+\bfpage{1895}--\blpage{1923}
+(\byear{1998})
+\doiurl{10.1162/089976698300017197}
+\end{barticle}
+\endbibitem
+
+%%% 38
+\bibitem[\protect\citeauthoryear{Loshchilov and
+  Hutter}{2019}]{loshchilov2019adamw}
+\begin{bchapter}
+\bauthor{\bsnm{Loshchilov}, \binits{I.}},
+\bauthor{\bsnm{Hutter}, \binits{F.}}:
+\bctitle{Decoupled weight decay regularization}.
+In: \bbtitle{Proc. Int. Conf. Learning Representations (ICLR)},
+\bconflocation{New Orleans, LA, USA}
+(\byear{2019})
+\end{bchapter}
+\endbibitem
+
+%%% 39
+\bibitem[\protect\citeauthoryear{Smith and
+  Topin}{2019}]{smith2019superconvergence}
+\begin{bchapter}
+\bauthor{\bsnm{Smith}, \binits{L.N.}},
+\bauthor{\bsnm{Topin}, \binits{N.}}:
+\bctitle{Super-convergence: Very fast training of neural networks using large
+  learning rates}.
+In: \bbtitle{Proc. SPIE Artificial Intelligence and Machine Learning for
+  Multi-Domain Operations Applications},
+vol. \bseriesno{11006},
+p. \bfpage{1100612}
+(\byear{2019}).
+\doiurl{10.1117/12.2520589}
+\end{bchapter}
+\endbibitem
+
+%%% 40
+\bibitem[\protect\citeauthoryear{Paszke et~al.}{2019}]{paszke2019pytorch}
+\begin{bchapter}
+\bauthor{\bsnm{Paszke}, \binits{A.}},
+\bauthor{\bsnm{Gross}, \binits{S.}},
+\bauthor{\bsnm{Massa}, \binits{F.}},
+\bauthor{\bsnm{Lerer}, \binits{A.}},
+\bauthor{\bsnm{Bradbury}, \binits{J.}},
+\bauthor{\bsnm{Chanan}, \binits{G.}},
+\bauthor{\bsnm{Killeen}, \binits{T.}},
+\bauthor{\bsnm{Lin}, \binits{Z.}},
+\bauthor{\bsnm{Gimelshein}, \binits{N.}},
+\bauthor{\bsnm{Antiga}, \binits{L.}}, \betal:
+\bctitle{{PyTorch}: An imperative style, high-performance deep learning
+  library}.
+In: \bbtitle{Advances in Neural Information Processing Systems (NeurIPS)},
+vol. \bseriesno{32},
+pp. \bfpage{8024}--\blpage{8035}
+(\byear{2019})
+\end{bchapter}
+\endbibitem
+
+%%% 41
+\bibitem[\protect\citeauthoryear{Su et~al.}{2015}]{su2015mvcnn}
+\begin{bchapter}
+\bauthor{\bsnm{Su}, \binits{H.}},
+\bauthor{\bsnm{Maji}, \binits{S.}},
+\bauthor{\bsnm{Kalogerakis}, \binits{E.}},
+\bauthor{\bsnm{Learned-Miller}, \binits{E.}}:
+\bctitle{Multi-view convolutional neural networks for {3D} shape recognition}.
+In: \bbtitle{Proc. IEEE Int. Conf. Computer Vision (ICCV)},
+\bconflocation{Santiago, Chile},
+pp. \bfpage{945}--\blpage{953}
+(\byear{2015}).
+\doiurl{10.1109/ICCV.2015.114}
+\end{bchapter}
+\endbibitem
+
+\end{thebibliography}
